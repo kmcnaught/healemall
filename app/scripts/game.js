@@ -1468,7 +1468,7 @@
     Game.trackEvent("levelSummary:" + Q.state.get("currentLevel"), "Zombie Mode", stage.options.zombieModeFound);
     Game.trackEvent("levelSummary:" + Q.state.get("currentLevel"), "Health collected", stage.options.health.collected + "/" + stage.options.health.available);
     Game.trackEvent("levelSummary:" + Q.state.get("currentLevel"), "Zombies healed", stage.options.zombies.healed + "/" + stage.options.zombies.available);
-    return Game.trackEvent("levelSummary:" + Q.state.get("currentLevel"), "Bullets waisted", stage.options.bullets.waisted + "/" + stage.options.bullets.available);
+    return Game.trackEvent("levelSummary:" + Q.state.get("currentLevel"), "Bullets wasted", stage.options.bullets.waisted + "/" + stage.options.bullets.available);
   });
 
 }).call(this);
