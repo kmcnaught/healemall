@@ -50,6 +50,26 @@ Q.scene "level1", (stage) ->
 
   stage.loadAssets(items)
 
+  # button
+  button = stage.insert new Q.UI.Button
+    x: Q.width/2
+    y: Q.height-10
+    w: 150
+    h: 150
+    fill: "#c4da4a"
+    radius: 10
+    fontColor: "#353b47"
+    font: "400 58px Jolly Lodger"
+    label: "jump"
+    keyActionName: "confirm"
+    type: Q.SPRITE_UI | Q.SPRITE_DEFAULT
+  
+  button.on "click", (e) ->
+    Q.inputs['up']=1
+
+  button.on "release", (e) ->
+    Q.inputs['up']=0
+
   # store level data for level summary
   Game.currentLevelData.health.available = stage.lists.Heart.length
   Game.currentLevelData.zombies.available = stage.lists.Zombie.length

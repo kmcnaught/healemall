@@ -4650,8 +4650,8 @@ Quintus.Touch = function(Q) {
             this.objectDwelltimes[obj.p.id] = {dwell:1, obj:obj, active:true};
           }
           else {
-            this.objectDwelltimes[obj.p.id].dwell += 1; 
-            this.objectDwelltimes[key].active = true;
+            this.objectDwelltimes[obj.p.id].dwell += 2; 
+            this.objectDwelltimes[obj.p.id].active = true;
 
             var curr_dwell = this.objectDwelltimes[obj.p.id].dwell
 
@@ -4672,7 +4672,7 @@ Quintus.Touch = function(Q) {
                 };
               obj.trigger('touchEnd', currTouch);
              
-              this.objectDwelltimes[obj.p.id].dwell = 0; 
+              this.objectDwelltimes[obj.p.id].dwell = -10; 
 
               obj.trigger('dwellIncrement', 0);
 
@@ -5041,7 +5041,10 @@ Quintus.UI = function(Q) {
     push: function() {
       this.p.frame = 0;
       if(this.callback) { this.callback(); }
+
+      // press and release
       this.trigger('click');
+      setTimeout(function(ctx) { ctx.trigger('release'); }, 100, this);
     },
 
     drawDwell: function(ctx, percent) {
