@@ -4469,10 +4469,12 @@ Quintus.Touch = function(Q) {
 
     init: function() {
       var touchSystem = this;
+      this.doDwell = true;
 
       this.boundTouch = function(e) { touchSystem.touch(e); };
       this.boundDrag = function(e) { touchSystem.drag(e); };
       this.boundEnd = function(e) { touchSystem.touchEnd(e); };
+      this.boundCursor = function(e) { touchSystem.cursor(e); };
 
       Q.el.addEventListener('touchstart',this.boundTouch);
       Q.el.addEventListener('mousedown',this.boundTouch);
@@ -4484,11 +4486,17 @@ Quintus.Touch = function(Q) {
       Q.el.addEventListener('mouseup',this.boundEnd);
       Q.el.addEventListener('touchcancel',this.boundEnd);
 
+      if (this.doDwell) {
+        Q.el.addEventListener('mousemove',this.boundCursor);        
+      }
+
       this.touchPos = new Q.Evented();
       this.touchPos.grid = {};
       this.touchPos.p = { w:1, h:1, cx: 0, cy: 0 };
       this.activeTouches = {};
       this.touchedObjects = {};
+      this.objectDwelltimes = {};
+      this.dwellTime = 30;
     },
 
     destroy: function() {
@@ -4501,6 +4509,10 @@ Quintus.Touch = function(Q) {
       Q.el.removeEventListener('touchend',this.boundEnd);
       Q.el.removeEventListener('mouseup',this.boundEnd);
       Q.el.removeEventListener('touchcancel',this.boundEnd);
+
+      if (this.doDwell) {
+        Q.el.removeEventListener('mousemove',this.boundCursor);        
+      }
     },
 
     normalizeTouch: function(touch,stage) {
