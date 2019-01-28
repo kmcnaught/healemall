@@ -4623,25 +4623,41 @@ Quintus.Touch = function(Q) {
           this.trigger("touch", pos);
         }
 
-        // decrement all dwells in progress
-        for (var key in this.objectDwelltimes) {
-          if (this.objectDwelltimes.hasOwnProperty(key)) {
-            this.objectDwelltimes[key] -= 1;
-          }
-          if (this.objectDwelltimes[key] < 0) {
-            delete this.objectDwelltimes[key]
-          }     
-        }  
+        var pid = 0
+        if (obj)
+          pid = obj.p.id 
 
-        // re-increment dwell for this object, decrement for others
+        // decrement any other dwells in progress
+        for (var key in this.objectDwelltimes) {
+          if (this.objectDwelltimes.hasOwnProperty(key) &&
+              key != pid) {
+            this.objectDwelltimes[key].dwell -= 1;
+            // turn off visualisation
+            if ( this.objectDwelltimes[key].active ) {
+              this.objectDwelltimes[key].obj.trigger('dwellIncrement', 0);
+              this.objectDwelltimes[key].active = false;
+            }
+          
+            if (this.objectDwelltimes[key].dwell < 0) {
+              delete this.objectDwelltimes[key]
+            }     
+          }
+        }  
+      
         if (obj) {
+          // increment this one       
           if (!(obj.p.id in this.objectDwelltimes)) {
-            this.objectDwelltimes[obj.p.id] = 1;
+            this.objectDwelltimes[obj.p.id] = {dwell:1, obj:obj, active:true};
           }
           else {
-            this.objectDwelltimes[obj.p.id] += 2; // 2 to cancel out decrement
+            this.objectDwelltimes[obj.p.id].dwell += 1; 
+            this.objectDwelltimes[key].active = true;
 
-            if (this.objectDwelltimes[obj.p.id] > this.dwellTime) {
+            var curr_dwell = this.objectDwelltimes[obj.p.id].dwell
+
+            obj.trigger('dwellIncrement', curr_dwell/this.dwellTime);
+
+            if (curr_dwell > this.dwellTime) {
 
               currTouch = {
                   x: pos.p.px,
@@ -4656,7 +4672,10 @@ Quintus.Touch = function(Q) {
                 };
               obj.trigger('touchEnd', currTouch);
              
-              this.objectDwelltimes[obj.p.id] = 0; 
+              this.objectDwelltimes[obj.p.id].dwell = 0; 
+
+              obj.trigger('dwellIncrement', 0);
+
             }
           }
         }
@@ -5002,9 +5021,11 @@ Quintus.UI = function(Q) {
       this.callback = callback;
       this.on('touch',this,"highlight");
       this.on('touchEnd',this,"push");
+      this.on('dwellIncrement',this,"updateDwell");
       if(this.p.keyActionName) {
         Q.input.on(this.p.keyActionName,this,"push");
       }
+      this.dwellProportion = 0.0;
     },
 
     highlight: function() {
@@ -5013,10 +5034,30 @@ Quintus.UI = function(Q) {
       }
     },
 
+    updateDwell: function(amount) {
+      this.dwellProportion = amount
+    },
+
     push: function() {
       this.p.frame = 0;
       if(this.callback) { this.callback(); }
       this.trigger('click');
+    },
+
+    drawDwell: function(ctx, percent) {
+      var orig_dim = Math.min(this.p.h, this.p.w)
+      
+      width = orig_dim*(1.0-percent)
+      var rect = {
+                   cx: width/2, cy: width/2, 
+                   h: width, w: width,
+                   radius: width/2+1 
+                 }
+
+      ctx.fillStyle = "#ff3b4753"; // HACK!
+      Q.UI.roundRect(ctx,rect);
+      this.addShadow(ctx);
+      ctx.fill();
     },
 
     draw: function(ctx) {
@@ -5031,6 +5072,11 @@ Quintus.UI = function(Q) {
         this.setFont(ctx);
         ctx.fillText(this.p.label,0,0);
         ctx.restore();
+      }
+
+      // dwell animation
+      if (this.dwellProportion > 0) {
+        this.drawDwell(ctx, this.dwellProportion);
       }
     },
 
