@@ -18,7 +18,7 @@ Q.component "gun",
     p.nextFireTimeout = 0
 
   destroyed: ->
-  	Q.input.off("fire", @entity)
+    Q.input.off("fire", @entity)
 
   extend:
     gunStep: (dt) ->
