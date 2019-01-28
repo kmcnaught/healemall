@@ -4496,7 +4496,7 @@ Quintus.Touch = function(Q) {
       this.activeTouches = {};
       this.touchedObjects = {};
       this.objectDwelltimes = {};
-      this.dwellTime = 30;
+      this.dwellTime = 50;
     },
 
     destroy: function() {
