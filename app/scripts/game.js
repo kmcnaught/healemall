@@ -757,7 +757,7 @@
   Q = Game.Q;
 
   Q.scene("level1", function(stage) {
-    var background, enemies, items, map, player;
+    var background, button, enemies, items, map, player;
     Game.map = map = new Q.TileLayer({
       type: Game.SPRITE_TILES,
       layerIndex: 0,
@@ -791,6 +791,25 @@
       ], ["Heart", Q.tilePos(14.5, 15)]
     ];
     stage.loadAssets(items);
+    button = stage.insert(new Q.UI.Button({
+      x: Q.width / 2,
+      y: Q.height - 10,
+      w: 150,
+      h: 150,
+      fill: "#c4da4a",
+      radius: 10,
+      fontColor: "#353b47",
+      font: "400 58px Jolly Lodger",
+      label: "jump",
+      keyActionName: "confirm",
+      type: Q.SPRITE_UI | Q.SPRITE_DEFAULT
+    }));
+    button.on("click", function(e) {
+      return Q.inputs['up'] = 1;
+    });
+    button.on("release", function(e) {
+      return Q.inputs['up'] = 0;
+    });
     Game.currentLevelData.health.available = stage.lists.Heart.length;
     return Game.currentLevelData.zombies.available = stage.lists.Zombie.length;
   });
@@ -803,7 +822,7 @@
   Q = Game.Q;
 
   Q.scene("level2", function(stage) {
-    var background, enemies, items, map, player, random, randomItems;
+    var background, button, enemies, items, map, player, random, randomItems;
     Game.map = map = new Q.TileLayer({
       type: Game.SPRITE_TILES,
       layerIndex: 0,
@@ -858,7 +877,20 @@
     ];
     stage.loadAssets(items);
     Game.currentLevelData.health.available = stage.lists.Heart.length;
-    return Game.currentLevelData.zombies.available = stage.lists.Zombie.length;
+    Game.currentLevelData.zombies.available = stage.lists.Zombie.length;
+    return button = stage.insert(new Q.UI.Button({
+      x: Q.width / 2,
+      y: Q.height - marginY,
+      w: Q.width / 2,
+      h: 70,
+      fill: "#c4da4a",
+      radius: 10,
+      fontColor: "#353b47",
+      font: "400 58px Jolly Lodger",
+      label: "Give me some zombies",
+      keyActionName: "confirm",
+      type: Q.SPRITE_UI | Q.SPRITE_DEFAULT
+    }));
   });
 
 }).call(this);
