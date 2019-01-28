@@ -2518,13 +2518,14 @@ Quintus.Input = function(Q) {
                        ESC: 'escape'
                     };
 
-  var DEFAULT_TOUCH_CONTROLS  = [ ['left','<' ],
-                            ['right','>' ],
+  var DEFAULT_TOUCH_CONTROLS  = [ 
                             [],
                             [],
+                            ['jumpleft','<^'],
+                            ['left','<' ],
+                            ['right','>' ],                            
+                            ['jumpright','^>'],
                             [],
-                            [],
-                            ['action','b'],
                             ['fire', 'a' ]];
 
   // Clockwise from midnight (a la CSS)
@@ -3020,7 +3021,7 @@ Quintus.Input = function(Q) {
 
     if(joypad) {
       Q.input.touchControls({
-        controls: [ [],[],[],['action','b'],['fire','a']]
+        controls: [ [],['jumpleft','d'],['jumpright','c'],['action','b'],['fire','a']]
       });
       Q.input.joypadControls();
     } else {
@@ -3057,17 +3058,17 @@ Quintus.Input = function(Q) {
     step: function(dt) {
       var p = this.entity.p;
 
-      if(Q.inputs['left']) {
+      if(Q.inputs['left'] || Q.inputs['jumpleft']) {
         p.vx = -p.speed;
         p.direction = 'left';
-      } else if(Q.inputs['right']) {
+      } else if(Q.inputs['right'] || Q.inputs['jumpright']) {
         p.direction = 'right';
         p.vx = p.speed;
       } else {
         p.vx = 0;
       }
 
-      if(p.landed > 0 && (Q.inputs['up'] || Q.inputs['action'])) {
+      if(p.landed > 0 && (Q.inputs['up'] || Q.inputs['action'] || Q.inputs['jumpleft'] || Q.inputs['jumpright'])) {
         p.vy = p.jumpSpeed;
         p.landed = -dt;
       }
