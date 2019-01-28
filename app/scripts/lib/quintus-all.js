@@ -4584,9 +4584,71 @@ Quintus.Touch = function(Q) {
             obj.trigger('touch', this.activeTouches[touch.identifier]);
             break;
           }
+        }
+      }
+      //e.preventDefault();
+    },
 
+    // handle mouse move events for gaze control
+    cursor: function(e) {
+
+      var touch = e;
+
+      for(var stageIdx=0;stageIdx < touchStage.length;stageIdx++) {
+        var stage = Q.stage(touchStage[stageIdx]);
+
+        if(!stage) { continue; }
+
+        touch.identifier = touch.identifier || 0;
+        var pos = this.normalizeTouch(touch,stage);
+
+        stage.regrid(pos,true);
+        var col = stage.search(pos,touchType), obj;
+
+        if(col || stageIdx === touchStage.length - 1) {
+          obj = col && col.obj;
+          pos.obj = obj;
+          this.trigger("touch", pos);
         }
 
+        // decrement all dwells in progress
+        for (var key in this.objectDwelltimes) {
+          if (this.objectDwelltimes.hasOwnProperty(key)) {
+            this.objectDwelltimes[key] -= 1;
+          }
+          if (this.objectDwelltimes[key] < 0) {
+            delete this.objectDwelltimes[key]
+          }     
+        }  
+
+        // re-increment dwell for this object, decrement for others
+        if (obj) {
+          if (!(obj.p.id in this.objectDwelltimes)) {
+            this.objectDwelltimes[obj.p.id] = 1;
+          }
+          else {
+            this.objectDwelltimes[obj.p.id] += 2; // 2 to cancel out decrement
+
+            if (this.objectDwelltimes[obj.p.id] > this.dwellTime) {
+
+              currTouch = {
+                  x: pos.p.px,
+                  y: pos.p.py,
+                  origX: obj.p.x,
+                  origY: obj.p.y,
+                  sx: pos.p.ox,
+                  sy: pos.p.oy,
+                  identifier: touch.identifier,
+                  obj: obj,
+                  stage: stage
+                };
+              obj.trigger('touchEnd', currTouch);
+             
+              this.objectDwelltimes[obj.p.id] = 0; 
+            }
+          }
+        }
+      
       }
       //e.preventDefault();
     },
