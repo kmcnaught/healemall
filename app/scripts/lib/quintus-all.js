@@ -4606,6 +4606,25 @@ Quintus.Touch = function(Q) {
 
       var touch = e;
 
+      // decrement all dwells in progress
+      // (including this one: we'll have to double-increment when we find it)
+      for (var key in this.objectDwelltimes) {
+        if (this.objectDwelltimes.hasOwnProperty(key) &&
+            key != pid) {
+          this.objectDwelltimes[key].dwell -= 1;
+          // turn off visualisation
+          if ( this.objectDwelltimes[key].active ) {
+            this.objectDwelltimes[key].obj.trigger('dwellIncrement', 0);
+            this.objectDwelltimes[key].active = false;
+          }
+        
+          if (this.objectDwelltimes[key].dwell < 0) {
+            delete this.objectDwelltimes[key]
+          }     
+        }
+      }  
+
+      // search all stages for this object
       for(var stageIdx=0;stageIdx < touchStage.length;stageIdx++) {
         var stage = Q.stage(touchStage[stageIdx]);
 
@@ -4620,40 +4639,20 @@ Quintus.Touch = function(Q) {
         if(col || stageIdx === touchStage.length - 1) {
           obj = col && col.obj;
           pos.obj = obj;
-          this.trigger("touch", pos);
         }
-
-        var pid = 0
-        if (obj)
-          pid = obj.p.id 
-
-        // decrement any other dwells in progress
-        for (var key in this.objectDwelltimes) {
-          if (this.objectDwelltimes.hasOwnProperty(key) &&
-              key != pid) {
-            this.objectDwelltimes[key].dwell -= 1;
-            // turn off visualisation
-            if ( this.objectDwelltimes[key].active ) {
-              this.objectDwelltimes[key].obj.trigger('dwellIncrement', 0);
-              this.objectDwelltimes[key].active = false;
-            }
-          
-            if (this.objectDwelltimes[key].dwell < 0) {
-              delete this.objectDwelltimes[key]
-            }     
-          }
-        }  
-      
+            
         if (obj) {
+          var pid = obj.p.id 
+        
           // increment this one       
-          if (!(obj.p.id in this.objectDwelltimes)) {
-            this.objectDwelltimes[obj.p.id] = {dwell:1, obj:obj, active:true};
+          if (!(pid in this.objectDwelltimes)) {
+            this.objectDwelltimes[pid] = {dwell:1, obj:obj, active:true};
           }
           else {
-            this.objectDwelltimes[obj.p.id].dwell += 2; 
-            this.objectDwelltimes[obj.p.id].active = true;
+            this.objectDwelltimes[pid].dwell += 2; 
+            this.objectDwelltimes[pid].active = true;
 
-            var curr_dwell = this.objectDwelltimes[obj.p.id].dwell
+            var curr_dwell = this.objectDwelltimes[pid].dwell
 
             obj.trigger('dwellIncrement', curr_dwell/this.dwellTime);
 
@@ -4672,7 +4671,7 @@ Quintus.Touch = function(Q) {
                 };
               obj.trigger('touchEnd', currTouch);
              
-              this.objectDwelltimes[obj.p.id].dwell = -10; 
+              this.objectDwelltimes[pid].dwell = -10; 
 
               obj.trigger('dwellIncrement', 0);
 
