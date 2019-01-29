@@ -74,8 +74,10 @@ Q.scene "hud", (stage) ->
 
   # gaze controls  
   n = 5
-  labels = ['jump', '<', '', '>', 'jump']
-  actions = ['jumpleft', 'left', '', 'right', 'jumpright']
+  labels = ['jump', '<', 'shoot', '>', 'jump']
+  dwell_actions = ['jumpleft', '', 'fire', '', 'jumpright']
+  hover_actions = ['', 'left', '', 'right', '']  
+
   width = Q.width/12
   margin = width/10  
 
@@ -87,12 +89,20 @@ Q.scene "hud", (stage) ->
 
 
   onClick = (action) => (e) => 
-    console.log('click %s', action)        
-    Q.inputs[action]=1
+    if action
+      console.log('click %s', action)        
+      Q.inputs[action]=1
 
   onRelease = (action) => (e) => 
-    console.log('release %s', action)        
-    Q.inputs[action]=0
+    if action
+      console.log('release %s', action)        
+      Q.inputs[action]=0
+
+  onRelease = (action) => (e) => 
+    if action
+      console.log('hover %s', action)        
+      Q.inputs[action]=0
+
 
   for item in [0..n-1]
 
@@ -121,9 +131,10 @@ Q.scene "hud", (stage) ->
       label: labels[item]
       keyActionName: "fire"
     
-    button.on "click", onClick actions[item]
-      
-    button.on "release", onRelease actions[item]
+    button.on "click", onClick actions[item]     
+
+    button.on "hover", =>
+      console.log('hover!')
 
 
     stage.insert(button)

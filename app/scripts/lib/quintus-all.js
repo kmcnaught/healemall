@@ -2997,7 +2997,7 @@ Quintus.Input = function(Q) {
 
     drawCanvas: function() {
       if(this.touchEnabled) {
-        this.drawButtons();
+       // this.drawButtons();
       }
 
       if(this.joypadEnabled) {
@@ -3084,19 +3084,18 @@ Quintus.Input = function(Q) {
         
         // if jumping sideways , we've now executed the jump but need to keep
         // the sideways motion on while it completes. 
+        // action will be completed once we've landed somewhere
+
         if (Q.inputs['jumpleft']) {
+          Q.inputs['jumpleft'] = 0
           Q.inputs['left'] = 1
+          this.entity.on("bump.bottom",this,"landedjump");
         } 
         else if (Q.inputs['jumpright']) {
+          Q.inputs['jumpright'] = 0
           Q.inputs['right'] = 1
+          this.entity.on("bump.bottom",this,"landedjump");
         } 
-
-        // these are one-shot commands, turn them off again
-        Q.inputs['jumpleft'] = 0
-        Q.inputs['jumpright'] = 0
-
-        // action will be completed once we've landed somewhere
-        this.entity.on("bump.bottom",this,"landedjump");
       }
       p.landed -= dt;
 
@@ -4682,6 +4681,7 @@ Quintus.Touch = function(Q) {
             var curr_dwell = this.objectDwelltimes[pid].dwell
 
             obj.trigger('dwellIncrement', curr_dwell/this.dwellTime);
+            obj.trigger('hover');
 
             if (curr_dwell > this.dwellTime) {
 
