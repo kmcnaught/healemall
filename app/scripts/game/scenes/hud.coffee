@@ -68,8 +68,43 @@ Q.scene "hud", (stage) ->
   keyContainer.fit(5, 8)
   keyContainer.p.x = healthContainer.p.x - healthContainer.p.w/2 - keyContainer.p.w/2 - 34
 
-
   # buttons
   stage.insert new Q.UI.PauseButton()
   stage.insert new Q.UI.MenuButton()
 
+  # gaze controls
+  margin = Q.width/25
+  width = Q.width/6 - 2*margin
+    
+  
+  w = width
+  h = width
+
+  x = margin*2
+  y = Q.height - margin*2
+
+  for item in [0..5]
+
+    if item > 0
+      x += width + margin*2
+
+    button = new Q.UI.Button
+      x: x
+      y: y
+      w: w
+      h: h
+      z: 1
+      type: Q.SPRITE_UI | Q.SPRITE_DEFAULT
+      fill: "#c4da4a80"
+      radius: 10
+      fontColor: "#353b47"
+      font: "400 58px Jolly Lodger"
+      label: "A"
+      keyActionName: "fire"
+    
+    button.on 'click', =>
+      console.log('clicked!')
+
+    stage.insert(button)
+
+  
