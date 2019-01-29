@@ -50,17 +50,18 @@ Q.scene "level1", (stage) ->
 
   stage.loadAssets(items)
 
-  # button
+  # button to enter door
+  pos = Q.tilePos(27+15, 9-2.5)
   button = stage.insert new Q.UI.Button
-    x: Q.width/2
-    y: Q.height-10
-    w: 150
-    h: 150
+    x: pos.x
+    y: pos.y
+    w: 120
+    h: 120
     fill: "#c4da4a"
     radius: 10
     fontColor: "#353b47"
     font: "400 58px Jolly Lodger"
-    label: "jump"
+    label: "enter"
     keyActionName: "confirm"
     type: Q.SPRITE_UI | Q.SPRITE_DEFAULT
   
