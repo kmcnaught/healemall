@@ -3055,6 +3055,16 @@ Quintus.Input = function(Q) {
       p.landed = 1/5;
     },
 
+    landedjump: function(col) {
+      // when a jump completes
+      var p = this.entity.p;
+      p.landed = 1/5;      
+      Q.inputs['left'] = 0
+      Q.inputs['right'] = 0
+
+      this.entity.off("bump.bottom",this,"landedjump");
+    },
+
     step: function(dt) {
       var p = this.entity.p;
 
@@ -3071,6 +3081,22 @@ Quintus.Input = function(Q) {
       if(p.landed > 0 && (Q.inputs['up'] || Q.inputs['action'] || Q.inputs['jumpleft'] || Q.inputs['jumpright'])) {
         p.vy = p.jumpSpeed;
         p.landed = -dt;
+        
+        // if jumping sideways , we've now executed the jump but need to keep
+        // the sideways motion on while it completes. 
+        if (Q.inputs['jumpleft']) {
+          Q.inputs['left'] = 1
+        } 
+        else if (Q.inputs['jumpright']) {
+          Q.inputs['right'] = 1
+        } 
+
+        // these are one-shot commands, turn them off again
+        Q.inputs['jumpleft'] = 0
+        Q.inputs['jumpright'] = 0
+
+        // action will be completed once we've landed somewhere
+        this.entity.on("bump.bottom",this,"landedjump");
       }
       p.landed -= dt;
 
