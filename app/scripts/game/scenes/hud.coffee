@@ -74,7 +74,7 @@ Q.scene "hud", (stage) ->
 
   # gaze controls  
   n = 5
-  labels = ['jump', '<', 'shoot', '>', 'jump']
+  labels = ['jump', '<', 'fire', '>', 'jump']
   dwell_actions = ['jumpleft', '', 'fire', '', 'jumpright']
   hover_actions = ['', 'left', '', 'right', '']  
 
@@ -98,43 +98,54 @@ Q.scene "hud", (stage) ->
       console.log('release %s', action)        
       Q.inputs[action]=0
 
-  onRelease = (action) => (e) => 
+  onHover = (action) => (e) => 
     if action
       console.log('hover %s', action)        
-      Q.inputs[action]=0
+      Q.inputs[action]=1
 
+  # onChangeHidden = (btn) => (e) =>
+  #   console.log('hidden changed')
+  #   console.log(Q.state.get("hasGun")) #true
+  #   console.log(btn.hidden) #undefined
+  #   btn.hidden = !Q.state.get("hasGun");
 
   for item in [0..n-1]
 
     if item > 0
       x += width + margin*2
 
-    if item == 2
-      continue
+    # if item == 2
+      # continue
 
     if labels[item].length > 1
       fontsize = "58px"
     else
       fontsize = "128px"
 
+    hidden = ( item == 2 )
     button = new Q.UI.Button
       x: x
       y: y
       w: w
       h: h
       z: 1
+      hidden: hidden
       type: Q.SPRITE_UI | Q.SPRITE_DEFAULT
-      fill: "#c4da4a80"
+      fill: "#c4da4a30"
       radius: 10
       fontColor: "#353b47"
       font: "400 " + fontsize + " Jolly Lodger"
-      label: labels[item]
-      keyActionName: "fire"
-    
-    button.on "click", onClick actions[item]     
+      label: labels[item]   
 
-    button.on "hover", =>
-      console.log('hover!')
+      updateHidden: (hasGun) ->
+        @.hidden = !hasGun 
+
+    if (item == 2)
+      Q.state.on "change.hasGun", button, "updateHidden" 
+    
+    button.on "click", onClick dwell_actions[item]     
+
+    button.on "hover", onHover hover_actions[item]      
 
 
     stage.insert(button)

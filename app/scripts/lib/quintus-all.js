@@ -3048,6 +3048,8 @@ Quintus.Input = function(Q) {
 
       p.landed = 0;
       p.direction ='right';
+
+      this.isjumpingsideways = false;
     },
 
     landed: function(col) {
@@ -3061,6 +3063,7 @@ Quintus.Input = function(Q) {
       p.landed = 1/5;      
       Q.inputs['left'] = 0
       Q.inputs['right'] = 0
+      this.isjumpingsideways = false;
 
       this.entity.off("bump.bottom",this,"landedjump");
     },
@@ -3074,8 +3077,15 @@ Quintus.Input = function(Q) {
       } else if(Q.inputs['right'] || Q.inputs['jumpright']) {
         p.direction = 'right';
         p.vx = p.speed;
+      } else if (this.isjumpingsideways) {
+        if (p.direction == 'right') {
+          p.vx = p.speed;
+        }
+        else {
+          p.vx = -p.speed;
+        }
       } else {
-        p.vx = 0;
+        p.vx = 0;      
       }
 
       if(p.landed > 0 && (Q.inputs['up'] || Q.inputs['action'] || Q.inputs['jumpleft'] || Q.inputs['jumpright'])) {
@@ -3086,15 +3096,9 @@ Quintus.Input = function(Q) {
         // the sideways motion on while it completes. 
         // action will be completed once we've landed somewhere
 
-        if (Q.inputs['jumpleft']) {
-          Q.inputs['jumpleft'] = 0
-          Q.inputs['left'] = 1
+        if (Q.inputs['jumpleft'] || Q.inputs['jumpright']) {
           this.entity.on("bump.bottom",this,"landedjump");
-        } 
-        else if (Q.inputs['jumpright']) {
-          Q.inputs['jumpright'] = 0
-          Q.inputs['right'] = 1
-          this.entity.on("bump.bottom",this,"landedjump");
+          this.isjumpingsideways = true;
         } 
       }
       p.landed -= dt;
@@ -4631,6 +4635,13 @@ Quintus.Touch = function(Q) {
     cursor: function(e) {
 
       var touch = e;
+
+      // Turn off all controls
+      // Reset all the actions bound to controls
+      // but keep track of all the actions that were on      
+      for (var key in Q.inputs) {
+        Q.inputs[key] = false;
+      } 
 
       // decrement all dwells in progress
       // (including this one: we'll have to double-increment when we find it)
