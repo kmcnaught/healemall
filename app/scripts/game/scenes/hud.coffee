@@ -72,21 +72,40 @@ Q.scene "hud", (stage) ->
   stage.insert new Q.UI.PauseButton()
   stage.insert new Q.UI.MenuButton()
 
-  # gaze controls
-  margin = Q.width/25
-  width = Q.width/6 - 2*margin
-    
-  
+  # gaze controls  
+  n = 5
+  labels = ['jump', '<', '', '>', 'jump']
+  actions = ['jumpleft', 'left', '', 'right', 'jumpright']
+  width = Q.width/12
+  margin = width/10  
+
   w = width
   h = width
 
-  x = margin*2
-  y = Q.height - margin*2
+  x = (Q.width - n*(width+margin))/2
+  y = Q.height - width - margin*2
 
-  for item in [0..5]
+
+  onClick = (action) => (e) => 
+    console.log('click %s', action)        
+    Q.inputs[action]=1
+
+  onRelease = (action) => (e) => 
+    console.log('release %s', action)        
+    Q.inputs[action]=0
+
+  for item in [0..n-1]
 
     if item > 0
       x += width + margin*2
+
+    if item == 2
+      continue
+
+    if labels[item].length > 1
+      fontsize = "58px"
+    else
+      fontsize = "128px"
 
     button = new Q.UI.Button
       x: x
@@ -98,13 +117,15 @@ Q.scene "hud", (stage) ->
       fill: "#c4da4a80"
       radius: 10
       fontColor: "#353b47"
-      font: "400 58px Jolly Lodger"
-      label: "A"
+      font: "400 " + fontsize + " Jolly Lodger"
+      label: labels[item]
       keyActionName: "fire"
     
-    button.on 'click', =>
-      console.log('clicked!')
+    button.on "click", onClick actions[item]
+      
+    button.on "release", onRelease actions[item]
+
 
     stage.insert(button)
 
-  
+
