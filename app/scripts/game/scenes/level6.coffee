@@ -124,6 +124,8 @@ Q.scene "level6", (stage) ->
     ["Heart", Q.tilePos(92.5, 37)]
   ]
 
+  Game.add_door_button(stage, doorKeyPositions[random].door)
+
   stage.loadAssets(items)
 
   # store level data for level summary

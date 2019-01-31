@@ -54,12 +54,16 @@ Q.scene "level2", (stage) ->
 
   random = Math.floor(Math.random() * 2)
 
+  doorPos = Q.tilePos(27, 9)
+
   items = [
     ["Key", randomItems[random].key]
-    ["Door", Q.tilePos(27, 9)]
+    ["Door", doorPos]
     ["Gun", Q.tilePos(14.5, 9, {bullets: 6})]
     ["Heart", randomItems[random].health]
   ]
+
+  Game.add_door_button(stage, doorPos)
 
   stage.loadAssets(items)
 
