@@ -56,7 +56,7 @@ Q.Sprite.extend "Player",
       @add("gun")
 
     @p.jumpSpeed = -660
-    @p.speed = 330
+    @p.speed = 220
     @p.savedPosition.x = @p.x
     @p.savedPosition.y = @p.y
 
