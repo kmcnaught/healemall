@@ -132,9 +132,13 @@ Q.scene "hud", (stage) ->
 
       Q.state.on "change.hasGun", onChangeHidden button
     
-    button.on "click", onClick dwell_actions[item]     
+    if (dwell_actions[item])
+      button.on "click", onClick dwell_actions[item]     
+    else
+      button.doDwell = false
 
-    button.on "hover", onHover hover_actions[item]      
+    if (hover_actions[item])
+      button.on "hover", onHover hover_actions[item]      
 
 
     stage.insert(button)

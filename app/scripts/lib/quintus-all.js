@@ -5063,6 +5063,7 @@ Quintus.UI = function(Q) {
         Q.input.on(this.p.keyActionName,this,"push");
       }
       this.dwellProportion = 0.0;
+      this.doDwell = true; 
     },
 
     highlight: function() {
@@ -5116,8 +5117,14 @@ Quintus.UI = function(Q) {
 
       // dwell animation
       if (this.dwellProportion > 0) {
-        this.drawDwell(ctx, this.dwellProportion);
-      }
+        if (this.doDwell) {
+          this.drawDwell(ctx, this.dwellProportion);
+        }
+        else {
+          // if we're using gaze continuously, stil show feedback 
+          this.drawDwell(ctx, 0.5); 
+        }
+      }      
     },
 
     setFont: function(ctx) {
