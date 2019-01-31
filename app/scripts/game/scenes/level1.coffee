@@ -40,36 +40,22 @@ Q.scene "level1", (stage) ->
 
   stage.loadAssets(enemies)
 
+  doorPos = Q.tilePos(27+15, 9)
+
   # items
   items = [
     ["Key", Q.tilePos(14.5+15, 9)]
-    ["Door", Q.tilePos(27+15, 9)]
+    ["Door", doorPos]
     ["Gun", Q.tilePos(14.5+15, 3, {bullets: 3})]
     ["Heart", Q.tilePos(14.5+15, 15)]
   ]
+  
+  doorPos2 = Q.tilePos(27+15, 9-2.5)
+  stage.insert new Q.UI.DoorButton
+      x: doorPos2.x
+      y: doorPos2.y
 
   stage.loadAssets(items)
-
-  # button to enter door
-  pos = Q.tilePos(27+15, 9-2.5)
-  button = stage.insert new Q.UI.Button
-    x: pos.x
-    y: pos.y
-    w: 120
-    h: 120
-    fill: "#c4da4a"
-    radius: 10
-    fontColor: "#353b47"
-    font: "400 58px Jolly Lodger"
-    label: "enter"
-    keyActionName: "confirm"
-    type: Q.SPRITE_UI | Q.SPRITE_DEFAULT
-  
-  button.on "click", (e) ->
-    Q.inputs['up']=1
-
-  button.on "release", (e) ->
-    Q.inputs['up']=0
 
   # store level data for level summary
   Game.currentLevelData.health.available = stage.lists.Heart.length

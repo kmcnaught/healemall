@@ -23,12 +23,14 @@ Q.Sprite.extend "Door",
         Q.state.set "hasKey", false
         @p.opened = true
         @p.sheet = "door_open"
+        Q.state.set "canEnterDoor", true
+
         Game.infoLabel.doorOpen()
 
       else if !@p.opened
         Game.infoLabel.keyNeeded()
 
-      else if @p.opened and (Q.inputs['up'] or Q.inputs['action'])
+      else if @p.opened and (Q.inputs['up'] or Q.inputs['action'] or Q.inputs['enter'])
         # enter the door
         obj.destroy()
 

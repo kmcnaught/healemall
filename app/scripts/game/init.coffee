@@ -144,6 +144,7 @@ window.Game =
       hasKey: false
       hasGun: false
       currentLevel: number # for saving the progress
+      canEnterDoor: false
 
     Game.currentLevelData = # for level summary
       zombies:
