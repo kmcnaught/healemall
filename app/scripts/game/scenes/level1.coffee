@@ -50,10 +50,7 @@ Q.scene "level1", (stage) ->
     ["Heart", Q.tilePos(14.5+15, 15)]
   ]
   
-  doorPos2 = Q.tilePos(27+15, 9-2.5)
-  stage.insert new Q.UI.DoorButton
-      x: doorPos2.x
-      y: doorPos2.y
+  Game.add_door_button(stage, doorPos)
 
   stage.loadAssets(items)
 

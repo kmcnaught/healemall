@@ -252,5 +252,13 @@ window.Game =
     window.addEventListener "beforeunload", (e) ->
       Game.trackEvent("Unload", "Current Screen", Game.currentScreen)
 
+
+  add_door_button: (stage, doorPos) -> 
+    Q = @Q
+    stage.insert new Q.UI.DoorButton
+      x: doorPos.x
+      y: doorPos.y - 2.5* Game.assets.map.tileSize 
+
+
 # init game
 Game.init()
