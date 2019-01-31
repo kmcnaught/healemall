@@ -78,44 +78,31 @@ Q.scene "hud", (stage) ->
   dwell_actions = ['jumpleft', '', 'fire', '', 'jumpright']
   hover_actions = ['', 'left', '', 'right', '']  
 
-  width = Q.width/12
-  margin = width/10  
+  width = Q.width/10
+  margin = width/15  
 
   w = width
   h = width
 
-  x = (Q.width - n*(width+margin))/2
-  y = Q.height - width - margin*2
+  x = (Q.width - n*(width+2*margin))/2 + margin + width/2
+  y = Q.height/2 + width/2 + 2*margin 
 
 
   onClick = (action) => (e) => 
     if action
       console.log('click %s', action)        
       Q.inputs[action]=1
-
-  onRelease = (action) => (e) => 
-    if action
-      console.log('release %s', action)        
-      Q.inputs[action]=0
+      Q.input.trigger(action);
 
   onHover = (action) => (e) => 
     if action
       console.log('hover %s', action)        
       Q.inputs[action]=1
 
-  # onChangeHidden = (btn) => (e) =>
-  #   console.log('hidden changed')
-  #   console.log(Q.state.get("hasGun")) #true
-  #   console.log(btn.hidden) #undefined
-  #   btn.hidden = !Q.state.get("hasGun");
-
   for item in [0..n-1]
 
     if item > 0
       x += width + margin*2
-
-    # if item == 2
-      # continue
 
     if labels[item].length > 1
       fontsize = "58px"
@@ -131,17 +118,19 @@ Q.scene "hud", (stage) ->
       z: 1
       hidden: hidden
       type: Q.SPRITE_UI | Q.SPRITE_DEFAULT
-      fill: "#c4da4a30"
+      fill: "#c4da4a50"
       radius: 10
       fontColor: "#353b47"
       font: "400 " + fontsize + " Jolly Lodger"
-      label: labels[item]   
-
-      updateHidden: (hasGun) ->
-        @.hidden = !hasGun 
+      label: labels[item]         
 
     if (item == 2)
-      Q.state.on "change.hasGun", button, "updateHidden" 
+      # unhide 'fire' button when we've got a gun
+      onChangeHidden = (btn) => () =>
+        console.log('hidden changed')    
+        btn.p.hidden = !Q.state.get("hasGun");
+
+      Q.state.on "change.hasGun", onChangeHidden button
     
     button.on "click", onClick dwell_actions[item]     
 
