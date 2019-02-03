@@ -37,12 +37,17 @@ Q.component "zombieAI",
       @p.audioTimeout = Math.max(@p.audioTimeout - dt, 0)
 
       # locate gap and turn back
-      dirX = @p.vx/Math.abs(@p.vx)
+      dirX = @p.vx/Math.abs(@p.vx) # or Math.sign(@p.vx) !
       ground = Q.stage().locate(@p.x, @p.y + @p.h/2 + 1, Game.SPRITE_TILES)
-      nextTile = Q.stage().locate(@p.x + dirX * @p.w/2 + dirX, @p.y + @p.h/2 + 1, Game.SPRITE_TILES)
+      nextTile = Q.stage().locate(@p.x + dirX * @p.w/2 + dirX, @p.y + @p.h/2 + 1, Game.SPRITE_TILES)      
+      inFront = Q.stage().locate(@p.x + dirX * @p.w/2 + dirX, @p.y, Game.SPRITE_TILES)
 
       # if we are on ground and there is a cliff
       if(!nextTile and ground and !@canSeeThePlayerObj.status and @p.canSeeThePlayerTimeout == 0)
+        @p.vx = -@p.vx
+
+      # if there's an obstacle in front
+      if (inFront and !@canSeeThePlayerObj.status and @p.canSeeThePlayerTimeout == 0)
         @p.vx = -@p.vx
 
       # set the correct direction of sprite
