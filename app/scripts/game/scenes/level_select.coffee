@@ -91,4 +91,12 @@ Q.scene "levelSelect", (stage) ->
   audioButton = stage.insert new Q.UI.AudioButton
     y: marginY/2
 
+  cursorButton = stage.insert new Q.UI.CursorButton   
+    y: marginY/2
+    
+
+
   audioButton.p.x = Q.width - marginX - audioButton.p.w/2
+  cursorButton.p.x = Q.width - marginX - audioButton.p.w - cursorButton.p.w
+
+  
