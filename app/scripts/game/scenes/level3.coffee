@@ -27,7 +27,7 @@ Q.scene "level3", (stage) ->
   stage.insert background
 
   # player
-  Game.player = player = stage.insert new Q.Player(Q.tilePos(24.5, 14))
+  Game.player = player = stage.insert new Q.Player(Q.tilePos(24.5+15, 14+5))
 
   # camera
   stage.add("viewport")
@@ -35,28 +35,28 @@ Q.scene "level3", (stage) ->
 
   # enemies
   enemies = [
-    ["Zombie", Q.tilePos(8, 11)]
-    ["Zombie", Q.tilePos(9, 17, {startLeft: true})]
+    ["Zombie", Q.tilePos(8+15, 11+5)]
+    ["Zombie", Q.tilePos(9+15, 17+5, {startLeft: true})]
 
-    ["Zombie", Q.tilePos(18, 5)]
-    ["Zombie", Q.tilePos(19, 23)]
+    ["Zombie", Q.tilePos(18+15, 5+5)]
+    ["Zombie", Q.tilePos(19+15, 23+5)]
 
-    ["Zombie", Q.tilePos(31, 5)]
-    ["Zombie", Q.tilePos(30, 23)]
+    ["Zombie", Q.tilePos(31+15, 5+5)]
+    ["Zombie", Q.tilePos(30+15, 23+5)]
 
-    ["Zombie", Q.tilePos(41, 11)]
-    ["Zombie", Q.tilePos(42, 17, {startLeft: true})]
+    ["Zombie", Q.tilePos(41+15, 11+5)]
+    ["Zombie", Q.tilePos(42+15, 17+5, {startLeft: true})]
   ]
 
   stage.loadAssets(enemies)
 
   # items
   randomItems = [
-    door: Q.tilePos(46.5, 14)
-    key: Q.tilePos(2.5, 14)
+    door: Q.tilePos(46.5+15, 14+5)
+    key: Q.tilePos(2.5+15, 14+5)
   ,
-    door: Q.tilePos(2.5, 14)
-    key: Q.tilePos(46.5, 14)
+    door: Q.tilePos(2.5+15, 14+5)
+    key: Q.tilePos(46.5+15, 14+5)
   ]
 
   random = Math.floor(Math.random() * 2)
@@ -65,10 +65,10 @@ Q.scene "level3", (stage) ->
     ["Key", randomItems[random].key]
     ["Door", randomItems[random].door]
     ["ExitSign", randomItems[random].exitSign]
-    ["Gun", Q.tilePos(24.5, 2, {bullets: 10})]
-    ["Heart", Q.tilePos(8, 5)]
-    ["Heart", Q.tilePos(41.5, 5)]
-    ["Heart", Q.tilePos(24.5, 26)]
+    ["Gun", Q.tilePos(24.5+15, 2+5, {bullets: 10})]
+    ["Heart", Q.tilePos(8+15, 5+5)]
+    ["Heart", Q.tilePos(41.5+15, 5+5)]
+    ["Heart", Q.tilePos(24.5+15, 26+5)]
   ]
 
   Game.add_door_button(stage, randomItems[random].door)

@@ -27,7 +27,7 @@ Q.scene "level1", (stage) ->
   stage.insert background
 
   # player
-  Game.player = player = stage.insert new Q.Player(Q.tilePos(3.5+15, 9))
+  Game.player = player = stage.insert new Q.Player(Q.tilePos(3.5+15, 9+5))
 
   # camera
   stage.add("viewport")
@@ -35,19 +35,19 @@ Q.scene "level1", (stage) ->
 
   # enemies
   enemies = [
-    ["Zombie", Q.tilePos(14+15, 9)]
+    ["Zombie", Q.tilePos(14+15, 9+5)]
   ]
 
   stage.loadAssets(enemies)
 
-  doorPos = Q.tilePos(27+15, 9)
+  doorPos = Q.tilePos(27+15, 9+5)
 
   # items
   items = [
-    ["Key", Q.tilePos(14.5+15, 9)]
+    ["Key", Q.tilePos(14.5+15, 9+5)]
     ["Door", doorPos]
-    ["Gun", Q.tilePos(14.5+15, 3, {bullets: 3})]
-    ["Heart", Q.tilePos(14.5+15, 15)]
+    ["Gun", Q.tilePos(14.5+15, 3+5, {bullets: 3})]
+    ["Heart", Q.tilePos(14.5+15, 15+5)]
   ]
   
   Game.add_door_button(stage, doorPos)
