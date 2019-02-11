@@ -3106,6 +3106,105 @@ Quintus.Input = function(Q) {
     }
   });
 
+  Q.component("platformerControlsSmarter", {
+    defaults: {
+      jumpSpeed: -300,
+      maxSpeed: 200,
+      moveAccumulation: 0,
+      dwellTime: 0.25, // how long it takes to kick in
+      rampUpTime: 1.5  // how long it takes to get up to speed
+    },
+
+    added: function() {
+      var p = this.entity.p;
+
+      Q._defaults(p,this.defaults);
+
+      this.entity.on("step",this,"step");
+      this.entity.on("bump.bottom",this,"landed");
+
+      p.landed = 0;
+      p.direction ='right';
+
+      this.isjumpingsideways = false;
+    },
+
+    landed: function(col) {
+      var p = this.entity.p;
+      p.landed = 1/5;
+    },
+
+    landedjump: function(col) {
+      // when a jump completes
+      var p = this.entity.p;
+      p.landed = 1/5;      
+      Q.inputs['left'] = 0
+      Q.inputs['right'] = 0
+      this.isjumpingsideways = false;
+
+      this.entity.off("bump.bottom",this,"landedjump");
+    },
+
+    step: function(dt) {
+      var p = this.entity.p;
+
+      // have we changed direction?
+      if ( ( (Q.inputs['left'] || Q.inputs['jumpleft']) && p.direction == 'right' ) ||
+           ( (Q.inputs['right'] || Q.inputs['jumpright']) && p.direction == 'left' ) ) {
+        p.moveAccumulation = 0;
+      }
+      else if (Q.inputs['left'] || Q.inputs['jumpleft'] ||
+               Q.inputs['right'] || Q.inputs['jumpright']) {
+        if (p.moveAccumulation < p.rampUpTime) {
+          p.moveAccumulation += dt;
+        }
+      }
+      else {
+        if (p.moveAccumulation > 0) {
+          p.moveAccumulation -= dt;
+        }
+      }
+
+      var speedFraction = Math.min(1.0, p.moveAccumulation/p.rampUpTime);
+
+      // delayed response (like a mini-dwell)
+      var delay = p.dwellTime/p.rampUpTime 
+      speedFraction = Math.max(0,(speedFraction - delay)/(1-delay))
+
+      if (this.isjumpingsideways) {
+        if (p.direction == 'right') {
+          p.vx = p.maxSpeed;
+        }
+        else {
+          p.vx = -p.maxSpeed;
+        }
+      } else if(Q.inputs['left'] || Q.inputs['jumpleft']) {
+        p.vx = -p.maxSpeed*speedFraction;
+        p.direction = 'left';
+      } else if(Q.inputs['right'] || Q.inputs['jumpright']) {
+        p.direction = 'right';
+        p.vx = p.maxSpeed*speedFraction;
+      } else {
+        p.vx = 0;      
+      }
+
+      if(p.landed > 0 && (Q.inputs['up'] || Q.inputs['action'] || Q.inputs['jumpleft'] || Q.inputs['jumpright'])) {
+        p.vy = p.jumpSpeed;
+        p.landed = -dt;
+        
+        // if jumping sideways , we've now executed the jump but need to keep
+        // the sideways motion on while it completes. 
+        // action will be completed once we've landed somewhere
+
+        if (Q.inputs['jumpleft'] || Q.inputs['jumpright']) {
+          this.entity.on("bump.bottom",this,"landedjump");
+          this.isjumpingsideways = true;
+        } 
+      }
+      p.landed -= dt;
+    }
+  });
+
 
   Q.component("stepControls", {
 
