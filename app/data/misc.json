@@ -1,0 +1,98 @@
+{
+  "hud_cursor_on_button_small": {
+    "sx":0,
+    "sy":0,
+    "cols":1,
+    "tilew":50,
+    "tileh":54,
+    "frames":1
+  },
+  "hud_cursor_off_button_small": {
+    "sx":50,
+    "sy":0,
+    "cols":1,
+    "tilew":50,
+    "tileh":54,
+    "frames":1
+  },
+  "hud_back_button_small": {
+    "sx":100,
+    "sy":0,
+    "cols":1,
+    "tilew":50,
+    "tileh":54,
+    "frames":1
+  },
+  "hud_audio_on_button_small": {
+    "sx":150,
+    "sy":0,
+    "cols":1,
+    "tilew":50,
+    "tileh":54,
+    "frames":1
+  },
+  "hud_audio_off_button_small": {
+    "sx":200,
+    "sy":0,
+    "cols":1,
+    "tilew":50,
+    "tileh":54,
+    "frames":1
+  },
+  "hud_pause_button_small": {
+    "sx":250,
+    "sy":0,
+    "cols":1,
+    "tilew":50,
+    "tileh":54,
+    "frames":1
+  },
+  "hud_cursor_on_button": {
+    "sx":0,
+    "sy":54,
+    "cols":1,
+    "tilew":125,
+    "tileh":134,
+    "frames":1
+  },
+  "hud_cursor_off_button": {
+    "sx":125,
+    "sy":54,
+    "cols":1,
+    "tilew":125,
+    "tileh":134,
+    "frames":1
+  },
+  "hud_back_button": {
+    "sx":250,
+    "sy":54,
+    "cols":1,
+    "tilew":125,
+    "tileh":134,
+    "frames":1
+  },
+  "hud_audio_on_button": {
+    "sx":375,
+    "sy":54,
+    "cols":1,
+    "tilew":125,
+    "tileh":134,
+    "frames":1
+  },
+  "hud_audio_off_button": {
+    "sx":500,
+    "sy":54,
+    "cols":1,
+    "tilew":125,
+    "tileh":134,
+    "frames":1
+  },
+  "hud_pause_button": {
+    "sx":625,
+    "sy":54,
+    "cols":1,
+    "tilew":125,
+    "tileh":134,
+    "frames":1
+  }
+}

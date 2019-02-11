@@ -68,6 +68,9 @@ window.Game =
       others:
         dataAsset: "others.json"
         sheet: "others.png"
+      misc:
+        dataAsset: "misc.json"
+        sheet: "misc.png"
       bullet:
         dataAsset: "bullet.json"
         sheet: "bullet.png"

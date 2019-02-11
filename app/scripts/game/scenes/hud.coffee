@@ -69,8 +69,8 @@ Q.scene "hud", (stage) ->
   keyContainer.p.x = healthContainer.p.x - healthContainer.p.w/2 - keyContainer.p.w/2 - 34
 
   # buttons
-  stage.insert new Q.UI.PauseButton()
-  stage.insert new Q.UI.MenuButton()
+  stage.insert new Q.UI.PauseButton({isSmall: true})
+  stage.insert new Q.UI.MenuButton({isSmall: true})
 
   # gaze controls  
   n = 5

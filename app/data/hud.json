@@ -65,46 +65,5 @@
     "tilew": 30,
     "tileh": 31,
     "frames": 1
-  },
-
-  "hud_settings_button": {
-    "sx": 44,
-    "sy": 71,
-    "cols": 1,
-    "tilew": 44,
-    "tileh": 47,
-    "frames": 1
-  },
-  "hud_back_button": {
-    "sx": 88,
-    "sy": 71,
-    "cols": 1,
-    "tilew": 44,
-    "tileh": 47,
-    "frames": 1
-  },
-  "hud_pause_button": {
-    "sx": 0,
-    "sy": 71,
-    "cols": 1,
-    "tilew": 44,
-    "tileh": 47,
-    "frames": 1
-  },
-  "hud_audio_on_button": {
-    "sx": 132,
-    "sy": 71,
-    "cols": 1,
-    "tilew": 44,
-    "tileh": 47,
-    "frames": 1
-  },
-  "hud_audio_off_button": {
-    "sx": 176,
-    "sy": 71,
-    "cols": 1,
-    "tilew": 44,
-    "tileh": 47,
-    "frames": 1
-  }
+  }  
 }

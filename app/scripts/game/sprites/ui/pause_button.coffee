@@ -7,9 +7,17 @@ Q.UI.PauseButton = Q.UI.Button.extend "UI.PauseButton",
       y: 110
       z: 100
       type: Q.SPRITE_UI | Q.SPRITE_DEFAULT
-      sheet: "hud_pause_button"
       isPaused: false
       keyActionName: "pause" # button that will trigger click event
+      isSmall: true
+
+
+    if @p.isSmall
+      @p.sheet = "hud_pause_button_small"
+    else
+      @p.sheet = "hud_pause_button"
+    
+    @size(true) # force resize 
 
     pausedScreen = new Q.UI.Container
       x: Q.width/2,
