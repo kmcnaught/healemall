@@ -69,8 +69,22 @@ Q.scene "hud", (stage) ->
   keyContainer.p.x = healthContainer.p.x - healthContainer.p.w/2 - keyContainer.p.w/2 - 34
 
   # buttons
-  stage.insert new Q.UI.PauseButton({isSmall: true})
-  stage.insert new Q.UI.MenuButton({isSmall: true})
+  marginBottomButtons = Q.height * 0.1
+
+  pauseButton = stage.insert new Q.UI.PauseButton
+    x: Q.width/2
+    y: Q.height - marginBottomButtons    
+    isSmall: false
+
+  menuButton = stage.insert new Q.UI.MenuButton
+    x: pauseButton.p.x - pauseButton.p.w - marginBottomButtons
+    y: Q.height - marginBottomButtons
+    isSmall: false
+
+  audioButton = stage.insert new Q.UI.AudioButton
+    x: pauseButton.p.x + pauseButton.p.w + marginBottomButtons
+    y: Q.height - marginBottomButtons
+    isSmall: false
 
   # gaze controls  
   n = 5
