@@ -3165,11 +3165,22 @@ Quintus.Input = function(Q) {
         }
       }
 
+      // Is there a gap ahead?
+      dirX = Math.sign(p.vx);
+      ground = Q.stage().locate(p.x, p.y + p.h/2 + 1, Game.SPRITE_TILES);
+      nextTile = Q.stage().locate(p.x + dirX * p.w/2 + 0.5*dirX*Game.assets.map.tileSize, p.y + p.h/2 + 1, Game.SPRITE_TILES);      
+
       var speedFraction = Math.min(1.0, p.moveAccumulation/p.rampUpTime);
 
       // delayed response (like a mini-dwell)
       var delay = p.dwellTime/p.rampUpTime 
       speedFraction = Math.max(0,(speedFraction - delay)/(1-delay))
+
+      //if we are on ground and there is a cliff, limit the speed
+      if(!nextTile && ground) {
+        console.log('cliff!')
+        speedFraction *= 0.5; // ??
+      }
 
       if (this.isjumpingsideways) {
         if (p.direction == 'right') {
