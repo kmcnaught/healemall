@@ -3109,7 +3109,7 @@ Quintus.Input = function(Q) {
   Q.component("platformerControlsSmarter", {
     defaults: {
       jumpSpeed: -300,
-      maxSpeed: 200,
+      maxSpeed: 250,
       moveAccumulation: 0,
       dwellTime: 0.25, // how long it takes to kick in
       rampUpTime: 1.5  // how long it takes to get up to speed
