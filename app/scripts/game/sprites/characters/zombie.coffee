@@ -30,6 +30,7 @@ Q.Sprite.extend "Zombie",
       y: 0
       vx: 0
       z: 20
+      canFallOff: true # when chasing, zombie can fall off platform
       sheet: "zombie"
       sprite: "zombie"
       canSeeThePlayerTimeout: 0

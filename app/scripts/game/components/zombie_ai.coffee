@@ -42,12 +42,15 @@ Q.component "zombieAI",
       nextTile = Q.stage().locate(@p.x + dirX * @p.w/2 + dirX, @p.y + @p.h/2 + 1, Game.SPRITE_TILES)      
       inFront = Q.stage().locate(@p.x + dirX * @p.w/2 + dirX, @p.y, Game.SPRITE_TILES)
 
-      # if we are on ground and there is a cliff
-      if(!nextTile and ground and !@canSeeThePlayerObj.status and @p.canSeeThePlayerTimeout == 0)
+      cliffAhead = !nextTile and ground
+      currentlyChasing = @canSeeThePlayerObj.status or @p.canSeeThePlayerTimeout > 0
+
+      if cliffAhead and (!currentlyChasing or !@p.canFallOff)
+        # turn around 
         @p.vx = -@p.vx
 
       # if there's an obstacle in front
-      if (inFront and !@canSeeThePlayerObj.status and @p.canSeeThePlayerTimeout == 0)
+      if (inFront and !currentlyChasing)
         @p.vx = -@p.vx
 
       # set the correct direction of sprite
