@@ -60,13 +60,13 @@ Q.scene "tutorial", (stage) ->
     Q.tilePos(48, 11, {label: "The longer you look, the faster you'll walk"}),
     Q.tilePos(57, 9.5, {label: "Dwell on a jump button to jump sideways"}),
     Q.tilePos(64.5, 8, {label: "Try jumping over the gap"}),
-    Q.tilePos(74, 8, {label: "Watch out for zombies!"}),
+    Q.tilePos(73, 8, {label: "Watch out for zombies!"}),
     Q.tilePos(77, 11, {label: "Try to get past without being bitten"}),
     Q.tilePos(82, 5, {label: "Health packs give you an extra life"}),
     Q.tilePos(91.5, 11, {label: "Collect the healing gun"}),
-    Q.tilePos(97, 13, {label: "Fire at the zombie using dwell"}),
-    Q.tilePos(103, 10, {label: "Once you've healed the zombies,"}),
-    Q.tilePos(103, 11, {label: "find the key and exit"}),
+    Q.tilePos(97.5, 13, {label: "Fire at the zombie using dwell"}),
+    Q.tilePos(103.5, 10, {label: "Once you've healed the zombies,"}),
+    Q.tilePos(103.5, 11, {label: "find the key and exit"}),
   ]
 
   for text_props in texts
