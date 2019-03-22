@@ -35,7 +35,7 @@ Q.scene "tutorial", (stage) ->
 
   # enemies
   enemies = [
-    ["Zombie", Q.tilePos(78, 14)]
+    ["Zombie", Q.tilePos(78, 14, canFallOff: false)]
   ]
 
   stage.loadAssets(enemies)
