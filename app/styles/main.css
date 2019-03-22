@@ -4,13 +4,11 @@
   color: #000;
   padding: 0.2em 0;
 }
-
 body {
   padding: 0px;
   margin: 0px;
   background-color: white;
 }
-
 h1, h2 {
   font-family: "Jolly Lodger", Arial, sans-serif;
   font-weight: 400;
@@ -18,12 +16,10 @@ h1, h2 {
   padding: 0;
   line-height: 1em;
 }
-
 #quintus_container {
   background: #252524 url('../images/bg.gif') center center no-repeat;
   background-size: cover;
 }
-
 #loading {
   margin: 0;
   padding: 0;
@@ -33,7 +29,6 @@ h1, h2 {
   text-align: center;
   z-index: 100;
 }
-
 #loading-container {
   position: relative;
   top: 60%;
@@ -42,7 +37,6 @@ h1, h2 {
   background-color: #ec655d;
   height: 40px;
 }
-
 #loading-progress {
   width: 0%;
   position: absolute;
@@ -52,7 +46,6 @@ h1, h2 {
   background-color: #f2da38;
   z-index: 10;
 }
-
 .loading-text {
   font-size: 30px;
   line-height: 40px;
@@ -60,36 +53,29 @@ h1, h2 {
   z-index: 20;
   position: relative;
 }
-
 .loading-title {
   position: relative;
   top: 50%;
   margin: -157px auto 0;
   width: 70%;
   text-align: center;
-
-  h1 {
-    font-size: 120px;
-    color: #f2da38;
-  }
-
-  h2 {
-    font-size: 40px;
-    color: #ec655d;
-  }
 }
-
-
-@media only screen and (max-width : 640px) {
+.loading-title h1 {
+  font-size: 120px;
+  color: #f2da38;
+}
+.loading-title h2 {
+  font-size: 40px;
+  color: #ec655d;
+}
+@media only screen and (max-width: 640px) {
   .loading-title {
     margin-top: -81px;
-
-    h1 {
-      font-size: 60px;
-    }
-
-    h2 {
-      font-size: 20px;
-    }
+  }
+  .loading-title h1 {
+    font-size: 60px;
+  }
+  .loading-title h2 {
+    font-size: 20px;
   }
 }
