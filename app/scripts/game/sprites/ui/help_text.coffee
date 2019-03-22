@@ -6,5 +6,5 @@ Q.UI.HelpText = Q.UI.Text.extend "UI.Text",
       label: ""
       color: "#f2da38"
       family: "Jolly Lodger"
-      size: 48
+      size: 32
 
