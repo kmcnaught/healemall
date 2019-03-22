@@ -138,7 +138,7 @@ Q.Sprite.extend "Player",
       col.obj.play("attack", 10)
 
       # will be invincible for 1 second
-      @p.timeInvincible = 1
+      @p.timeInvincible = 3
 
   savePosition: ->
     dirX = @p.vx/Math.abs(@p.vx)
