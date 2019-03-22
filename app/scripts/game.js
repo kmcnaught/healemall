@@ -164,7 +164,7 @@
       Q = this.Q;
       Q.state.reset({
         enemiesCounter: 0,
-        lives: 3,
+        lives: 5,
         bullets: 0,
         hasKey: false,
         hasGun: false,
@@ -205,6 +205,8 @@
       this.Q.state.set("currentLevel", 0);
       this.Q.clearStages();
       this.Q.stageScene("levelSelect");
+      console.log(Q.width);
+      console.log(Q.height);
       // for analytics
       return Game.currentScreen = "levelSelect";
     },
@@ -241,7 +243,7 @@
       Q = this.Q;
       Q.state.reset({
         enemiesCounter: 0,
-        lives: 3,
+        lives: 5,
         bullets: 0,
         hasKey: false,
         hasGun: false,
@@ -856,7 +858,7 @@
     marginBottomButtons = Q.height * 0.1;
     pauseButton = stage.insert(new Q.UI.PauseButton({
       x: Q.width / 2,
-      y: marginBottomButtons,
+      y: Q.height - marginBottomButtons,
       isSmall: false
     }));
     menuButton = stage.insert(new Q.UI.MenuButton({
@@ -2540,7 +2542,7 @@
         this.updateLifePoints();
         col.obj.play("attack", 10);
         // will be invincible for 1 second
-        return this.p.timeInvincible = 1;
+        return this.p.timeInvincible = 3;
       }
     },
     savePosition: function() {
