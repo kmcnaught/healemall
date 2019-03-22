@@ -255,8 +255,8 @@ window.Game =
     Q.stageScene "hud", 1,
       sort: true
 
-    # # the story
-    # Game.infoLabel.intro()
+    # the story
+    Game.infoLabel.tutorial()
 
     # for analytics
     Game.currentScreen = "tutorial"

@@ -16,6 +16,10 @@ Q.UI.InfoLabel = Q.UI.Text.extend "UI.InfoLabel",
     @p.container.fit(5, 10)
     Q._generatePoints(@)
 
+  tutorial: ->
+    @p.label = "If you can complete this tutorial you're ready to save the zombies"
+    @afterLabelChange()
+
   intro: ->
     @p.label = "I need to find the way out of here"
     @afterLabelChange()
