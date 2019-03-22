@@ -2126,7 +2126,7 @@
   Q = Game.Q;
 
   Q.scene("tutorial", function(stage) {
-    var background, doorPos, enemies, items, j, len, map, player, text_props, texts;
+    var background, doorPos, enemies, items, j, len, map, player, text_props, texts, yFudge;
     // main map with collision
     Game.map = map = new Q.TileLayer({
       type: Game.SPRITE_TILES,
@@ -2189,59 +2189,60 @@
     Game.add_door_button(stage, doorPos);
     stage.loadAssets(items);
     // help texts
+    yFudge = 1.5;
     texts = [
       Q.tilePos(38,
-      11,
+      11 + yFudge,
       {
         label: "Look at the arrows to walk"
       }),
-      Q.tilePos(48,
-      11,
+      Q.tilePos(46,
+      11 + yFudge,
       {
         label: "The longer you look, the faster you'll walk"
       }),
-      Q.tilePos(57,
-      9.5,
+      Q.tilePos(54,
+      11 + yFudge,
       {
         label: "Dwell on a jump button to jump sideways"
       }),
       Q.tilePos(64.5,
-      8,
+      8 + yFudge,
       {
         label: "Try jumping over the gap"
       }),
       Q.tilePos(73,
-      8,
+      8 + yFudge,
       {
         label: "Watch out for zombies!"
       }),
       Q.tilePos(77,
-      11,
+      11 + yFudge,
       {
         label: "Try to get past without being bitten"
       }),
       Q.tilePos(82,
-      5,
+      5 + yFudge,
       {
         label: "Health packs give you an extra life"
       }),
       Q.tilePos(91.5,
-      11,
+      11 + yFudge,
       {
         label: "Collect the healing gun"
       }),
       Q.tilePos(97.5,
-      13,
+      13 + yFudge,
       {
         label: "Fire at the zombie using dwell"
       }),
       Q.tilePos(103.5,
-      10,
+      10 + yFudge,
       {
         label: "Once you've healed the zombie,"
       }),
       Q.tilePos(103.5,
-      11,
+      11 + yFudge,
       {
         label: "find the key and exit"
       })
@@ -3463,7 +3464,7 @@
         label: "",
         color: "#f2da38",
         family: "Jolly Lodger",
-        size: 48
+        size: 32
       });
     }
   });
