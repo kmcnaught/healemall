@@ -161,7 +161,7 @@ Q.Sprite.extend "Player",
 
       if @p.lifePoints <= 0
 
-        if @p.wasZombie
+        if @p.wasZombie or @p.y > Game.map.p.h
           @destroy()
           Game.stageGameOverScreen()
           return
