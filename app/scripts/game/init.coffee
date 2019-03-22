@@ -78,6 +78,8 @@ window.Game =
         sheet: "map_tiles.png"
       gradient: "gradient-top.png"
 
+      tutorial:
+        dataAsset: "tutorial.tmx"
       level1:
         dataAsset: "level1.tmx"
       level2:
@@ -220,6 +222,45 @@ window.Game =
 
     # for analytics
     Game.currentScreen = "controls"
+
+  stageTutorial: ->
+    Q = @Q
+
+    Q.state.reset
+      enemiesCounter: 0
+      lives: 3
+      bullets: 0
+      hasKey: false
+      hasGun: false
+      currentLevel: 0 # for saving the progress
+      canEnterDoor: false
+
+    Game.currentLevelData = # for level summary
+      zombies:
+        healed: 0
+        available: 0
+      health:
+        collected: 0
+        available: 0
+      bullets:
+        waisted: 0
+        available: 0
+      zombieModeFound: false
+
+    Q.input.touchControls() # render onscreen touch buttons
+
+    Q.clearStages()
+    Q.stageScene "tutorial",
+      sort: true
+    Q.stageScene "hud", 1,
+      sort: true
+
+    # # the story
+    # Game.infoLabel.intro()
+
+    # for analytics
+    Game.currentScreen = "tutorial"
+
 
   stageGameOverScreen: ->
     @Q.clearStages()
