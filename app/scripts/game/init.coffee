@@ -186,6 +186,9 @@ window.Game =
     @Q.clearStages()
     @Q.stageScene "levelSelect"
 
+    console.log(Q.width)
+    console.log(Q.height)
+
     # for analytics
     Game.currentScreen = "levelSelect"
 
