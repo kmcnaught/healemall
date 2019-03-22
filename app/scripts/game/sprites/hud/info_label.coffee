@@ -25,7 +25,7 @@ Q.UI.InfoLabel = Q.UI.Text.extend "UI.InfoLabel",
     @afterLabelChange()
 
   doorOpen: ->
-    @p.label = "Nice! Now I need to 'jump' inside the door"
+    @p.label = "Nice! Now I need to enter the door"
     @afterLabelChange()
 
   gunFound: ->
