@@ -2905,6 +2905,7 @@
    <tile/>
    <tile/>
    <tile/>
+   <tile gid="15"/>
    <tile/>
    <tile/>
    <tile/>
@@ -2918,8 +2919,7 @@
    <tile/>
    <tile/>
    <tile/>
-   <tile/>
-   <tile/>
+   <tile gid="15"/>
    <tile/>
    <tile/>
    <tile/>
@@ -3118,8 +3118,8 @@
    <tile gid="2"/>
    <tile gid="5"/>
    <tile gid="2"/>
+   <tile gid="4"/>
    <tile gid="3"/>
-   <tile/>
    <tile/>
    <tile/>
    <tile/>
@@ -9122,8 +9122,8 @@
    <tile/>
    <tile/>
    <tile/>
-   <tile gid="10"/>
    <tile/>
+   <tile gid="10"/>
    <tile/>
    <tile/>
    <tile/>
