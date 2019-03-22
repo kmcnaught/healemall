@@ -99,7 +99,6 @@ Q.Sprite.extend "Player",
 
     if @p.timeToNextSave == 0
       @savePosition()
-      @p.timeToNextSave = 2
 
     # collision with enemy timeout
     if @p.timeInvincible > 0
@@ -148,6 +147,7 @@ Q.Sprite.extend "Player",
     if ground
       @p.savedPosition.x = @p.x
       @p.savedPosition.y = @p.y
+      @p.timeToNextSave = 2
 
   updateLifePoints: (newLives) ->
     if newLives?
