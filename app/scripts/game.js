@@ -271,9 +271,8 @@
       Q.stageScene("hud", 1, {
         sort: true
       });
-      // # the story
-      // Game.infoLabel.intro()
-
+      // the story
+      Game.infoLabel.tutorial();
       // for analytics
       return Game.currentScreen = "tutorial";
     },
@@ -2949,6 +2948,10 @@
       this.p.container.p.x = this.p.offsetLeft + this.p.w / 2 + 10;
       this.p.container.fit(5, 10);
       return Q._generatePoints(this);
+    },
+    tutorial: function() {
+      this.p.label = "If you can complete this tutorial you're ready to save the zombies";
+      return this.afterLabelChange();
     },
     intro: function() {
       this.p.label = "I need to find the way out of here";
