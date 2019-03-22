@@ -73,7 +73,7 @@ Q.scene "hud", (stage) ->
 
   pauseButton = stage.insert new Q.UI.PauseButton
     x: Q.width/2
-    y: marginBottomButtons    
+    y: Q.height - marginBottomButtons    
     isSmall: false
 
   menuButton = stage.insert new Q.UI.MenuButton
