@@ -40,14 +40,14 @@ Q.scene "tutorial", (stage) ->
 
   stage.loadAssets(enemies)
 
-  doorPos = Q.tilePos(108, 23)
+  doorPos = Q.tilePos(108-3, 23)
 
   # items
   items = [
-    ["Key", Q.tilePos(108,11)]
+    ["Key", Q.tilePos(108-3,11)]
     ["Door", doorPos]
-    ["Gun", Q.tilePos(91, 14, {bullets: 20})]
-    ["Heart", Q.tilePos(82,8)]
+    ["Gun", Q.tilePos(91-3, 14, {bullets: 20})]
+    ["Heart", Q.tilePos(82-3,8)]
   ]
   
   Game.add_door_button(stage, doorPos)
@@ -61,13 +61,13 @@ Q.scene "tutorial", (stage) ->
     Q.tilePos(46, 11+yFudge, {label: "The longer you look, the faster you'll walk"}),
     Q.tilePos(54, 11+yFudge, {label: "Dwell on a jump button to jump sideways"}),
     Q.tilePos(64.5, 8+yFudge, {label: "Try jumping over the gap"}),
-    Q.tilePos(73, 8+yFudge, {label: "Watch out for zombies!"}),
+    Q.tilePos(73-1.5, 8+yFudge, {label: "Watch out for zombies!"}),
     Q.tilePos(77, 11+yFudge, {label: "Try to get past without being bitten"}),
-    Q.tilePos(82, 5+yFudge, {label: "Health packs give you an extra life"}),
-    Q.tilePos(91.5, 11+yFudge, {label: "Collect the healing gun"}),
-    Q.tilePos(97.5, 13+yFudge, {label: "Fire at the zombie using dwell"}),
-    Q.tilePos(103.5, 10+yFudge, {label: "Once you've healed the zombie,"}),
-    Q.tilePos(103.5, 11+yFudge, {label: "find the key and exit"}),
+    Q.tilePos(82-3, 5+yFudge, {label: "Health packs give you an extra life"}),
+    Q.tilePos(91-3, 10+yFudge, {label: "Collect the healing gun,"}),
+    Q.tilePos(91-3, 10.5+yFudge, {label: "and fire at the zombie"}),
+    Q.tilePos(103.5-3, 10+yFudge, {label: "Once you've healed the zombie,"}),
+    Q.tilePos(103.5-3, 10.5+yFudge, {label: "find the key and exit"}),
   ]
 
   for text_props in texts
