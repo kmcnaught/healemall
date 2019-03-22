@@ -73,17 +73,17 @@ Q.scene "hud", (stage) ->
 
   pauseButton = stage.insert new Q.UI.PauseButton
     x: Q.width/2
-    y: Q.height - marginBottomButtons    
+    y: marginBottomButtons    
     isSmall: false
 
   menuButton = stage.insert new Q.UI.MenuButton
-    x: pauseButton.p.x - pauseButton.p.w - marginBottomButtons
-    y: Q.height - marginBottomButtons
+    x: Q.width - marginBottomButtons
+    y: Q.height - marginBottomButtons    
     isSmall: false
 
   audioButton = stage.insert new Q.UI.AudioButton
-    x: pauseButton.p.x + pauseButton.p.w + marginBottomButtons
-    y: Q.height - marginBottomButtons
+    x: marginBottomButtons
+    y: Q.height - marginBottomButtons    
     isSmall: false
 
   # gaze controls  
