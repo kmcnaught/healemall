@@ -65,7 +65,7 @@ Q.scene "tutorial", (stage) ->
     Q.tilePos(82, 5, {label: "Health packs give you an extra life"}),
     Q.tilePos(91.5, 11, {label: "Collect the healing gun"}),
     Q.tilePos(97.5, 13, {label: "Fire at the zombie using dwell"}),
-    Q.tilePos(103.5, 10, {label: "Once you've healed the zombies,"}),
+    Q.tilePos(103.5, 10, {label: "Once you've healed the zombie,"}),
     Q.tilePos(103.5, 11, {label: "find the key and exit"}),
   ]
 
