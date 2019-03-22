@@ -2166,24 +2166,24 @@
       ]
     ];
     stage.loadAssets(enemies);
-    doorPos = Q.tilePos(108, 23);
+    doorPos = Q.tilePos(108 - 3, 23);
     // items
     items = [
       ["Key",
-      Q.tilePos(108,
+      Q.tilePos(108 - 3,
       11)],
       ["Door",
       doorPos],
       [
         "Gun",
-        Q.tilePos(91,
+        Q.tilePos(91 - 3,
         14,
         {
           bullets: 20
         })
       ],
       ["Heart",
-      Q.tilePos(82,
+      Q.tilePos(82 - 3,
       8)]
     ];
     Game.add_door_button(stage, doorPos);
@@ -2211,7 +2211,7 @@
       {
         label: "Try jumping over the gap"
       }),
-      Q.tilePos(73,
+      Q.tilePos(73 - 1.5,
       8 + yFudge,
       {
         label: "Watch out for zombies!"
@@ -2221,28 +2221,28 @@
       {
         label: "Try to get past without being bitten"
       }),
-      Q.tilePos(82,
+      Q.tilePos(82 - 3,
       5 + yFudge,
       {
         label: "Health packs give you an extra life"
       }),
-      Q.tilePos(91.5,
-      11 + yFudge,
+      Q.tilePos(91 - 3,
+      10 + yFudge,
       {
-        label: "Collect the healing gun"
+        label: "Collect the healing gun,"
       }),
-      Q.tilePos(97.5,
-      13 + yFudge,
+      Q.tilePos(91 - 3,
+      10.5 + yFudge,
       {
-        label: "Fire at the zombie using dwell"
+        label: "and fire at the zombie"
       }),
-      Q.tilePos(103.5,
+      Q.tilePos(103.5 - 3,
       10 + yFudge,
       {
         label: "Once you've healed the zombie,"
       }),
-      Q.tilePos(103.5,
-      11 + yFudge,
+      Q.tilePos(103.5 - 3,
+      10.5 + yFudge,
       {
         label: "find the key and exit"
       })
