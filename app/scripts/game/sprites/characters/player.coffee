@@ -193,4 +193,4 @@ Q.Sprite.extend "Player",
 
   restore: ->
     @p.x = @p.savedPosition.x
-    @p.y = @p.savedPosition.y
+    @p.y = @p.savedPosition.y-25
