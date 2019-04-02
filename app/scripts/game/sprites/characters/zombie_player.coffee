@@ -102,18 +102,5 @@ Q.Sprite.extend "ZombiePlayer",
 
   die: ->
     # zombie mode ends
-    Q.state.set "lives", 3
-
-    Game.player = player = @stage.insert new Q.Player
-      x: @p.savedPosition.x
-      y: @p.savedPosition.y
-
-    player.p.wasZombie = true
-
-    Game.setCameraTo(@stage, player)
-
-    Game.infoLabel.zombieModeOff()
-    Game.playerAvatar.changeToPlayer()
-
-    Q.AudioManager.remove Game.audio.zombieMode
+    Game.stageGameOverScreen()
     @destroy()
