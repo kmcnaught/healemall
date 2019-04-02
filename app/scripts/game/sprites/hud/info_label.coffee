@@ -10,66 +10,59 @@ Q.UI.InfoLabel = Q.UI.Text.extend "UI.InfoLabel",
       size: 24
       family: "Boogaloo"
 
-  afterLabelChange: ->
+  changeLabel: (new_label) ->
+    @afterLabelChange "..."
+    self = this;
+    setTimeout ( -> self.afterLabelChange new_label), 250
+
+  afterLabelChange: (new_label) ->
+    if new_label
+      @p.label = new_label 
     @calcSize()
     @p.container.p.x = @p.offsetLeft + @p.w/2 + 10
     @p.container.fit(5, 10)
     Q._generatePoints(@)
 
   tutorial: ->
-    @p.label = "If you can complete this tutorial you're ready to save the zombies"
-    @afterLabelChange()
+    @changeLabel "If you can complete this tutorial you're ready to save the zombies"
 
   intro: ->
-    @p.label = "I need to find the way out of here"
-    @afterLabelChange()
+    @changeLabel "I need to find the way out of here"
 
   keyNeeded: ->
-    @p.label = "I need the key"
-    @afterLabelChange()
+    @changeLabel "I need the key"
 
   doorOpen: ->
-    @p.label = "Nice! Now I need to enter the door"
-    @afterLabelChange()
+    @changeLabel "Nice! Now I need to enter the door"
 
   gunFound: ->
-    @p.label = "I found the gun, I can shoot pressing Spacebar"
-    @afterLabelChange()
+    @changeLabel "I found the gun, I can shoot pressing Spacebar"
 
   outOfBullets: ->
-    @p.label = "I'm out of ammo"
-    @afterLabelChange()
+    @changeLabel "I'm out of ammo"
 
   keyFound: ->
-    @p.label = "I found the key, now I need to find the the door"
-    @afterLabelChange()
+    @changeLabel "I found the key, now I need to find the the door"
 
   clear: ->
-    @p.label = ""
-    @afterLabelChange()
+    @afterLabelChange ""
 
   lifeLevelLow: ->
-    @p.label = "I need to be more careful"
-    @afterLabelChange()
+    @changeLabel "I need to be more careful"
 
   extraLifeFound: ->
-    @p.label = "I feel better now!"
-    @afterLabelChange()
+    @changeLabel "I feel better now!"
 
   lifeLost: ->
-    @p.label = "That hurts!"
-    @afterLabelChange()
+    @changeLabel "That hurts!"
 
   zombieModeOn: ->
-    @p.label = "I was bitten too many times. "
-    @afterLabelChange()
+    @changeLabel "I was bitten too many times. "
 
   zombieModeOnNext: ->
-    @p.label = "I've turned into a zombie. Nooo!"
-    @afterLabelChange()
+    @changeLabel "I've turned into a zombie. Nooo!"
 
   zombieModeOff: ->
-    @p.label = "Ok, back to business"
-    @afterLabelChange()
+    @changeLabel "Ok, back to business"
 
 
