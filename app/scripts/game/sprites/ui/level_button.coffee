@@ -8,7 +8,8 @@ Q.UI.LevelButton = Q.UI.Button.extend "UI.LevelButton",
       fontColor: "#595f5f"
       font: "400 70px Jolly Lodger"
 
-    @p.label = "" + @p.level
+    if @p.level > 0 
+      @p.label = "" + @p.level
 
     @p.sheetW = 172
     @p.sheetH = 130

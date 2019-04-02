@@ -58,6 +58,16 @@ Q.scene "levelSelect", (stage) ->
       h: h
       enabled: enabled
 
+    # Add label for tutorial
+    if item == 0
+      container.insert new Q.UI.Text
+          x: 0
+          y: 0
+          label: "Tutorial"
+          color: "#595f5f"
+          family: "Jolly Lodger"
+          size: 32
+
     # add progress stars
     level = item
     if item > 0
