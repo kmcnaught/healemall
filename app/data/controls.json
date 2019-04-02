@@ -1,0 +1,34 @@
+{
+  "controls_zombie": {
+    "sx": 0,
+    "sy": 0,
+    "cols": 1,
+    "tilew": 120,
+    "tileh": 125,
+    "frames": 1
+  },
+  "controls_gun": {
+    "sx": 148,
+    "sy": 0,
+    "cols": 1,
+    "tilew": 125,
+    "tileh": 120,
+    "frames": 1
+  },
+  "controls_door": {
+    "sx": 296,
+    "sy": 0,
+    "cols": 1,
+    "tilew": 128,
+    "tileh": 139,
+    "frames": 1
+  },
+  "controls_eyegaze": {
+    "sx": 0,
+    "sy": 143,
+    "cols": 1,
+    "tilew": 249,
+    "tileh": 77,
+    "frames": 1
+  }
+}

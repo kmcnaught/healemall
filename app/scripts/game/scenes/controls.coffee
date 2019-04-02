@@ -68,7 +68,7 @@ Q.scene "controls", (stage) ->
   cell1.insert new Q.Sprite
     x: 0
     y: 0
-    sheet: "ui_controls_1"
+    sheet: "controls_eyegaze"
 
   # add 2 step
   step2text = cell2.insert new Q.UI.Text
@@ -91,7 +91,7 @@ Q.scene "controls", (stage) ->
   cell2.insert new Q.Sprite
     x: 0
     y: 0
-    sheet: "ui_controls_2"
+    sheet: "controls_gun"
 
   # add 3 step
 
@@ -114,10 +114,7 @@ Q.scene "controls", (stage) ->
   cell3.insert new Q.Sprite
     x: 0
     y: 0
-    sheet: "ui_controls_3"
-
-
-  # REPEAT FOR CELL 4 (don't have assets yet)
+    sheet: "controls_zombie"
   
   step4text = cell4.insert new Q.UI.Text
     x: 0
@@ -138,7 +135,7 @@ Q.scene "controls", (stage) ->
   cell4.insert new Q.Sprite
     x: 0
     y: 0
-    sheet: "ui_controls_1"
+    sheet: "controls_door"
 
   # button
   button = stage.insert new Q.UI.Button

@@ -59,6 +59,9 @@ window.Game =
       characters:
         dataAsset: "characters.json"
         sheet: "characters.png"
+      controls:
+        dataAsset: "controls.json"
+        sheet: "controls.png"
       items:
         dataAsset: "items.json"
         sheet: "items.png"
