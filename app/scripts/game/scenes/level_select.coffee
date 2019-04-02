@@ -11,7 +11,7 @@ Q.scene "levelSelect", (stage) ->
   marginYinP = 20 # %
   gutterXinP = 8 # %
   gutterYinP = 14 # %
-  columnsNo = 3
+  columnsNo = 4
 
   # layout math
   columnInP = (100 - (marginXinP * 2) - (columnsNo - 1) * gutterXinP)/columnsNo  # 24%
@@ -30,8 +30,10 @@ Q.scene "levelSelect", (stage) ->
   w = columnWidth
   h = rowHeight
 
+  # prepare special buttons for first column
+
   # add level buttons
-  for item in [0..5]
+  for item in [0..6]
 
     if item % columnsNo == 0
       x = marginX + columnWidth/2
@@ -39,7 +41,7 @@ Q.scene "levelSelect", (stage) ->
       if item > 0
         y += rowHeight + gutterY
 
-    enabled = if item + 1 <= Game.availableLevel then true else false
+    enabled = if item <= Game.availableLevel then true else false
 
     # put button into container
     container = stage.insert new Q.UI.Container
@@ -49,7 +51,7 @@ Q.scene "levelSelect", (stage) ->
     x += columnWidth + gutterX
 
     container.insert new Q.UI.LevelButton
-      level: item + 1
+      level: item
       x: 0
       y: 0
       w: w
@@ -57,8 +59,9 @@ Q.scene "levelSelect", (stage) ->
       enabled: enabled
 
     # add progress stars
-    level = item + 1
-    stars = localStorage.getItem(Game.storageKeys.levelProgress + ":" + level)
+    level = item
+    if item > 0
+      stars = localStorage.getItem(Game.storageKeys.levelProgress + ":" + level)
 
     if stars
       starsX = -60

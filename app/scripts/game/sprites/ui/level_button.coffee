@@ -8,7 +8,7 @@ Q.UI.LevelButton = Q.UI.Button.extend "UI.LevelButton",
       fontColor: "#595f5f"
       font: "400 70px Jolly Lodger"
 
-    @p.label = @p.level
+    @p.label = "" + @p.level
 
     @p.sheetW = 172
     @p.sheetH = 130
@@ -22,11 +22,12 @@ Q.UI.LevelButton = Q.UI.Button.extend "UI.LevelButton",
 
     @on 'click', =>
       if @p.enabled
-        if @p.level > 1
-          Game.stageLevel(@p.level)
-        else
+        if @p.level == 0
           Game.stageTutorial()
-          # Game.stageControlsScreen()
+        else if @p.level == 1
+          Game.stageControlsScreen()
+        else
+          Game.stageLevel(@p.level)
 
       else
         Game.trackEvent("Level Button", "clicked", "locked")
