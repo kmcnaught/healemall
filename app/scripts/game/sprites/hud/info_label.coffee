@@ -36,7 +36,7 @@ Q.UI.InfoLabel = Q.UI.Text.extend "UI.InfoLabel",
     @changeLabel "Nice! Now I need to enter the door"
 
   gunFound: ->
-    @changeLabel "I found the gun, I can shoot pressing Spacebar"
+    @changeLabel "I found the gun, I can shoot zombies"
 
   outOfBullets: ->
     @changeLabel "I'm out of ammo"
