@@ -131,8 +131,23 @@ Q.scene "levelSelect", (stage) ->
     y: marginY/2
     
 
+  # about button
+  aboutButton = stage.insert new Q.UI.Button
+    y: marginY/2
+    label: "About"
+    fill: "#818793"
+    radius: 10
+    fontColor: "#404444"
+    font: "400 32px Jolly Lodger"
+    z: 100
+    keyActionName: "confirm"
+    type: Q.SPRITE_UI | Q.SPRITE_DEFAULT
 
+    
+  aboutButton.on "click", (e) ->
+    console.log('About!')
+
+  aboutButton.p.x = marginX + aboutButton.p.w/2
   audioButton.p.x = Q.width - marginX - audioButton.p.w/2
   cursorButton.p.x = Q.width - marginX - audioButton.p.w - cursorButton.p.w
 
-  
