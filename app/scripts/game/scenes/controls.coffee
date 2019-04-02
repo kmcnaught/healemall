@@ -59,7 +59,7 @@ Q.scene "controls", (stage) ->
     h: rowHeight
     
   # add 1 step
-  numberpad = 50
+  numberpad = 40
   row2offset = 30
 
   step1text = cell1.insert new Q.UI.Text
@@ -80,7 +80,7 @@ Q.scene "controls", (stage) ->
 
   cell1.insert new Q.Sprite
     x: step1text.p.x + step1text.p.w/2 + 160 
-    y: step1text.p.y
+    y: step1text.p.y  - 15
     sheet: "controls_eyegaze"
 
   # add 2 step
