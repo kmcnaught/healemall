@@ -49,6 +49,8 @@ Q.scene "controls", (stage) ->
 
   # add 1 step
   numberpad = 50
+  row2offset = 30
+
   step1text = cell1.insert new Q.UI.Text
     x: 0
     y: -100
@@ -66,8 +68,8 @@ Q.scene "controls", (stage) ->
     size: 44
 
   cell1.insert new Q.Sprite
-    x: 0
-    y: 0
+    x: step1text.p.x + step1text.p.w/2 + 160 
+    y: step1text.p.y
     sheet: "controls_eyegaze"
 
   # add 2 step
@@ -86,17 +88,16 @@ Q.scene "controls", (stage) ->
     color: "#f2da38"
     family: "Boogaloo"
     size: 44
-
   
-  cell2.insert new Q.Sprite
-    x: 0
-    y: 0
+  sprite = cell2.insert new Q.Sprite
+    x: step2text.p.x + step2text.p.w/2 + 120 
+    y: step2text.p.y
     sheet: "controls_gun"
 
   # add 3 step
 
   step3text = cell3.insert new Q.UI.Text
-    x: 0
+    x: step1text.p.x
     y: step1text.p.y
     label: "Shoot the zombies!"
     color: "#9ca2ae"
@@ -112,12 +113,12 @@ Q.scene "controls", (stage) ->
     size: 44
 
   cell3.insert new Q.Sprite
-    x: 0
-    y: 0
+    x: step3text.p.x + step3text.p.w/2 + 100 
+    y: step3text.p.y
     sheet: "controls_zombie"
   
   step4text = cell4.insert new Q.UI.Text
-    x: 0
+    x: step2text.p.x
     y: step1text.p.y
     label: "Find the exit"
     color: "#9ca2ae"
@@ -133,8 +134,8 @@ Q.scene "controls", (stage) ->
     size: 44
 
   cell4.insert new Q.Sprite
-    x: 0
-    y: 0
+    x: step4text.p.x + step4text.p.w/2 + 120 
+    y: step4text.p.y
     sheet: "controls_door"
 
   # button
