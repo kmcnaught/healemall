@@ -22,31 +22,42 @@ Q.scene "controls", (stage) ->
   Q.AudioManager.clear()
 
   # add title
-  stage.insert new Q.UI.Text
+  title = stage.insert new Q.UI.Text
     x: Q.width/2
-    y: marginY/2
+    y: marginY
     label: "How to heal’em"
     color: "#f2da38"
     family: "Jolly Lodger"
     size: 60
 
   # add cells, 2x2
+  x_pad = -50 # to account for images on right of centralised text
+
   cell1 = stage.insert new Q.UI.Container
-    x: marginX + columnWidth/2
-    y: Q.height/2 - rowHeight/2
+    x: marginX + columnWidth/2 + x_pad
+    y: Q.height/2 - rowHeight/2 + title.p.h
+    w: columnWidth
+    h: rowHeight
+    
 
   cell2 = stage.insert new Q.UI.Container
-    x: cell1.p.x + gutterX + columnWidth
-    y: Q.height/2 - rowHeight/2
-
+    x: cell1.p.x + gutterX + columnWidth + x_pad 
+    y: Q.height/2 - rowHeight/4 + title.p.h
+    w: columnWidth
+    h: rowHeight
+    
   cell3 = stage.insert new Q.UI.Container
-    x: marginX + columnWidth/2
-    y: Q.height/2 + rowHeight/2
-
+    x: marginX + columnWidth/2 + x_pad 
+    y: Q.height/2 + rowHeight/4 + title.p.h
+    w: columnWidth
+    h: rowHeight
+    
   cell4 = stage.insert new Q.UI.Container
-    x: cell1.p.x + gutterX + columnWidth
-    y: Q.height/2 + rowHeight/2
-
+    x: cell1.p.x + gutterX + columnWidth + x_pad 
+    y: Q.height/2 + rowHeight/2 + title.p.h
+    w: columnWidth
+    h: rowHeight
+    
   # add 1 step
   numberpad = 50
   row2offset = 30
