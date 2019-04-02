@@ -3,7 +3,7 @@ Q = Game.Q
 Q.UI.Authors = Q.UI.Text.extend "UI.Authors",
   init: (p) ->
     @_super p,
-      label: "created by @krzysu and @pawelmadeja, follow us for updates"
+      label: "Created by @krzysu and @pawelmadeja, adapted for eye gaze by @SpecialEffect"
       color: "#c4da4a"
       family: "Boogaloo"
       size: 22
