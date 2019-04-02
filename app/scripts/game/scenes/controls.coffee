@@ -3,11 +3,11 @@ Q = Game.Q
 Q.scene "controls", (stage) ->
 
   # some math
-  marginY = Q.height * 0.25
+  marginY = Q.height * 0.15
 
-  marginXinP = 20 # %
+  marginXinP = 10 # %
   gutterXinP = 8 # %
-  columnsNo = 3
+  columnsNo = 2
 
   # layout math
   columnInP = (100 - (marginXinP * 2) - (columnsNo - 1) * gutterXinP)/columnsNo  # 24%
@@ -15,6 +15,7 @@ Q.scene "controls", (stage) ->
   marginX = Q.width * marginXinP * 0.01
   gutterX = Q.width * gutterXinP * 0.01
   columnWidth = Q.width * columnInP * 0.01
+  rowHeight = Q.height * 0.3
 
   # audio
   Q.AudioManager.stopAll()
@@ -24,26 +25,30 @@ Q.scene "controls", (stage) ->
   stage.insert new Q.UI.Text
     x: Q.width/2
     y: marginY/2
-    label: "How to heal’em in three steps"
+    label: "How to heal’em"
     color: "#f2da38"
     family: "Jolly Lodger"
     size: 60
 
-  # add 3 columns
-  column1Container = stage.insert new Q.UI.Container
+  # add cells, 2x2
+  cell1 = stage.insert new Q.UI.Container
     x: marginX + columnWidth/2
-    y: Q.height/2
+    y: Q.height/2 - rowHeight/2
 
-  column2Container = stage.insert new Q.UI.Container
-    x: column1Container.p.x + gutterX + columnWidth
-    y: Q.height/2
+  cell2 = stage.insert new Q.UI.Container
+    x: cell1.p.x + gutterX + columnWidth
+    y: Q.height/2 - rowHeight/2
 
-  column3Container = stage.insert new Q.UI.Container
-    x: column2Container.p.x + gutterX + columnWidth
-    y: Q.height/2
+  cell3 = stage.insert new Q.UI.Container
+    x: marginX + columnWidth/2
+    y: Q.height/2 + rowHeight/2
+
+  cell4 = stage.insert new Q.UI.Container
+    x: cell1.p.x + gutterX + columnWidth
+    y: Q.height/2 + rowHeight/2
 
   # add 1 step
-  step1text1 = column1Container.insert new Q.UI.Text
+  step1text1 = cell1.insert new Q.UI.Text
     x: 0
     y: -140
     label: "1st"
@@ -51,21 +56,21 @@ Q.scene "controls", (stage) ->
     family: "Boogaloo"
     size: 26
 
-  step1text2 = column1Container.insert new Q.UI.Text
+  step1text2 = cell1.insert new Q.UI.Text
     x: 0
     y: -100
-    label: "Move with arrows"
+    label: "Explore the graveyard"
     color: "#9ca2ae"
     family: "Boogaloo"
     size: 30
 
-  column1Container.insert new Q.Sprite
+  cell1.insert new Q.Sprite
     x: 0
     y: 0
     sheet: "ui_controls_1"
 
   # add 2 step
-  column2Container.insert new Q.UI.Text
+  cell2.insert new Q.UI.Text
     x: 0
     y: step1text1.p.y
     label: "2nd"
@@ -73,7 +78,7 @@ Q.scene "controls", (stage) ->
     family: "Boogaloo"
     size: 26
 
-  column2Container.insert new Q.UI.Text
+  cell2.insert new Q.UI.Text
     x: 0
     y: step1text2.p.y
     label: "Find Healing Gun"
@@ -81,13 +86,13 @@ Q.scene "controls", (stage) ->
     family: "Boogaloo"
     size: 30
 
-  column2Container.insert new Q.Sprite
+  cell2.insert new Q.Sprite
     x: 0
     y: 0
     sheet: "ui_controls_2"
 
   # add 3 step
-  column3Container.insert new Q.UI.Text
+  cell3.insert new Q.UI.Text
     x: 0
     y: step1text1.p.y
     label: "3rd"
@@ -95,18 +100,41 @@ Q.scene "controls", (stage) ->
     family: "Boogaloo"
     size: 26
 
-  column3Container.insert new Q.UI.Text
+  cell3.insert new Q.UI.Text
     x: 0
     y: step1text2.p.y
-    label: "Use your Gun!"
+    label: "Shoot the zombies!"
     color: "#9ca2ae"
     family: "Boogaloo"
     size: 30
 
-  column3Container.insert new Q.Sprite
+  cell3.insert new Q.Sprite
     x: 0
     y: 0
     sheet: "ui_controls_3"
+
+
+  # REPEAT FOR CELL 4 (don't have assets yet)
+  step1text1 = cell4.insert new Q.UI.Text
+    x: 0
+    y: -140
+    label: "1st"
+    color: "#ec655d"
+    family: "Boogaloo"
+    size: 26
+
+  step1text2 = cell4.insert new Q.UI.Text
+    x: 0
+    y: -100
+    label: "Find the exit"
+    color: "#9ca2ae"
+    family: "Boogaloo"
+    size: 30
+
+  cell4.insert new Q.Sprite
+    x: 0
+    y: 0
+    sheet: "ui_controls_1"
 
   # button
   button = stage.insert new Q.UI.Button
