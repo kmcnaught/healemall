@@ -64,7 +64,7 @@ Q.scene "levelSelect", (stage) ->
           x: 0
           y: 0
           label: "Tutorial"
-          color: "#595f5f"
+          color: "#404444"
           family: "Jolly Lodger"
           size: 32
 
@@ -102,7 +102,7 @@ Q.scene "levelSelect", (stage) ->
       x: 0
       y: settings.p.h/6
       label: "Settings"
-      color: "#595f5f"
+      color: "#404444"
       family: "Jolly Lodger"
       size: 32
 
