@@ -94,5 +94,13 @@
     "tilew":125,
     "tileh":134,
     "frames":1
+  },
+  "settings_button": {
+    "sx":125,
+    "sy":188,
+    "cols":1,
+    "tilew":53,
+    "tileh":55,
+    "frames":1
   }
 }

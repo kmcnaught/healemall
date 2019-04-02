@@ -87,6 +87,29 @@ Q.scene "levelSelect", (stage) ->
 
   # end of adding level buttons
 
+  # settings button bottom right
+  container = stage.insert new Q.UI.Container
+      x: x
+      y: y
+
+  settings = container.insert new Q.UI.SettingsButton
+      x: 0
+      y: 0
+      w: w
+      h: h
+  
+  settings_label = container.insert new Q.UI.Text
+      x: 0
+      y: settings.p.h/6
+      label: "Settings"
+      color: "#595f5f"
+      family: "Jolly Lodger"
+      size: 32
+
+  container.insert new Q.Sprite
+    x: 2
+    y: settings_label.p.y - settings_label.p.h - 15
+    sheet: "settings_button"
 
   # add title
   stage.insert new Q.UI.Text
