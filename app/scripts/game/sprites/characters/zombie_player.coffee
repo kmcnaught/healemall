@@ -29,12 +29,12 @@ Q.Sprite.extend "ZombiePlayer",
       sheet: "zombie_player"
       sprite: "zombiePlayer"
       type: Game.SPRITE_ZOMBIE_PLAYER
-      collisionMask: Game.SPRITE_TILES | Game.SPRITE_HUMAN
+      collisionMask: Game.SPRITE_TILES | Game.SPRITE_HUMAN  | Game.SPRITE_PLAYER_COLLECTIBLE
 
     @add("2d, animation")
 
-    @p.jumpSpeed = -500
-    @p.speed = 140
+    @p.jumpSpeed = -660
+    @p.speed = 220
     @p.savedPosition.x = @p.x
     @p.savedPosition.y = @p.y
     @p.playerDirection = @p.direction

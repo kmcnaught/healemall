@@ -23,7 +23,7 @@ Q.Sprite.extend "Key",
     @on "sensor", @, "sensor"
 
   sensor: (obj) ->
-    if obj.isA("Player")
+    if obj.isA("Player") or obj.isA("ZombiePlayer") 
       Q.state.set "hasKey", true
       Game.infoLabel.keyFound()
 

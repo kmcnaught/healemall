@@ -17,7 +17,7 @@ Q.Sprite.extend "Door",
     @on "sensor", @, "sensor"
 
   sensor: (obj) ->
-    if obj.isA("Player")
+    if obj.isA("Player") or obj.isA("ZombiePlayer") 
       if (Q.state.get "hasKey") && !@p.opened
         # remove the key and open the door
         Q.state.set "hasKey", false
