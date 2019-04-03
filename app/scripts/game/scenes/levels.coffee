@@ -35,7 +35,7 @@ Q.scene "level4", (stage) ->
 Q.scene "level5", (stage) ->
 
   level_data = Game.assets.level5.dataAsset
-  num_bullets = 3
+  num_bullets = 15
 
   Q.LevelParser.default_load_level(stage, level_data, num_bullets) 
 
