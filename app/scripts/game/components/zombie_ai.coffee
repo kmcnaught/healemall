@@ -16,7 +16,11 @@ Q.component "zombieAI",
       # some AI - always try to catch player
       @canSeeThePlayer() # create @canSeeThePlayerObj object
 
-      if @canSeeThePlayerObj.status
+      # stop chasing while player invincible
+      playerInvincible = @isPlayerInvincible()
+      if playerInvincible
+        @p.canSeeThePlayerTimeout = 0
+      else if @canSeeThePlayerObj.status
         # I see the player, I will remember that for X sec
         @p.canSeeThePlayerTimeout = 3
 
@@ -40,10 +44,15 @@ Q.component "zombieAI",
       dirX = @p.vx/Math.abs(@p.vx) # or Math.sign(@p.vx) !
       ground = Q.stage().locate(@p.x, @p.y + @p.h/2 + 1, Game.SPRITE_TILES)
       nextTile = Q.stage().locate(@p.x + dirX * @p.w/2 + dirX, @p.y + @p.h/2 + 1, Game.SPRITE_TILES)      
-      inFront = Q.stage().locate(@p.x + dirX * @p.w/2 + dirX, @p.y, Game.SPRITE_TILES)
+      inFrontTile = Q.stage().locate(@p.x + dirX * @p.w/2 + dirX, @p.y, Game.SPRITE_TILES)
+      inFrontPlayer =  Q.stage().locate(@p.x + dirX * @p.w/2 + dirX, @p.y, Game.SPRITE_PLAYER)
+      inFront = inFrontTile or inFrontPlayer
 
       cliffAhead = !nextTile and ground
-      currentlyChasing = @canSeeThePlayerObj.status or @p.canSeeThePlayerTimeout > 0
+
+      # if player is invincible, we'll stop chasing as soon as attack animation finished
+      stopChasing = playerInvincible and @p.animation != "attack"
+      currentlyChasing = not stopChasing and (@canSeeThePlayerObj.status or @p.canSeeThePlayerTimeout > 0)
 
       if cliffAhead and (!currentlyChasing or !@p.canFallOff)
         # turn around 
@@ -61,6 +70,10 @@ Q.component "zombieAI",
         @p.flip = false
       else
         @p.flip = "x"
+
+    isPlayerInvincible: ->
+      player = Game.player.p
+      return (not player?.isDestroyed? and player.timeInvincible > 0)
 
     canSeeThePlayer: ->
       player = Game.player.p
