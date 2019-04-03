@@ -26,33 +26,10 @@ Q.scene "level1", (stage) ->
 
   stage.insert background
 
-  # player
-  Game.player = player = stage.insert new Q.Player(Q.tilePos(3.5+15, 9+5))
-
-  # camera
-  stage.add("viewport")
-  Game.setCameraTo(stage, player)
-
-  # enemies
-  enemies = [
-    ["Zombie", Q.tilePos(14+15, 9+5)]
-  ]
-
-  stage.loadAssets(enemies)
-
-  doorPos = Q.tilePos(27+15, 9+5)
-
-  # items
-  items = [
-    ["Key", Q.tilePos(14.5+15, 9+5)]
-    ["Door", doorPos]
-    ["Gun", Q.tilePos(14.5+15, 3+5, {bullets: 3})]
-    ["Heart", Q.tilePos(14.5+15, 15+5)]
-  ]
-  
-  Game.add_door_button(stage, doorPos)
-
-  stage.loadAssets(items)
+  # Add objects from 'items' layer
+  ignore_objects = []
+  objects = Q.LevelParser.parse_objects(Game.assets.level1.dataAsset, ignore_objects)
+  Q.LevelParser.load_objects(stage, objects, 3)
 
   # store level data for level summary
   Game.currentLevelData.health.available = stage.lists.Heart.length

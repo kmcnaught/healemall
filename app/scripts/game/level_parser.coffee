@@ -2,7 +2,7 @@ Q = Game.Q
 
 Q.LevelParser =
 
-  load_objects: (dataAsset, ignore_objects) -> 
+  parse_objects: (dataAsset, ignore_objects) -> 
     fileParts = dataAsset.split(".")
     fileExt = fileParts[fileParts.length-1].toLowerCase()
 
@@ -34,3 +34,28 @@ Q.LevelParser =
     else 
       throw "file type not supported"
   
+  load_objects: (stage, objects, bullets_per_gun) ->
+    
+    all_items = []
+
+    for obj in objects
+      if obj.name == "Gun"
+        # Add bullets
+        item =
+          [obj.name, Q.tilePos(obj.x, obj.y, {bullets: bullets_per_gun})]   
+        all_items.push item
+      else if obj.name == "Player"
+        # Player and camera together, get added differently
+        Game.player = player = stage.insert new Q.Player(Q.tilePos(18.5, 14))
+        stage.add("viewport")
+        Game.setCameraTo(stage, player)
+      else if obj.name == "Door"
+        all_items.push [obj.name, Q.tilePos(obj.x, obj.y)]   
+        # Add door button for gaze
+        Game.add_door_button(stage, Q.tilePos(obj.x, obj.y))
+      else
+        item =
+          [obj.name, Q.tilePos(obj.x, obj.y)]   
+        all_items.push item
+
+    stage.loadAssets(all_items)
