@@ -27,9 +27,9 @@ Q.scene "level1", (stage) ->
   stage.insert background
 
   # Add objects from 'items' layer
-  ignore_objects = []
-  objects = Q.LevelParser.parse_objects(Game.assets.level1.dataAsset, ignore_objects)
-  Q.LevelParser.load_objects(stage, objects, 3)
+  numBullets = 3
+  objects = Q.LevelParser.parse_objects(Game.assets.level1.dataAsset, [])
+  Q.LevelParser.load_objects(stage, objects, numBullets)
 
   # store level data for level summary
   Game.currentLevelData.health.available = stage.lists.Heart.length
