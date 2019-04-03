@@ -1,6 +1,36 @@
 Q = Game.Q
 
 Q.LevelParser =
+  # NB most of these methods modifies the global Game object
+
+  default_load_level: (stage, data_asset, bullets_per_gun) ->
+    # If no customisation is required, this encapsulates all level loading      
+
+    # main map with collision
+    Game.map = @load_map(data_asset, Game.SPRITE_TILES, 0)
+    stage.collisionLayer Game.map 
+
+    # background decorations
+    background = @load_map(data_asset, Game.SPRITE_NONE, 1)
+    stage.insert background
+
+    # all other objects (player, zombies, gun, health, door etc)
+    objects = @parse_objects(data_asset, [])
+    @load_objects(stage, objects, bullets_per_gun)
+
+    # store level data for level summary
+    Game.currentLevelData.health.available = stage.lists.Heart.length
+    Game.currentLevelData.zombies.available = stage.lists.Zombie.length
+
+  load_map: (data_asset, sprite_type, layer_index) ->
+    return new Q.TileLayer
+      type: sprite_type
+      layerIndex: layer_index
+      dataAsset: data_asset
+      sheet: Game.assets.map.sheetName
+      tileW: Game.assets.map.tileSize
+      tileH: Game.assets.map.tileSize
+      z: 2
 
   parse_objects: (dataAsset, ignore_objects) -> 
     fileParts = dataAsset.split(".")
