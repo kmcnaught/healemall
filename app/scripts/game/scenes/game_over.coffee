@@ -21,7 +21,7 @@ Q.scene "gameOver", (stage) ->
   stage.insert new Q.UI.Text
     x: Q.width/2
     y: Q.height/2
-    label: "Looks like these zombies cannot hope for your help :/\nBe better next time!"
+    label: "Oh no, you died! :(\nBe better next time!"
     color: "#c4da4a"
     family: "Boogaloo"
     size: 36
