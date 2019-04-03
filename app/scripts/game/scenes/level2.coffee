@@ -27,7 +27,7 @@ Q.scene "level2", (stage) ->
   stage.insert background
 
   # Add objects from 'items' layer
-  numBullets = 6
+  numBullets = 8
   objects = Q.LevelParser.parse_objects(Game.assets.level2.dataAsset, [])
   Q.LevelParser.load_objects(stage, objects, numBullets)
 
