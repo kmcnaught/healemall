@@ -74,6 +74,13 @@ Q.LevelParser =
         item =
           [obj.name, Q.tilePos(obj.x, obj.y, {bullets: bullets_per_gun})]   
         all_items.push item
+      else if obj.name == "Zombie"
+        # Face random direction
+        randomBool = Math.floor(Math.random() * 2) 
+        console.log(randomBool)
+        item =
+          [obj.name, Q.tilePos(obj.x, obj.y, {startLeft: randomBool})]   
+        all_items.push item
       else if obj.name == "Player"
         # Player and camera together, get added differently
         Game.player = player = stage.insert new Q.Player(Q.tilePos(obj.x, obj.y))
