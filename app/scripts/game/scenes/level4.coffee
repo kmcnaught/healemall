@@ -2,38 +2,7 @@ Q = Game.Q
 
 Q.scene "level4", (stage) ->
 
-  # bg image
-  # stage.insert new Q.Background()
+  level_data = Game.assets.level4.dataAsset
+  num_bullets = 3
 
-  # main map with collision
-  Game.map = map = new Q.TileLayer
-    type: Game.SPRITE_TILES
-    layerIndex: 0
-    dataAsset: Game.assets.level4.dataAsset
-    sheet: Game.assets.map.sheetName
-    tileW: Game.assets.map.tileSize
-    tileH: Game.assets.map.tileSize
-    z: 2
-
-  stage.collisionLayer map
-
-  # decorations
-  background = new Q.TileLayer
-    layerIndex: 1,
-    type: Game.SPRITE_NONE
-    dataAsset: Game.assets.level4.dataAsset
-    sheet: Game.assets.map.sheetName
-    tileW: Game.assets.map.tileSize
-    tileH: Game.assets.map.tileSize
-    z: 1
-
-  stage.insert background
-
-  # Add objects from 'items' layer
-  numBullets = 3
-  objects = Q.LevelParser.parse_objects(Game.assets.level4.dataAsset, [])
-  Q.LevelParser.load_objects(stage, objects, numBullets)
-
-  # store level data for level summary
-  Game.currentLevelData.health.available = stage.lists.Heart.length
-  Game.currentLevelData.zombies.available = stage.lists.Zombie.length
+  Q.LevelParser.default_load_level(stage, level_data, num_bullets) 
