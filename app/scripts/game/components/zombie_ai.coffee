@@ -4,7 +4,7 @@ Q.component "zombieAI",
   added: ->
     p = @entity.p
 
-    if p.startLeft == true
+    if p.startLeft
       p.vx = 60
     else
       p.vx = -60
