@@ -46,7 +46,7 @@ Q.LevelParser =
         all_items.push item
       else if obj.name == "Player"
         # Player and camera together, get added differently
-        Game.player = player = stage.insert new Q.Player(Q.tilePos(18.5, 14))
+        Game.player = player = stage.insert new Q.Player(Q.tilePos(obj.x, obj.y))
         stage.add("viewport")
         Game.setCameraTo(stage, player)
       else if obj.name == "Door"
