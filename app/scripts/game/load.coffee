@@ -16,7 +16,7 @@ Q.load Game.assets.all,
     Q.compileSheets Game.assets.controls.sheet, Game.assets.controls.dataAsset
 
     # first stage
-    Game.stageStartScreen()
+    Game.stageScreen("start")
 
   , {
     progressCallback: (loaded, total) ->

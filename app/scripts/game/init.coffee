@@ -204,13 +204,6 @@ window.Game =
     # for analytics
     Game.currentScreen = "levelSummary for level" + @Q.state.get("currentLevel")
 
-  stageStartScreen: ->
-    @Q.clearStages()
-    @Q.stageScene "start"
-
-    # for analytics
-    Game.currentScreen = "start"
-
   stageEndScreen: ->
     @Q.input.disableTouchControls()
     @Q.clearStages()
@@ -222,12 +215,12 @@ window.Game =
     # track events
     Game.trackEvent("End Screen", "displayed")
 
-  stageControlsScreen: ->
+  stageScreen: (screen_name) ->
     @Q.clearStages()
-    @Q.stageScene "controls"
+    @Q.stageScene screen_name
 
     # for analytics
-    Game.currentScreen = "controls"
+    Game.currentScreen = screen_name
 
   stageTutorial: ->
     Q = @Q

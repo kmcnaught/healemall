@@ -26,7 +26,7 @@ Q.UI.LevelButton = Q.UI.Button.extend "UI.LevelButton",
         if @p.level == 0
           Game.stageTutorial()
         else if @p.level == 1
-          Game.stageControlsScreen()
+          Game.stageScreen("controls")
         else
           Game.stageLevel(@p.level)
 
