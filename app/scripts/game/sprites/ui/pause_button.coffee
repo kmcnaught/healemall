@@ -25,7 +25,7 @@ Q.UI.PauseButton = Q.UI.Button.extend "UI.PauseButton",
       w: Q.width,
       h: Q.height
       z: 50
-      fill: "rgba(0,0,0,0.5)"
+      fill: "rgba(0,0,0,0.75)"
 
     pausedText = new Q.UI.Text
       x: 0
