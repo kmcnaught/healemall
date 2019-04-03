@@ -16,4 +16,4 @@ Q.UI.SettingsButton = Q.UI.Button.extend "UI.SettingsButton",
     @p.cy = @p.sheetH/2
 
     @on 'click', =>
-      console.log('Settings!')
+      Game.stageScreen("controls_settings")
