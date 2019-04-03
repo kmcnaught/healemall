@@ -24,7 +24,7 @@
   <object id="5" name="player" type="player" x="1260" y="910" width="70" height="140"/>
  </objectgroup>
  <objectgroup color="#ff0000" id="3" name="enemies">
-  <object id="6" name="zombie" type="enemy" x="1960" y="910" width="70" height="140">
+  <object id="6" name="zombie" type="enemy" x="1960" y="978" width="70" height="72">
    <properties>
     <property name="style" value="1"/>
    </properties>
