@@ -13,7 +13,7 @@
  </tileset>
  <objectgroup color="#ffff00" id="1" name="items">
   <object id="1" name="key" type="items" x="1711.21" y="1957.27" width="70" height="70"/>
-  <object id="2" name="door" x="3824.85" y="1945.15" width="70" height="70"/>
+  <object id="2" name="door" x="3824.85" y="1960.3" width="70" height="70"/>
   <object id="3" name="health" x="4211.21" y="2021.21" width="70" height="70"/>
   <object id="4" name="gun" x="1712.12" y="696.061" width="70" height="70"/>
   <object id="5" name="health" x="1322.12" y="760.606" width="70" height="70"/>
