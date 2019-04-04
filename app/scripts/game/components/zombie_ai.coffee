@@ -22,7 +22,7 @@ Q.component "zombieAI",
         @p.canSeeThePlayerTimeout = 0
       else if @canSeeThePlayerObj.status
         # I see the player, I will remember that for X sec
-        @p.canSeeThePlayerTimeout = 3
+        @p.canSeeThePlayerTimeout = 2
 
         if @canSeeThePlayerObj.playAudio
           if @p.audioTimeout == 0
