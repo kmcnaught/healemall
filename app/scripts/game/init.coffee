@@ -24,7 +24,14 @@ window.Game =
     Game.storageKeys =
       availableLevel: "zombieGame:availableLevel"
       levelProgress: "zombieGame:levelProgress"
+      showCursor: "zombieGame:showCursor"
     Game.availableLevel = localStorage.getItem(Game.storageKeys.availableLevel) || 1
+
+    showCursorString = localStorage.getItem(Game.storageKeys.showCursor)
+    if not (showCursorString == null) and (showCursorString == false.toString())
+      Game.showCursor = false
+    else
+      Game.showCursor = true
 
     # used for collision detection
     @SPRITE_NONE = 0
@@ -49,6 +56,10 @@ window.Game =
         y: row * Game.assets.map.tileSize + Game.assets.map.tileSize/2
 
       Q._extend position, otherParams
+
+    if not Game.showCursor
+      element = document.getElementById("quintus_container")
+      element.style.cursor = "none"
 
     return
 

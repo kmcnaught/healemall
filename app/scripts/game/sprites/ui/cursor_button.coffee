@@ -11,14 +11,14 @@ Q.UI.CursorButton = Q.UI.Button.extend "UI.CursorButton",
 
     if @p.isSmall
       if Game.showCursor
-        @p.sheet = "hud_cursor_off_button_small"
-      else
         @p.sheet = "hud_cursor_on_button_small"
+      else
+        @p.sheet = "hud_cursor_off_button_small"
     else
       if Game.showCursor
-        @p.sheet = "hud_cursor_off_button"
-      else
         @p.sheet = "hud_cursor_on_button"
+      else
+        @p.sheet = "hud_cursor_off_button"
 
     @size(true) # force resize 
 
@@ -48,3 +48,6 @@ Q.UI.CursorButton = Q.UI.Button.extend "UI.CursorButton",
 
         Game.trackEvent("Cursor Button", "clicked", "on")
 
+      # Remember response in local storage
+      localStorage.setItem(Game.storageKeys.showCursor, Game.showCursor)
+ 
