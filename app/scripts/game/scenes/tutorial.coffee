@@ -3,10 +3,31 @@ Q = Game.Q
 Q.scene "tutorial", (stage) ->
 
 
-  level_data = Game.assets.tutorial.dataAsset
-  num_bullets = 20
+  data_asset = Game.assets.tutorial.dataAsset
+  bullets_per_gun = 20
 
-  Q.LevelParser.default_load_level(stage, level_data, num_bullets) 
+  # main map with collision
+  Game.map = Q.LevelParser.load_map(data_asset, Game.SPRITE_TILES, 0)
+  stage.collisionLayer Game.map 
+
+  # background decorations
+  background = Q.LevelParser.load_map(data_asset, Game.SPRITE_NONE, 1)
+  stage.insert background
+
+  # all other objects, except zombie, which will be special for tutorial
+  ignore_objects = ["Zombie",]
+  objects = Q.LevelParser.parse_objects(data_asset, ignore_objects)
+  Q.LevelParser.load_objects(stage, objects, bullets_per_gun)
+
+  # Add zombie manually
+  enemies = [
+    ["Zombie", Q.tilePos(78, 14, canFallOff: false)]
+  ]
+  stage.loadAssets(enemies)
+
+  # store level data for level summary
+  Game.currentLevelData.health.available = stage.lists.Heart.length
+  Game.currentLevelData.zombies.available = stage.lists.Zombie.length
 
   # Add help texts
   yFudge = 1.5
