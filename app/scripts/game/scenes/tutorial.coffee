@@ -17,11 +17,13 @@ Q.scene "tutorial", (stage) ->
     Q.tilePos(64.5, 8+yFudge, {label: "Try jumping over the gap"}),
     Q.tilePos(73-1.5, 8+yFudge, {label: "Watch out for zombies!"}),
     Q.tilePos(77, 11+yFudge, {label: "Try to get past without being bitten"}),
-    Q.tilePos(82-3, 5+yFudge, {label: "Health packs give you an extra life"}),
+    Q.tilePos(83.5, 8, {label: "<-- Health packs give you an extra life"}),
+
     Q.tilePos(91-3, 10+yFudge, {label: "Collect the healing gun,"}),
     Q.tilePos(91-3, 10.5+yFudge, {label: "and fire at the zombie"}),
-    Q.tilePos(103.5-3, 10+yFudge, {label: "Once you've healed the zombie,"}),
-    Q.tilePos(103.5-3, 10.5+yFudge, {label: "find the key and exit"}),
+
+    Q.tilePos(94.5, 14+yFudge, {label: "Once you've healed the zombie,"}),
+    Q.tilePos(94.5, 14.5+yFudge, {label: "find the key and exit"}),
   ]
 
   for text_props in texts
