@@ -3,11 +3,12 @@ Q = Game.Q
 Q.component "zombieAI",
   added: ->
     p = @entity.p
+    p.fullSpeed = 60
 
     if p.startLeft
-      p.vx = 60
+      p.vx = p.fullSpeed
     else
-      p.vx = -60
+      p.vx = -p.fullSpeed
 
     p.audioTimeout = 0
 
@@ -32,7 +33,7 @@ Q.component "zombieAI",
 
         if (@canSeeThePlayerObj.left and @p.vx > 0) or (@canSeeThePlayerObj.right and @p.vx < 0)
           # enemy goes in wrong direction, change it
-          @p.vx = -@p.vx
+          @p.vx = -Math.sign(@p.vx)*@p.fullSpeed
       else
         # run timeout
         @p.canSeeThePlayerTimeout = Math.max(@p.canSeeThePlayerTimeout - dt, 0)
@@ -54,22 +55,35 @@ Q.component "zombieAI",
       stopChasing = playerInvincible and @p.animation != "attack"
       currentlyChasing = not stopChasing and (@canSeeThePlayerObj.status or @p.canSeeThePlayerTimeout > 0)
 
-      if cliffAhead and (!currentlyChasing or !@p.canFallOff)
-        # turn around 
-        @p.vx = -@p.vx
+      if cliffAhead 
+        if not currentlyChasing 
+          if @p.vx > 0
+            # turn around 
+            @p.vx = -Math.sign(@p.vx)*@p.fullSpeed
+          else
+            # turn around 
+            if @p.flip
+              @p.vx = @p.fullSpeed
+            else
+              @p.vx = -@p.fullSpeed
+        else if currentlyChasing and not @p.canFallOff
+          # keep facing player, but don't fall off
+          @p.vx = 0
 
       # if there's an obstacle in front
       if (inFront and !currentlyChasing)
-        @p.vx = -@p.vx
+        # turn around 
+        @p.vx = -Math.sign(@p.vx)*@p.fullSpeed
 
       # set the correct direction of sprite
       @flip()
 
     flip: ->
-      if(@p.vx > 0)
-        @p.flip = false
-      else
-        @p.flip = "x"
+      if Math.abs(@p.vx) > 0
+        if(@p.vx > 0)
+          @p.flip = false
+        else
+          @p.flip = "x"
 
     isPlayerInvincible: ->
       player = Game.player.p
