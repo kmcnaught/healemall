@@ -15,18 +15,16 @@
   <image source="../images/bg.gif" width="2048" height="2048"/>
  </tileset>
  <objectgroup color="#ffff00" id="1" name="items">
-  <object id="14" name="gun" x="6358" y="962" width="94" height="74"/>
-  <object id="16" name="health" x="5740" y="518" width="94" height="82"/>
-  <object id="20" name="door" x="7530" y="1570" width="56" height="66"/>
-  <object id="21" name="zombie" x="5436" y="948" width="84" height="68"/>
-  <object id="22" type="key" x="7532" y="736" width="88" height="68"/>
-  <object id="23" x="4484" y="-272"/>
+  <object id="14" name="gun" x="6146" y="974" width="94" height="74"/>
+  <object id="16" name="health" x="5524" y="546" width="94" height="82"/>
+  <object id="20" name="door" x="7334" y="1606" width="56" height="66"/>
+  <object id="22" name="key" x="7344" y="764" width="88" height="68"/>
  </objectgroup>
  <objectgroup color="#00aa00" id="2" name="player">
   <object id="5" name="player" type="player" x="2660" y="910" width="70" height="140"/>
  </objectgroup>
  <objectgroup color="#ff0000" id="3" name="enemies">
-  <object id="6" name="zombie" type="enemy" x="3360" y="910" width="70" height="140">
+  <object id="6" name="zombie" type="enemy" x="5204" y="950" width="70" height="92">
    <properties>
     <property name="style" value="1"/>
    </properties>
@@ -12441,16 +12439,14 @@
   </data>
  </layer>
  <objectgroup id="15" name="text">
-  <object id="7" x="2666" y="626" width="64" height="84"/>
-  <object id="8" name="look to move" x="2712" y="662"/>
+  <object id="8" name="look to move" x="2712" y="674.121"/>
   <object id="9" name="longer is faster" x="3354" y="630" width="90" height="64"/>
   <object id="10" name="dwell to jump" x="3982" y="622" width="78" height="82"/>
   <object id="11" name="jump over the gap" x="4476" y="428" width="112" height="68"/>
   <object id="12" name="watch out for zombies!" x="5120" y="424" width="152" height="74"/>
-  <object id="17" name="pick up health packs " x="5616" y="264" width="402" height="66"/>
-  <object id="18" name="find the healing gun" x="6400" y="668" width="78" height="100"/>
-  <object id="19" name="find the door and exit" x="7190" y="898" width="200" height="76"/>
-  <object id="24" name="shoot the zombie" x="6760" y="960" width="136" height="56"/>
-  <object id="25" x="3172" y="-460"/>
+  <object id="17" name="pick up health packs " x="5688" y="308" width="402" height="66"/>
+  <object id="18" name="find the healing gun" x="6160" y="640" width="78" height="100"/>
+  <object id="19" name="find the door and exit" x="6578" y="1038" width="200" height="76"/>
+  <object id="24" name="shoot the zombie" x="6288" y="776" width="136" height="56"/>
  </objectgroup>
 </map>

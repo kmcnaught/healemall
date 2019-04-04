@@ -69,30 +69,33 @@ Q.LevelParser =
     all_items = []
 
     for obj in objects
-      if obj.name == "Gun"
-        # Add bullets
-        item =
-          [obj.name, Q.tilePos(obj.x, obj.y, {bullets: bullets_per_gun})]   
-        all_items.push item
-      else if obj.name == "Zombie"
-        # Face random direction
-        randomBool = Math.floor(Math.random() * 2) 
-        console.log(randomBool)
-        item =
-          [obj.name, Q.tilePos(obj.x, obj.y, {startLeft: randomBool})]   
-        all_items.push item
-      else if obj.name == "Player"
-        # Player and camera together, get added differently
-        Game.player = player = stage.insert new Q.Player(Q.tilePos(obj.x, obj.y))
-        stage.add("viewport")
-        Game.setCameraTo(stage, player)
-      else if obj.name == "Door"
-        all_items.push [obj.name, Q.tilePos(obj.x, obj.y)]   
-        # Add door button for gaze
-        Game.add_door_button(stage, Q.tilePos(obj.x, obj.y))
+      if obj.name in ["Key", "Gun", "Zombie", "Door", "Player", "Heart", "Health"]
+        if obj.name == "Gun"
+          # Add bullets
+          item =
+            [obj.name, Q.tilePos(obj.x, obj.y, {bullets: bullets_per_gun})]   
+          all_items.push item
+        else if obj.name == "Zombie"
+          # Face random direction
+          randomBool = Math.floor(Math.random() * 2) 
+          console.log(randomBool)
+          item =
+            [obj.name, Q.tilePos(obj.x, obj.y, {startLeft: randomBool})]   
+          all_items.push item
+        else if obj.name == "Player"
+          # Player and camera together, get added differently
+          Game.player = player = stage.insert new Q.Player(Q.tilePos(obj.x, obj.y))
+          stage.add("viewport")
+          Game.setCameraTo(stage, player)
+        else if obj.name == "Door"
+          all_items.push [obj.name, Q.tilePos(obj.x, obj.y)]   
+          # Add door button for gaze
+          Game.add_door_button(stage, Q.tilePos(obj.x, obj.y))
+        else
+          item =
+            [obj.name, Q.tilePos(obj.x, obj.y)]   
+          all_items.push item
       else
-        item =
-          [obj.name, Q.tilePos(obj.x, obj.y)]   
-        all_items.push item
+        console.log("Cannot create object: #{obj.name}")
 
     stage.loadAssets(all_items)
