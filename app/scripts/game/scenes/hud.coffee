@@ -118,6 +118,22 @@ Q.scene "hud", (stage) ->
     if item > 0
       x += width + margin*2
 
+    # try jump buttons higher
+    tryotherlayout = false
+    if tryotherlayout
+      if item == 0
+        xcurr = x + width + margin*2
+        ycurr = Q.height/2 - 3*width/2 + 2*margin 
+      else if item == 4
+        xcurr = x - (width + margin*2)
+        ycurr = Q.height/2 - 3*width/2 + 2*margin 
+      else
+        xcurr = x
+        ycurr = Q.height/2 + width/2 + 2*margin 
+    else
+      xcurr = x
+      ycurr = y
+
     if labels[item].length > 1
       fontsize = "58px"
     else
@@ -125,8 +141,8 @@ Q.scene "hud", (stage) ->
 
     hidden = ( item == 2 )
     button = new Q.UI.Button
-      x: x
-      y: y
+      x: xcurr
+      y: ycurr
       w: w
       h: h
       z: 1
