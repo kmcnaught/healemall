@@ -69,6 +69,15 @@ Q.Sprite.extend "Player",
     @on "player.outOfMap", @, "restore"
 
   step: (dt) ->
+    # if invincible, flash opacity (with a triangle wave)
+    if @p.timeInvincible > 0
+      a = 0.3 # amplitude (triangle goes [-a, a])
+      p = 1.25 # period
+      tri = (2*a/Math.PI)*Math.asin(Math.sin((2*Math.PI/p)*@p.timeInvincible))
+      @p.opacity = tri + (1.0 - a)
+    else
+      @p.opacity = 1.0
+
     if @p.direction == "left"
       @p.flip = "x"
       @p.points = [
