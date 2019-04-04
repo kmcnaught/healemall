@@ -201,5 +201,6 @@ Q.Sprite.extend "Player",
     Q.state.set "lives", @p.lifePoints
 
   restore: ->
+    @p.timeInvincible = 5
     @p.x = @p.savedPosition.x
     @p.y = @p.savedPosition.y-25
