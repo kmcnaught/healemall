@@ -5246,6 +5246,74 @@ Quintus.UI = function(Q) {
 
   });
 
+
+  Q.UI.PolygonButton =  Q.UI.Button.extend("UI.PolygonButton", {
+    init: function(p, defaultProps, callback) {
+      this._super(Q._defaults(p||{},defaultProps),{
+        type: Q.SPRITE_UI | Q.SPRITE_DEFAULT,
+        keyActionName: null
+      });      
+    },
+    
+    drawPolygon: function(ctx) {
+
+      ctx.beginPath();
+      
+      ctx.moveTo(this.p.points[0][0], this.p.points[0][1]);
+      for(var i=0; i<this.p.points.length; i++) {
+        ctx.lineTo(this.p.points[i][0], this.p.points[i][1]);
+      }
+      ctx.lineTo(this.p.points[0][0], this.p.points[0][1]);
+
+      ctx.closePath();
+      if(this.p.fill) { 
+        ctx.fill();
+      }
+    },
+
+    draw: function(ctx) {
+      if(this.p.hidden) { return false; }
+      if(!this.p.border && !this.p.fill) { return; }
+
+      ctx.globalAlpha = this.p.opacity;
+      if(this.p.frame === 1 && this.p.highlight) {
+        ctx.fillStyle = this.p.highlight;
+      } else {
+        ctx.fillStyle = this.p.fill;
+      }
+      ctx.strokeStyle = this.p.stroke;
+
+      
+      if (this.p.points) { 
+        this.drawPolygon(ctx);
+      }
+
+      if(this.p.asset || this.p.sheet) {
+        Q.Sprite.prototype.draw.call(this,ctx);
+      }
+
+      if(this.p.label) {
+        ctx.save();
+        this.setFont(ctx);
+        ctx.fillText(this.p.label,0,0);
+        ctx.restore();
+      }
+
+      // dwell animation
+      if (this.dwellProportion > 0) {
+        if (this.doDwell) {
+          this.drawDwell(ctx, this.dwellProportion);
+        }
+        else {
+          // if we're using gaze continuously, stil show feedback 
+          this.drawDwell(ctx, 0.5); 
+        }
+      }      
+
+    }
+
+  });
+
   Q.UI.IFrame = Q.Sprite.extend("UI.IFrame", {
     init: function(p) {
       this._super(p, { opacity: 1, type: Q.SPRITE_UI | Q.SPRITE_DEFAULT });
