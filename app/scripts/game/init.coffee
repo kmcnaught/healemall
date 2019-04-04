@@ -27,11 +27,20 @@ window.Game =
       showCursor: "zombieGame:showCursor"
     Game.availableLevel = localStorage.getItem(Game.storageKeys.availableLevel) || 1
 
-    showCursorString = localStorage.getItem(Game.storageKeys.showCursor)
-    if not (showCursorString == null) and (showCursorString == false.toString())
-      Game.showCursor = false
-    else
-      Game.showCursor = true
+    boolValueOrDefault = (key, defaultVal) =>
+      stringVal = localStorage.getItem(key)
+      if (stringVal == null)
+        return defaultVal
+      else
+        if (stringVal == false.toString())
+          return false
+        else if (stringVal == true.toString())
+          return true
+        else
+          console.error("Cannot read bool value for key #{key}")
+          return defaultVal
+    
+    Game.showCursor = boolValueOrDefault(Game.storageKeys.showCursor, true)
 
     # used for collision detection
     @SPRITE_NONE = 0
