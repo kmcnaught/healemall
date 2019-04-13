@@ -106,19 +106,48 @@ Q.scene "levelSelectMore", (stage) ->
     else
       # work out level numbr
       if item == 4
-        level = 6
+        level = 6 # special case for last 'main' level
       else
         level = item+6+Game.moreLevelsPage*4
-        if level > 3
-          item = item+1
+        if item > 3
+          level = level-2
       
-      container.insert new Q.UI.LevelButton
+      button = new Q.UI.LevelButton
         level: level
         x: 0
         y: 0
         w: w
         h: h
         enabled: true
+      
+      container.insert button
+        
+      # add label if level has name
+      # ugh, there's a bit of confusion here with off-by-one indexing
+      level_name = Game.levels_array[level].name
+      
+      if level_name
+        name_width = Q.ctx.measureText(level_name).width
+        fontsize = 28
+
+        # background panel
+        container.insert new Q.UI.Container
+          x: 0
+          y: button.p.h*.5-fontsize*0.05
+          w: name_width*1.1
+          h: fontsize*1.1
+          radius: 2
+          fill: "#81879366",
+          type: Q.SPRITE_UI | Q.SPRITE_DEFAULT
+
+        # foreground text
+        container.insert new Q.UI.Text
+          x: 0
+          y: button.p.h*.5
+          label: level_name
+          color: "#000000"
+          family: "Jolly Lodger"
+          size: fontsize   
       
       # add progress stars#          
       if item > 0

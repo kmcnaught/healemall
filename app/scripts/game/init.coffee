@@ -79,6 +79,9 @@ window.Game =
   prepareAssets: ->
 
     levels = 
+      tutorial:
+        dataAsset: "tutorial.tmx"
+        bullets: 20
       level1:
         dataAsset: "level1.tmx"
         bullets: 4
@@ -112,6 +115,7 @@ window.Game =
       level10:
         dataAsset: "level10.tmx"
         bullets: 10
+        name: 'Really long name here'
       level11:
         dataAsset: "level11.tmx"
         bullets: 10
