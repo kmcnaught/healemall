@@ -21,7 +21,7 @@ Q.scene "end", (stage) ->
   stage.insert new Q.UI.Text
     x: Q.width/2
     y: Q.height/2
-    label: "You did it!\nIf you like the game, follow us on twitter.\nAlso please give us some feedback.\nThanks for your time!"
+    label: "You did it! \n\n You have completed the game, *and* unlocked some bonus levels. \n\n Hurrah!"
     color: "#c4da4a"
     family: "Boogaloo"
     size: 36
@@ -43,3 +43,5 @@ Q.scene "end", (stage) ->
 
   button.on "click", (e) ->
     Game.stageLevelSelectScreen()
+    localStorage.setItem(Game.storageKeys.unlockedBonus, true)
+

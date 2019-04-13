@@ -33,6 +33,8 @@ Q.scene "levelSelect", (stage) ->
   # prepare special buttons for first column
 
   # add level buttons
+  bonusUnlocked = localStorage.getItem(Game.storageKeys.unlockedBonus)
+
   for item in [0..6]
 
     if item % columnsNo == 0
@@ -49,6 +51,10 @@ Q.scene "levelSelect", (stage) ->
       y: y
 
     x += columnWidth + gutterX
+
+    # If we've unlocked levels, we'll replace L6 with a link to "more levels"
+    if item == 6 and bonusUnlocked 
+      break
 
     container.insert new Q.UI.LevelButton
       level: item
@@ -84,8 +90,34 @@ Q.scene "levelSelect", (stage) ->
 
         starsX += 60
 
-
   # end of adding level buttons
+
+  # "More levels!" if unlocked
+  if bonusUnlocked 
+
+    bonus = container.insert new Q.UI.MoreLevelsButton
+        x: 0
+        y: 0
+        w: w
+        h: h
+
+    
+    fontsize = 32
+    container.insert new Q.UI.Text
+        x: 0
+        y: -fontsize/2
+        label: "More"
+        color: "#404444"
+        family: "Jolly Lodger"
+        size: fontsize
+    
+    container.insert new Q.UI.Text
+        x: 0
+        y: fontsize/2
+        label: "levels"
+        color: "#404444"
+        family: "Jolly Lodger"
+        size: fontsize
 
   # settings button bottom right
   container = stage.insert new Q.UI.Container

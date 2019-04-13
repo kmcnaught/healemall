@@ -25,8 +25,10 @@ window.Game =
       availableLevel: "zombieGame:availableLevel"
       levelProgress: "zombieGame:levelProgress"
       showCursor: "zombieGame:showCursor"
-    Game.availableLevel = localStorage.getItem(Game.storageKeys.availableLevel) || 1
+      unlockedBonus: "zombieGame:unlockedBonus"
 
+    Game.availableLevel = localStorage.getItem(Game.storageKeys.availableLevel) || 1
+    
     boolValueOrDefault = (key, defaultVal) =>
       stringVal = localStorage.getItem(key)
       if (stringVal == null)
@@ -41,6 +43,7 @@ window.Game =
           return defaultVal
     
     Game.showCursor = boolValueOrDefault(Game.storageKeys.showCursor, true)
+    Game.unlockedBonus = boolValueOrDefault(Game.storageKeys.unlockedBonus, false)
 
     # used for collision detection
     @SPRITE_NONE = 0
@@ -241,6 +244,18 @@ window.Game =
 
     # for analytics
     Game.currentScreen = screen_name
+
+  stageMoreLevels: (page) ->
+    if page >= 0
+      screen_name = "levelSelectMore"
+
+      Game.moreLevelsPage = page
+
+      @Q.clearStages()
+      @Q.stageScene screen_name
+
+      # for analytics
+      Game.currentScreen = screen_name     
 
   stageTutorial: ->
     Q = @Q
