@@ -11,7 +11,7 @@ Q.scene "start", (stage) ->
 
 
   # description = "Imagine, what if the cure exists?\n"
-  description = "You have found the cure for the zombie plague!\n"
+  description = "You have found the cure for the zombie plague!\n\n"
   description += "Explore an old, abandoned graveyard,\n"
   description += "heal as many zombies as you can,\n"
   description += "and find your way out.\n\n" 
@@ -22,10 +22,22 @@ Q.scene "start", (stage) ->
       y: 0
       align: 'center'
       label: description
-      color: "#17191e"
+      color: "#000000"
       family: "Jolly Lodger"
       size: 36
 
+  # panel
+  titleContainer.insert new Q.UI.Container
+    x:0
+    y:0
+    w: desc.p.w*1.1
+    h: desc.p.h*1.1
+    z: desc.p.z - 1
+    fill: "#e3ecf933",
+    radius: 8, 
+    type: Q.SPRITE_UI | Q.SPRITE_DEFAULT
+
+  
   title = titleContainer.insert new Q.UI.Text
     x: 0
     y: desc.p.y - desc.p.h/2
