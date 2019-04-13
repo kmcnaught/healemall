@@ -77,6 +77,80 @@ window.Game =
 
   # one place of defining assets
   prepareAssets: ->
+
+    levels = 
+      level1:
+        dataAsset: "level1.tmx"
+        bullets: 4
+      level2:
+        dataAsset: "level2.tmx"
+        bullets: 8
+      level3:
+        dataAsset: "level3.tmx"
+        bullets: 6
+      level4:
+        dataAsset: "level4.tmx"
+        bullets: 3
+      level5:
+        dataAsset: "level5.tmx"
+        bullets: 15
+      level6:
+        dataAsset: "level6.tmx"
+        bullets: 3
+      level7:      
+        dataAsset: "level7.tmx"
+        bullets: 10
+        name:"Easy Peasy"
+      level8:
+        dataAsset: "level8.tmx"
+        bullets: 10
+        name: "Too Many Zombies"
+      level9:
+        dataAsset: "level9.tmx"
+        bullets: 10
+        name: "Tricky"
+      level10:
+        dataAsset: "level10.tmx"
+        bullets: 10
+      level11:
+        dataAsset: "level11.tmx"
+        bullets: 10
+      level12:
+        dataAsset: "level12.tmx"
+        bullets: 10
+      level13:
+        dataAsset: "level13.tmx"
+        bullets: 10
+      level14:
+        dataAsset: "level14.tmx"
+        bullets: 10
+      level15:
+        dataAsset: "level15.tmx"
+        bullets: 10
+      level16:
+        dataAsset: "level16.tmx"
+        bullets: 10
+      level17:
+        dataAsset: "level17.tmx"
+        bullets: 10
+      level18:
+        dataAsset: "level18.tmx"
+        bullets: 10
+      level19:
+        dataAsset: "level19.tmx"
+        bullets: 10
+      level20:
+        dataAsset: "level20.tmx"
+        bullets: 10
+
+    # split into array for accessing level details by index
+    # and data assets strings for loading 
+    @levels_array = []
+    level_assets = []  
+    for k, v of levels
+      @levels_array.push v
+      level_assets.push v.dataAsset
+
     # all assets, only file names
     @assets =
       characters:
@@ -103,22 +177,9 @@ window.Game =
       map:
         sheet: "map_tiles.png"
       gradient: "gradient-top.png"
-
       tutorial:
         dataAsset: "tutorial.tmx"
-      level1:
-        dataAsset: "level1.tmx"
-      level2:
-        dataAsset: "level2.tmx"
-      level3:
-        dataAsset: "level3.tmx"
-      level4:
-        dataAsset: "level4.tmx"
-      level5:
-        dataAsset: "level5.tmx"
-      level6:
-        dataAsset: "level6.tmx"
-
+      
     # audio
     @audio =
       zombieMode: "zombie_mode.mp3"
@@ -131,7 +192,7 @@ window.Game =
 
     Game.isMuted = false
 
-    # convert to array for Q.load
+    # convert to array for Q.load    
     assetsAsArray = []
     @objValueToArray(@assets, assetsAsArray)
 
@@ -144,7 +205,7 @@ window.Game =
     @objValueToArray(@audio, audioAsArray)
 
     # merge assets and audio for Q.load
-    @assets.all = assetsAsArray.concat(audioAsArray)
+    @assets.all = assetsAsArray.concat(audioAsArray).concat(level_assets)
 
   # helper to conver obj to array
   objValueToArray: (obj, array) ->
@@ -192,8 +253,19 @@ window.Game =
     Q.input.touchControls() # render onscreen touch buttons
 
     Q.clearStages()
-    Q.stageScene "level" + number,
+
+    level = Game.levels_array[number]
+
+    # levels are constructed on the fly
+    level_data =level.dataAsset
+    num_bullets = level.bullets
+
+    Q.scene "level", (stage) ->
+      Q.LevelParser.default_load_level(stage, level_data, num_bullets) 
+
+    Q.stageScene "level",
       sort: true
+
     Q.stageScene "hud", 1,
       sort: true
 
