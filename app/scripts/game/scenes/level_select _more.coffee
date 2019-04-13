@@ -112,57 +112,59 @@ Q.scene "levelSelectMore", (stage) ->
         if item > 3
           level = level-2
       
-      button = new Q.UI.LevelButton
-        level: level
-        x: 0
-        y: 0
-        w: w
-        h: h
-        enabled: true
-      
-      container.insert button
+      if level < Game.levels_array.length
+
+        button = new Q.UI.LevelButton
+          level: level
+          x: 0
+          y: 0
+          w: w
+          h: h
+          enabled: true
         
-      # add label if level has name
-      # ugh, there's a bit of confusion here with off-by-one indexing
-      level_name = Game.levels_array[level].name
-      
-      if level_name
-        name_width = Q.ctx.measureText(level_name).width
-        fontsize = 28
+        container.insert button
+          
+        # add label if level has name
+        # ugh, there's a bit of confusion here with off-by-one indexing
+        level_name = Game.levels_array[level].name
+        
+        if level_name
+          name_width = Q.ctx.measureText(level_name).width
+          fontsize = 28
 
-        # background panel
-        container.insert new Q.UI.Container
-          x: 0
-          y: button.p.h*.5-fontsize*0.05
-          w: name_width*1.1
-          h: fontsize*1.1
-          radius: 2
-          fill: "#81879366",
-          type: Q.SPRITE_UI | Q.SPRITE_DEFAULT
+          # background panel
+          container.insert new Q.UI.Container
+            x: 0
+            y: button.p.h*.5-fontsize*0.05
+            w: name_width*1.1
+            h: fontsize*1.1
+            radius: 2
+            fill: "#81879366",
+            type: Q.SPRITE_UI | Q.SPRITE_DEFAULT
 
-        # foreground text
-        container.insert new Q.UI.Text
-          x: 0
-          y: button.p.h*.5
-          label: level_name
-          color: "#000000"
-          family: "Jolly Lodger"
-          size: fontsize   
-      
-      # add progress stars#          
-      if item > 0
-        stars = localStorage.getItem(Game.storageKeys.levelProgress + ":" + level)
+          # foreground text
+          container.insert new Q.UI.Text
+            x: 0
+            y: button.p.h*.5
+            label: level_name
+            color: "#000000"
+            family: "Jolly Lodger"
+            size: fontsize   
+        
+        # add progress stars#          
+        if item > 0
+          stars = localStorage.getItem(Game.storageKeys.levelProgress + ":" + level)
 
-      if stars
-        starsX = -60
-        starsY = [34, 50, 40]
+        if stars
+          starsX = -60
+          starsY = [34, 50, 40]
 
-        for i in [1..stars]
-          container.insert new Q.UI.LevelScoreImgSmall
-            x: starsX
-            y: starsY[i-1]
+          for i in [1..stars]
+            container.insert new Q.UI.LevelScoreImgSmall
+              x: starsX
+              y: starsY[i-1]
 
-          starsX += 60
+            starsX += 60
 
   # end of adding level buttons
 

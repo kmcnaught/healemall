@@ -322,7 +322,8 @@ window.Game =
     Game.currentScreen = screen_name
 
   stageMoreLevels: (page) ->
-    if page >= 0
+    max_pages = Math.ceil(Game.levels_array.length - 6)/4 
+    if page >= 0 and page <= max_pages
       screen_name = "levelSelectMore"
 
       Game.moreLevelsPage = page
