@@ -118,6 +118,7 @@ Q.scene "levelSelectMore", (stage) ->
         y: 0
         w: w
         h: h
+        enabled: true
       
       # add progress stars#          
       if item > 0
