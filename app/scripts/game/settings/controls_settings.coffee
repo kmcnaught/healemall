@@ -109,7 +109,7 @@ Q.scene "controls_settings", (stage) ->
   pad = 10
 
   # Click method
-  container_topleft.insert new Q.UI.Button
+  container_topleft.insert new Q.UI.PolygonButton
     fill: "#c4da4a"
     x: - (cellsize + pad)
     w: cellsize
@@ -121,6 +121,14 @@ Q.scene "controls_settings", (stage) ->
     label: "Dwell Click"
     keyActionName: "confirm"
     type: Q.SPRITE_UI | Q.SPRITE_DEFAULT
+    points: [
+      [0,90],
+      [-60,-50],
+      [85,0],
+      [-70,60],
+      [30,-90],
+    ]
+  
 
   container_topleft.insert new Q.UI.Button
     x: + (cellsize + pad)
