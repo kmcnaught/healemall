@@ -15,4 +15,7 @@ Q.UI.HealthCounter = Q.UI.Text.extend "UI.HealthCounter",
     Q.state.on "change.lives", @, "updateLabel"
 
   updateLabel: (lives) ->
-    @p.label = lives + ""
+    if lives >= 0
+      @p.label = lives + ""
+    else
+      @p.label = "0"

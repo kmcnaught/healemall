@@ -168,7 +168,7 @@ Q.Sprite.extend "Player",
       @play("hit", 1)
       Q.AudioManager.add Game.audio.playerHit
 
-      if @p.lifePoints <= 0
+      if @p.lifePoints < 0
 
         if @p.wasZombie or @p.y > Game.map.p.h
           @destroy()
