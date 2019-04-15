@@ -3111,8 +3111,12 @@ Quintus.Input = function(Q) {
       jumpSpeed: -300,
       maxSpeed: 250,
       moveAccumulation: 0,
-      dwellTime: 0.25, // how long it takes to kick in
-      rampUpTime: 1.5  // how long it takes to get up to speed
+      // arrow keys use pseudo dwell response to get analogue input:
+      // there's a short minimum time before character starts moving (but they change direction immediately)...
+      dwellTime: 250, 
+      // ... and then the speed ramps up to maximum over a longer period
+      rampUpTime: 1500  
+      // this naturally balances wanting an immediate response with wanting to be careful when starting to walk
     },
 
     added: function() {
@@ -3147,6 +3151,7 @@ Quintus.Input = function(Q) {
 
     step: function(dt) {
       var p = this.entity.p;
+      dt = dt * 1000 // milliseconds
 
       // have we changed direction?
       if ( ( (Q.inputs['left'] || Q.inputs['jumpleft']) && p.direction == 'right' ) ||
@@ -4610,6 +4615,7 @@ Quintus.Touch = function(Q) {
     init: function() {
       var touchSystem = this;
       this.doDwell = true;
+      this.lastCursorTime = 0;
 
       this.boundTouch = function(e) { touchSystem.touch(e); };
       this.boundDrag = function(e) { touchSystem.drag(e); };
@@ -4636,7 +4642,7 @@ Quintus.Touch = function(Q) {
       this.activeTouches = {};
       this.touchedObjects = {};
       this.objectDwelltimes = {};
-      this.dwellTime = 50;
+      this.dwellTime = 1000;
     },
 
     destroy: function() {
@@ -4746,6 +4752,15 @@ Quintus.Touch = function(Q) {
 
       var touch = e;
 
+      // Measure time since last input
+      var timestamp = e.timeStamp // millisecs
+      dt = 0
+      if (this.lastCursorTime > 0) {
+        dt = timestamp - this.lastCursorTime;      
+      }
+      this.lastCursorTime = timestamp
+      
+
       // Turn off all controls
       // Reset all the actions bound to controls
       // but keep track of all the actions that were on      
@@ -4758,7 +4773,7 @@ Quintus.Touch = function(Q) {
       for (var key in this.objectDwelltimes) {
         if (this.objectDwelltimes.hasOwnProperty(key) &&
             key != pid) {
-          this.objectDwelltimes[key].dwell -= 1;
+          this.objectDwelltimes[key].dwell -= dt;
           // turn off visualisation
           if ( this.objectDwelltimes[key].active ) {
             this.objectDwelltimes[key].obj.trigger('dwellIncrement', 0);
@@ -4793,10 +4808,10 @@ Quintus.Touch = function(Q) {
         
           // increment this one       
           if (!(pid in this.objectDwelltimes)) {
-            this.objectDwelltimes[pid] = {dwell:1, obj:obj, active:true};
+            this.objectDwelltimes[pid] = {dwell:dt, obj:obj, active:true};
           }
           else {
-            this.objectDwelltimes[pid].dwell += 2; 
+            this.objectDwelltimes[pid].dwell += 2*dt; 
             this.objectDwelltimes[pid].active = true;
 
             var curr_dwell = this.objectDwelltimes[pid].dwell
@@ -4819,7 +4834,7 @@ Quintus.Touch = function(Q) {
                 };
               obj.trigger('touchEnd', currTouch);
              
-              this.objectDwelltimes[pid].dwell = -10; 
+              this.objectDwelltimes[pid].dwell = 0; 
 
               obj.trigger('dwellIncrement', 0);
 
