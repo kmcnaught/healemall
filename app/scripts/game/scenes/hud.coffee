@@ -113,26 +113,96 @@ Q.scene "hud", (stage) ->
       console.log('hover %s', action)        
       Q.inputs[action]=1
 
+
+  # define some shapes for the main gaze controls  
+  stem_h = h*.275 # varies height of arrow stem (from centre)
+  stem_w = w*.05 # varies length of arrow stem (from centre)
+  stem_start = w*0.4 # varies how much stem is shrunk to balance the visual weight
+
+  leftarrow_p = [
+            [stem_start, -stem_h],
+            [-stem_w, -stem_h],
+            [-stem_w, -h/2],
+            [-w/2, 0],
+            [-stem_w, h/2],
+            [-stem_w, stem_h],
+            [stem_start, stem_h],
+          ]   
+  rightarrow_p = [
+            [-stem_start, stem_h],
+            [stem_w, stem_h],
+            [stem_w, h/2],
+            [+w/2, 0],
+            [stem_w, -h/2],
+            [stem_w, -stem_h],
+            [-stem_start, -stem_h],
+          ]
+  leftjump_normalised = [
+            [0.5, 0.5],
+            [0.5, 0.0714285714285715],
+            [0.428571428571429, -0.0714285714285714],
+            [0.214285714285714, -0.321428571428571],
+            [0.428571428571429, -0.5],
+            [-0.5, -0.5],
+            [-0.5, 0.321428571428571],
+            [-0.321428571428571, 0.142857142857143],
+            [-0.214285714285714, 0.25],
+            [-0.214285714285714, 0.5],
+          ]   
+  rightjump_normalised = [
+            [-0.5, 0.5],
+            [-0.5, 0.0714285714285715],
+            [-0.428571428571429, -0.0714285714285714],
+            [-0.214285714285714, -0.321428571428571],
+            [-0.428571428571429, -0.5],
+            [0.5, -0.5],
+            [0.5, 0.321428571428571],
+            [0.321428571428571, 0.142857142857143],
+            [0.214285714285714, 0.25],
+            [0.214285714285714, 0.5],
+          ]  
+  # (drew in inkscape, exported points)
+  shoot_points_normalised =  [
+    [-0.55601, -0.06244],
+    [-0.52346, 0.27963],
+    [-0.39846, 0.42963],
+    [-0.16236, 0.53631],
+    [0.13835, 0.53221],
+    [0.40483, 0.37777],
+    [0.51227, 0.21024],
+    [0.56227, 0.06024],
+    [0.52017, -0.15927],
+    [0.33858, -0.38187],
+    [0.0781, -0.50214],
+    [-0.21649, -0.44501],
+    [-0.44801, -0.29167],
+  ]
+
+  # scale shapes up
+  shoot_p = ([p[0]*w*.9, p[1]*h*.9] for p in shoot_points_normalised)
+  rightjump_p = ([p[0]*w*.9, p[1]*h*.9] for p in rightjump_normalised)
+  leftjump_p = ([p[0]*w*.9, p[1]*h*.9] for p in leftjump_normalised)
+  
+  leftarrow_p = ([p[0]*1.2, p[1]*1.2] for p in leftarrow_p)
+  rightarrow_p = ([p[0]*1.2, p[1]*1.2] for p in rightarrow_p)
+
+  button_points = [leftjump_p, leftarrow_p, shoot_p, rightarrow_p, rightjump_p ]               
+
   for item in [0..n-1]
 
     if item > 0
       x += width + margin*2
 
-    # try jump buttons higher
-    tryotherlayout = false
-    if tryotherlayout
-      if item == 0
-        xcurr = x + width + margin*2
-        ycurr = Q.height/2 - 3*width/2 + 2*margin 
-      else if item == 4
-        xcurr = x - (width + margin*2)
-        ycurr = Q.height/2 - 3*width/2 + 2*margin 
-      else
-        xcurr = x
-        ycurr = Q.height/2 + width/2 + 2*margin 
+    # jump buttons get shifted up
+    if item == 0
+      xcurr = x + width + margin*2
+      ycurr = Q.height/2 - 3*width/2 + 2*margin 
+    else if item == 4
+      xcurr = x - (width + margin*2)
+      ycurr = Q.height/2 - 3*width/2 + 2*margin 
     else
       xcurr = x
-      ycurr = y
+      ycurr = Q.height/2 + width/2 + 2*margin 
 
     if labels[item].length > 1
       fontsize = "58px"
@@ -140,19 +210,24 @@ Q.scene "hud", (stage) ->
       fontsize = "128px"
 
     hidden = ( item == 2 )
-    button = new Q.UI.Button
+    if item == 2
+      label = "shoot"
+    else
+      label = ""
+    button = new Q.UI.PolygonButton
       x: xcurr
       y: ycurr
       w: w
       h: h
-      z: 1
+      z: 1         
       hidden: hidden
       type: Q.SPRITE_UI | Q.SPRITE_DEFAULT
       fill: "#c4da4a50"
       radius: 10
       fontColor: "#353b47"
       font: "400 " + fontsize + " Jolly Lodger"
-      label: labels[item]         
+      label: label       
+      points: button_points[item]
 
     if (item == 2)
       # unhide 'fire' button when we've got a gun
