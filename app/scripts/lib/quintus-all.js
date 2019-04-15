@@ -4806,39 +4806,47 @@ Quintus.Touch = function(Q) {
         if (obj) {
           var pid = obj.p.id 
         
-          // increment this one       
-          if (!(pid in this.objectDwelltimes)) {
-            this.objectDwelltimes[pid] = {dwell:dt, obj:obj, active:true};
-          }
-          else {
-            this.objectDwelltimes[pid].dwell += 2*dt; 
-            this.objectDwelltimes[pid].active = true;
+          // always trigger a hover
+          obj.trigger('hover');
 
-            var curr_dwell = this.objectDwelltimes[pid].dwell
+          // dwell-able objects get new dwell created/old dwell incremented
+          if (obj.doDwell) {   
 
-            obj.trigger('dwellIncrement', curr_dwell/this.dwellTime);
-            obj.trigger('hover');
-
-            if (curr_dwell > this.dwellTime) {
-
-              currTouch = {
-                  x: pos.p.px,
-                  y: pos.p.py,
-                  origX: obj.p.x,
-                  origY: obj.p.y,
-                  sx: pos.p.ox,
-                  sy: pos.p.oy,
-                  identifier: touch.identifier,
-                  obj: obj,
-                  stage: stage
-                };
-              obj.trigger('touchEnd', currTouch);
-             
-              this.objectDwelltimes[pid].dwell = 0; 
-
-              obj.trigger('dwellIncrement', 0);
-
+            if (!(pid in this.objectDwelltimes)) {
+              this.objectDwelltimes[pid] = {dwell:dt, obj:obj, active:true};
             }
+            else {
+              this.objectDwelltimes[pid].dwell += 2*dt; 
+              this.objectDwelltimes[pid].active = true;
+
+              var curr_dwell = this.objectDwelltimes[pid].dwell
+
+              obj.trigger('dwellIncrement', curr_dwell/this.dwellTime);
+
+              if (curr_dwell > this.dwellTime) {
+                currTouch = {
+                    x: pos.p.px,
+                    y: pos.p.py,
+                    origX: obj.p.x,
+                    origY: obj.p.y,
+                    sx: pos.p.ox,
+                    sy: pos.p.oy,
+                    identifier: touch.identifier,
+                    obj: obj,
+                    stage: stage
+                  };
+                obj.trigger('touchEnd', currTouch);
+
+                this.objectDwelltimes[pid].dwell = 0; 
+                obj.trigger('dwellIncrement', 0);
+              }        
+            }
+          }
+          // non-dwell buttons still respond to gaze, but just instantly
+          // they go straight to maximum
+          else {  
+            this.objectDwelltimes[pid] = {dwell:1, obj:obj, active:true};
+            obj.trigger('dwellIncrement', 1.0);
           }
         }
       
