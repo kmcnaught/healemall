@@ -24,7 +24,7 @@ Q.UI.InfoLabel = Q.UI.Text.extend "UI.InfoLabel",
     Q._generatePoints(@)
 
   tutorial: ->
-    @changeLabel "If you can complete this tutorial you're ready to save the zombies"
+    @changeLabel "If you can complete this tutorial you're ready to save some zombies"
 
   intro: ->
     @changeLabel "I need to find the way out of here"
