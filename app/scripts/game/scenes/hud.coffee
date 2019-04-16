@@ -93,14 +93,17 @@ Q.scene "hud", (stage) ->
   hover_actions = ['', 'left', '', 'right', '']  
 
   width = Q.width/10
-  margin = width/15  
+  scale = 1.5
+  width = width*scale
+
+  margin = width/15 
 
   w = width
   h = width
 
   x = (Q.width - n*(width+2*margin))/2 + margin + width/2
-  y = Q.height/2 + width/2 + 2*margin 
-
+  y = Q.height/2 + width/2# + 2*margin   
+  # y = y - 2*mar
 
   onClick = (action) => (e) => 
     if action
@@ -188,6 +191,12 @@ Q.scene "hud", (stage) ->
 
   button_points = [leftjump_p, leftarrow_p, shoot_p, rightarrow_p, rightjump_p ]               
 
+  # positioning
+  # lower buttons (left, right, shoot) should centre vertically on platform player is stood on
+  y_lower = Q.height/2 + Game.assets.map.tileSize/2
+  # upper buttons (jump) centre just above next platform, for scale = 1, 
+  y_upper = y_lower - (3+scale)*Game.assets.map.tileSize 
+
   for item in [0..n-1]
 
     if item > 0
@@ -196,13 +205,20 @@ Q.scene "hud", (stage) ->
     # jump buttons get shifted up
     if item == 0
       xcurr = x + width + margin*2
-      ycurr = Q.height/2 - 3*width/2 + 2*margin 
+      ycurr = y_upper
     else if item == 4
       xcurr = x - (width + margin*2)
-      ycurr = Q.height/2 - 3*width/2 + 2*margin 
+      ycurr = y_upper
     else
       xcurr = x
-      ycurr = Q.height/2 + width/2 + 2*margin 
+      ycurr = y_lower
+
+    # the camera following isn't *quite* centralised, so we have an offset here.
+    camera_offset = -Game.assets.map.tileSize*.4
+    xcurr = xcurr + camera_offset
+
+    # if item == 3
+      # ycurr = ycurr + Game.assets.map.tileSize
 
     if labels[item].length > 1
       fontsize = "58px"
