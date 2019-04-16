@@ -9,8 +9,12 @@ Q.UI.InfoLabel = Q.UI.Text.extend "UI.InfoLabel",
       color: "#222221"
       size: 24
       family: "Boogaloo"
+      pendingLabel: ""
 
-  changeLabel: (new_label) ->
+  changeLabel: (new_label) ->    
+    if new_label is this.pendingLabel
+      return
+    this.pendingLabel = new_label
     @afterLabelChange "..."
     self = this;
     setTimeout ( -> self.afterLabelChange new_label), 250
