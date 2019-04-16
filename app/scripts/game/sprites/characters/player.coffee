@@ -194,7 +194,7 @@ Q.Sprite.extend "Player",
 
         @destroy()
 
-      if @p.lifePoints == 1
+      if @p.lifePoints == 0
         Game.infoLabel.lifeLevelLow()
 
     # always update label

@@ -52,13 +52,21 @@ Q.UI.InfoLabel = Q.UI.Text.extend "UI.InfoLabel",
     @afterLabelChange ""
 
   lifeLevelLow: ->
-    @changeLabel "I need to be more careful"
+    @changeLabel "No more spare lives! I need to be more careful"
 
   extraLifeFound: ->
     @changeLabel "I feel better now!"
 
   lifeLost: ->
-    @changeLabel "That hurts!"
+    random = Math.floor(Math.random() * 3)
+    if random == 0
+      label = "Ouch!"
+    else if random == 1
+      label = "I've been bitten!"
+    else 
+      label = "That hurts!"
+      
+    @changeLabel label
 
   zombieModeOn: ->
     @changeLabel "I was bitten too many times. "
