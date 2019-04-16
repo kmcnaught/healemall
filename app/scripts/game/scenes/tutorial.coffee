@@ -30,9 +30,9 @@ Q.scene "tutorial", (stage) ->
   Game.currentLevelData.zombies.available = stage.lists.Zombie.length
 
   # Add help texts
-  yFudge = 1.5
+  yFudge = 1.75
   texts = [
-    Q.tilePos(38, 11+yFudge, {label: "Look at the arrows to walk"}),
+    Q.tilePos(38, 11+yFudge, {label: "Look at the left and right arrows below to walk"}),
     Q.tilePos(46, 11+yFudge, {label: "The longer you look, the faster you'll walk"}),
     Q.tilePos(54, 11+yFudge, {label: "Dwell on a jump button to jump sideways"}),
     Q.tilePos(64.5, 8+yFudge, {label: "Try jumping over the gap"}),
