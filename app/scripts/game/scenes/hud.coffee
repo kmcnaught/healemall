@@ -87,24 +87,16 @@ Q.scene "hud", (stage) ->
     isSmall: false
 
   # gaze controls  
-  n = 5
-  labels = ['jump', '<', 'fire', '>', 'jump']
-  dwell_actions = ['jumpleft', '', 'fire', '', 'jumpright']
-  hover_actions = ['', 'left', '', 'right', '']  
+  
+  scale = 1.0 # TODO: make this a setting
 
-  width = Q.width/10
-  scale = 1.5
-  width = width*scale
-
-  margin = width/15 
+  base_width = Q.width/10
+  width = base_width*scale
 
   w = width
   h = width
-
-  x = (Q.width - n*(width+2*margin))/2 + margin + width/2
-  y = Q.height/2 + width/2# + 2*margin   
-  # y = y - 2*mar
-
+  margin = w/15 
+  
   onClick = (action) => (e) => 
     if action
       console.log('click %s', action)        
@@ -197,71 +189,55 @@ Q.scene "hud", (stage) ->
   # upper buttons (jump) centre just above next platform, for scale = 1, 
   y_upper = y_lower - (3+scale)*Game.assets.map.tileSize 
 
-  for item in [0..n-1]
+  camera_offset = -0.4*Game.assets.map.tileSize
+  x_left = Q.width/2 + camera_offset - (width + margin*2)
+  x_right = Q.width/2 + camera_offset + (width + margin*2)
+  x_centre = Q.width/2 + camera_offset
 
-    if item > 0
-      x += width + margin*2
-
-    # jump buttons get shifted up
-    if item == 0
-      xcurr = x + width + margin*2
-      ycurr = y_upper
-    else if item == 4
-      xcurr = x - (width + margin*2)
-      ycurr = y_upper
-    else
-      xcurr = x
-      ycurr = y_lower
-
-    # the camera following isn't *quite* centralised, so we have an offset here.
-    camera_offset = -Game.assets.map.tileSize*.4
-    xcurr = xcurr + camera_offset
-
-    # if item == 3
-      # ycurr = ycurr + Game.assets.map.tileSize
-
-    if labels[item].length > 1
-      fontsize = "58px"
-    else
-      fontsize = "128px"
-
-    hidden = ( item == 2 )
-    if item == 2
-      label = "shoot"
-    else
-      label = ""
+  # define button-adding function
+  createGazeButton = (x, y, label, points, dwell_action, hover_action) => 
     button = new Q.UI.PolygonButton
-      x: xcurr
-      y: ycurr
+      x: x
+      y: y
       w: w
       h: h
       z: 1         
-      hidden: hidden
       type: Q.SPRITE_UI | Q.SPRITE_DEFAULT
       fill: "#c4da4a50"
       radius: 10
       fontColor: "#353b47"
-      font: "400 " + fontsize + " Jolly Lodger"
-      label: label       
-      points: button_points[item]
+      font: "400 58px Jolly Lodger"
+      label: label
+      points: points
 
-    if (item == 2)
-      # unhide 'fire' button when we've got a gun
-      onChangeHidden = (btn) => () =>
-        console.log('hidden changed')    
-        btn.p.hidden = !Q.state.get("hasGun");
-
-      Q.state.on "change.hasGun", onChangeHidden button
-    
-    if (dwell_actions[item])
-      button.on "click", onClick dwell_actions[item]     
+    if (dwell_action)
+      button.on "click", onClick dwell_action
     else
       button.doDwell = false
 
-    if (hover_actions[item])
-      button.on "hover", onHover hover_actions[item]      
+    if (hover_action)
+      button.on "hover", onHover hover_action
 
+    return button
 
-    stage.insert(button)
+  btnLeft = createGazeButton(x_left, y_lower, "", leftarrow_p, "", "left")
+  btnRight = createGazeButton(x_right, y_lower, "", rightarrow_p, "", "right")
+  btnJumpLeft = createGazeButton(x_left, y_upper, "", leftjump_p, "jumpleft", "")
+  btnJumpRight = createGazeButton(x_right, y_upper, "", rightjump_p, "jumpright", "")
 
+  # shoot button has extra logic  
+  btnShoot = createGazeButton(x_centre, y_lower, "shoot", shoot_p, "shoot", "")
 
+  # unhide 'fire' button when we've got a gun
+  onChangeHidden = (btn) => () =>
+    btn.p.hidden = !Q.state.get("hasGun");
+
+  btnShoot.p.hidden = !Q.state.get("hasGun")
+  Q.state.on "change.hasGun", onChangeHidden btnShoot
+
+  # Add everything to the stage
+  stage.insert(btnLeft)
+  stage.insert(btnRight)
+  stage.insert(btnJumpLeft)
+  stage.insert(btnJumpRight)
+  stage.insert(btnShoot)
