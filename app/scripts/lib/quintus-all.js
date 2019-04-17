@@ -3189,6 +3189,11 @@ Quintus.Input = function(Q) {
         } 
       }
       p.landed -= dt;
+
+      // turn off instantaneous controls, like jumping, to mark as 'dealt with'
+      Q.inputs['jumpleft'] = false;
+      Q.inputs['jumpright'] = false;
+
     }
   });
 
