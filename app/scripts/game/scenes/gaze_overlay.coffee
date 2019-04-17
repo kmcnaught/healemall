@@ -17,10 +17,15 @@ Q.scene "gaze_overlay", (stage) ->
       Q.inputs[action]=1
       Q.input.trigger(action);
 
-  onHover = (action) => (e) => 
+  onTouch = (action) => (e) => 
     if action
-      console.log('hover %s', action)        
+      console.log('touch %s', action)        
       Q.inputs[action]=1
+
+  onTouchEnd = (action) => (e) => 
+    if action
+      console.log('touch end %s', action)        
+      Q.inputs[action]=0
 
 
   # define some shapes for the main gaze controls  
@@ -130,7 +135,9 @@ Q.scene "gaze_overlay", (stage) ->
       button.doDwell = false
 
     if (hover_action)
-      button.on "hover", onHover hover_action
+      button.on "hover", onTouch hover_action
+      button.on "touch", onTouch hover_action
+      button.on "touchEnd", onTouchEnd hover_action
 
     return button
 
