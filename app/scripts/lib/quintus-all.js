@@ -2997,7 +2997,7 @@ Quintus.Input = function(Q) {
 
     drawCanvas: function() {
       if(this.touchEnabled) {
-       // this.drawButtons();
+        this.drawButtons();
       }
 
       if(this.joypadEnabled) {

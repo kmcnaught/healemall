@@ -297,7 +297,7 @@ window.Game =
         available: 0
       zombieModeFound: false
 
-    Q.input.touchControls() # render onscreen touch buttons
+    # Q.input.touchControls() # render onscreen touch buttons
 
     Q.clearStages()
 
@@ -402,7 +402,7 @@ window.Game =
         available: 0
       zombieModeFound: false
 
-    Q.input.touchControls() # render onscreen touch buttons
+    # Q.input.touchControls() # render onscreen touch buttons
 
     Q.clearStages()
     Q.stageScene "tutorial",
