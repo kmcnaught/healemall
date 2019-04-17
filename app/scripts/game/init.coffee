@@ -59,7 +59,8 @@ window.Game =
       maximize: true
       upsampleWidth: 640
       upsampleHeight: 320
-    Q.controls().touch() # touch on screen buttons are rendered when level initialized
+    Q.controls().touch(Q.SPRITE_UI, [0,1])
+    Q.controls().trackGaze(Q.SPRITE_UI, [0,1,2])
     Q.enableSound()
 
     # game progress

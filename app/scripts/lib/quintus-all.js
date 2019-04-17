@@ -4614,8 +4614,6 @@ Quintus.Touch = function(Q) {
 
     init: function() {
       var touchSystem = this;
-      this.doDwell = true;
-      this.lastCursorTime = 0;
 
       this.boundTouch = function(e) { touchSystem.touch(e); };
       this.boundDrag = function(e) { touchSystem.drag(e); };
@@ -4631,10 +4629,6 @@ Quintus.Touch = function(Q) {
       Q.el.addEventListener('touchend',this.boundEnd);
       Q.el.addEventListener('mouseup',this.boundEnd);
       Q.el.addEventListener('touchcancel',this.boundEnd);
-
-      if (this.doDwell) {
-        Q.el.addEventListener('mousemove',this.boundCursor);        
-      }
 
       this.touchPos = new Q.Evented();
       this.touchPos.grid = {};
@@ -4656,9 +4650,6 @@ Quintus.Touch = function(Q) {
       Q.el.removeEventListener('mouseup',this.boundEnd);
       Q.el.removeEventListener('touchcancel',this.boundEnd);
 
-      if (this.doDwell) {
-        Q.el.removeEventListener('mousemove',this.boundCursor);        
-      }
     },
 
     normalizeTouch: function(touch,stage) {
@@ -4684,7 +4675,6 @@ Quintus.Touch = function(Q) {
         canvasPosX = touch.pageX - Q.touch.offsetX;
         canvasPosY = touch.pageY - Q.touch.offsetY;
       }
-
 
       this.touchPos.p.ox = this.touchPos.p.px = canvasPosX / Q.cssWidth * Q.width;
       this.touchPos.p.oy = this.touchPos.p.py = canvasPosY / Q.cssHeight * Q.height;
@@ -4744,12 +4734,6 @@ Quintus.Touch = function(Q) {
           }
         }
       }
-      //e.preventDefault();
-    },
-
-    // handle mouse move events for gaze control
-    cursor: function(e) {      
-      
       //e.preventDefault();
     },
 
@@ -4825,19 +4809,19 @@ Quintus.Touch = function(Q) {
 Quintus.Gaze = function(Q) {
   // Uses cursor (controlled by eye gaze tracker) for button interaction
   if(Q._isUndefined(Quintus.Sprites)) {
-    throw "Quintus.Touch requires Quintus.Sprites Module";
+    throw "Quintus.Gaze requires Quintus.Sprites Module";
   }
 
-  var touchStage = [0,1,2];
+  var touchStage = [0];
   var touchType = 0;
 
   Q.Evented.extend("GazeSystem",{
 
     init: function() {
-      var touchSystem = this;
+      var gazeSystem = this;
       this.lastCursorTime = 0;
 
-      this.boundCursor = function(e) { touchSystem.cursor(e); };
+      this.boundCursor = function(e) { gazeSystem.cursor(e); };
       Q.el.addEventListener('mousemove',this.boundCursor);        
       
       this.touchPos = new Q.Evented();
@@ -5002,27 +4986,27 @@ Quintus.Gaze = function(Q) {
 
   });
 
-  // Q.touch = function(type,stage) {
-  //   Q.untouch();
-  //   touchType = type || Q.SPRITE_UI;
-  //   touchStage = stage || [2,1,0];
-  //   if(!Q._isArray(touchStage)) {
-  //     touchStage = [touchStage];
-  //   }
+  Q.trackGaze = function(type,stage) {
+    Q.untrackGaze();
+    touchType = type || Q.SPRITE_UI;
+    touchStage = stage || [2,1,0];
+    if(!Q._isArray(touchStage)) {
+      touchStage = [touchStage];
+    }
 
-  //   if(!Q._touch) {
-  //     Q.touchInput = new Q.TouchSystem();
-  //   }
-  //   return Q;
-  // };
+    if(!Q._gaze) {
+      Q.gazeInput = new Q.GazeSystem();
+    }
+    return Q;
+  };
 
-  // Q.untouch = function() {
-  //   if(Q.touchInput) {
-  //     Q.touchInput.destroy();
-  //     delete Q['touchInput'];
-  //   }
-  //   return Q;
-  // };
+  Q.untrackGaze = function() {
+    if(Q.gazeInput) {
+      Q.gazeInput.destroy();
+      delete Q['gazeInput'];
+    }
+    return Q;
+  };
 
 };
 
