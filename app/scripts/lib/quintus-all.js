@@ -4863,9 +4863,7 @@ Quintus.Gaze = function(Q) {
       }
       this.lastCursorTime = timestamp
 
-      var found_obj;
-      var found_pid;
-      var found_pos;
+      var gaze_target;
       
       // Search all stages for object under cursor
       // (this doesn't handle multiple overlapping objects)
@@ -4884,9 +4882,7 @@ Quintus.Gaze = function(Q) {
           obj = col && col.obj;
           pos.obj = obj;
           if (obj) {
-            found_obj = obj;
-            found_pid = obj.p.id;
-            found_pos = pos;
+            gaze_target = {obj: obj, pid: obj.p.id, pos: pos}
           }
         }  
       }
@@ -4899,7 +4895,7 @@ Quintus.Gaze = function(Q) {
 
       // Decrement all other dwells in progress
       for (var key in this.objectDwelltimes) {
-        if (key != found_pid) {
+        if (!gaze_target || key != gaze_target.pid) {
           this.objectDwelltimes[key].dwell -= dt;
 
           // turn off visualisation
@@ -4915,52 +4911,52 @@ Quintus.Gaze = function(Q) {
       }  
 
       // If we found something, increment its dwell and take some action
-      if (found_obj) {
+      if (gaze_target) {
         
         // always trigger a hover
-        found_obj.trigger('hover');
+        gaze_target.obj.trigger('hover');
 
         // dwell-able objects get new dwell created/old dwell incremented
-        if (found_obj.doDwell) {   
+        if (gaze_target.obj.doDwell) {   
 
-          if (!(found_pid in this.objectDwelltimes)) {
+          if (!(gaze_target.pid in this.objectDwelltimes)) {
             // if we weren't on this object last tick, dt could be large without
             // implying we were here for a long time
             var init_dt = 100; 
-            this.objectDwelltimes[found_pid] = {dwell:init_dt, obj:found_obj, active:true};
+            this.objectDwelltimes[gaze_target.pid] = {dwell:init_dt, obj:gaze_target.obj, active:true};
           }
           else {
-            this.objectDwelltimes[found_pid].dwell += dt; 
-            this.objectDwelltimes[found_pid].active = true;
+            this.objectDwelltimes[gaze_target.pid].dwell += dt; 
+            this.objectDwelltimes[gaze_target.pid].active = true;
 
-            var curr_dwell = this.objectDwelltimes[found_pid].dwell
+            var curr_dwell = this.objectDwelltimes[gaze_target.pid].dwell
 
-            found_obj.trigger('dwellIncrement', curr_dwell/this.dwellTime);
+            gaze_target.obj.trigger('dwellIncrement', curr_dwell/this.dwellTime);
 
             if (curr_dwell > this.dwellTime) {
               currTouch = {
-                  x: found_pos.p.px,
-                  y: found_pos.p.py,
-                  origX: found_obj.p.x,
-                  origY: found_obj.p.y,
-                  sx: found_pos.p.ox,
-                  sy: found_pos.p.oy,
+                  x: gaze_target.pos.p.px,
+                  y: gaze_target.pos.p.py,
+                  origX: gaze_target.obj.p.x,
+                  origY: gaze_target.obj.p.y,
+                  sx: gaze_target.pos.p.ox,
+                  sy: gaze_target.pos.p.oy,
                   identifier: e.identifier,
-                  obj: found_obj,
+                  obj: gaze_target.obj,
                   stage: stage
                 };
-              found_obj.trigger('touchEnd', currTouch);
+              gaze_target.obj.trigger('touchEnd', currTouch);
 
-              this.objectDwelltimes[found_pid].dwell = 0; 
-              found_obj.trigger('dwellIncrement', 0);
+              this.objectDwelltimes[gaze_target.pid].dwell = 0; 
+              gaze_target.obj.trigger('dwellIncrement', 0);
             }        
           }
         }
         // non-dwell buttons still respond to gaze, but just instantly
         // they go straight to maximum
         else {  
-          this.objectDwelltimes[found_pid] = {dwell:1, obj:found_obj, active:true};
-          found_obj.trigger('dwellIncrement', 1.0);
+          this.objectDwelltimes[gaze_target.pid] = {dwell:1, obj:gaze_target.obj, active:true};
+          gaze_target.obj.trigger('dwellIncrement', 1.0);
         }
       }
       //e.preventDefault();
