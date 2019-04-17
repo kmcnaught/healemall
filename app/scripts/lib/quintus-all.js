@@ -3102,6 +3102,21 @@ Quintus.Input = function(Q) {
       p.direction ='right';
 
       this.isjumpingsideways = false;
+      this.pendingJumpLeft = false;
+      this.pendingJumpRight = false;
+
+      // jump actions get triggered by dwell, need to queue until next step
+      Q.input.on("jumpleft", this, "queueJumpLeft");
+      Q.input.on("jumpright", this, "queueJumpRight");
+
+    },
+
+    queueJumpLeft: function() {
+      this.pendingJumpLeft = true;
+    },
+  
+    queueJumpRight: function() {
+      this.pendingJumpRight = true;
     },
 
     landed: function(col) {
@@ -3129,8 +3144,8 @@ Quintus.Input = function(Q) {
            ( (Q.inputs['right'] || Q.inputs['jumpright']) && p.direction == 'left' ) ) {
         p.moveAccumulation = 0;
       }
-      else if (Q.inputs['left'] || Q.inputs['jumpleft'] ||
-               Q.inputs['right'] || Q.inputs['jumpright']) {
+      else if (Q.inputs['left'] || Q.inputs['jumpleft'] || this.pendingJumpLeft ||
+               Q.inputs['right'] || Q.inputs['jumpright'] || this.pendingJumpRight) {
         if (p.moveAccumulation < p.rampUpTime) {
           p.moveAccumulation += dt;
         }
@@ -3165,17 +3180,19 @@ Quintus.Input = function(Q) {
         else {
           p.vx = -p.maxSpeed;
         }
-      } else if(Q.inputs['left'] || Q.inputs['jumpleft']) {
+      } else if(Q.inputs['left'] || Q.inputs['jumpleft'] || this.pendingJumpLeft) {
         p.vx = -p.maxSpeed*speedFraction;
         p.direction = 'left';
-      } else if(Q.inputs['right'] || Q.inputs['jumpright']) {
+      } else if(Q.inputs['right'] || Q.inputs['jumpright'] || this.pendingJumpRight) {
         p.direction = 'right';
         p.vx = p.maxSpeed*speedFraction;
       } else {
         p.vx = 0;      
       }
 
-      if(p.landed > 0 && (Q.inputs['up'] || Q.inputs['action'] || Q.inputs['jumpleft'] || Q.inputs['jumpright'])) {
+      if(p.landed > 0 && (Q.inputs['up'] || Q.inputs['action'] || 
+                          Q.inputs['jumpleft'] || Q.inputs['jumpright'] ||
+                          this.pendingJumpLeft || this.pendingJumpRight)) {
         p.vy = p.jumpSpeed;
         p.landed = -dt;
         
@@ -3183,17 +3200,20 @@ Quintus.Input = function(Q) {
         // the sideways motion on while it completes. 
         // action will be completed once we've landed somewhere
 
-        if (Q.inputs['jumpleft'] || Q.inputs['jumpright']) {
+        if (Q.inputs['jumpleft'] || Q.inputs['jumpright']||
+            this.pendingJumpLeft || this.pendingJumpRight) {
           this.entity.on("bump.bottom",this,"landedjump");
           this.isjumpingsideways = true;
         } 
       }
+
       p.landed -= dt;
 
-      // turn off instantaneous controls, like jumping, to mark as 'dealt with'
+      // turn off jumping controls (these should only be instantaneous actions)
+      this.pendingJumpRight = false;
+      this.pendingJumpLeft = false;
       Q.inputs['jumpleft'] = false;
       Q.inputs['jumpright'] = false;
-
     }
   });
 
