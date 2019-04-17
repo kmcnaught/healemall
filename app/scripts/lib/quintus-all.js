@@ -4618,7 +4618,6 @@ Quintus.Touch = function(Q) {
       this.boundTouch = function(e) { touchSystem.touch(e); };
       this.boundDrag = function(e) { touchSystem.drag(e); };
       this.boundEnd = function(e) { touchSystem.touchEnd(e); };
-      this.boundCursor = function(e) { touchSystem.cursor(e); };
 
       Q.el.addEventListener('touchstart',this.boundTouch);
       Q.el.addEventListener('mousedown',this.boundTouch);
@@ -4635,8 +4634,6 @@ Quintus.Touch = function(Q) {
       this.touchPos.p = { w:1, h:1, cx: 0, cy: 0 };
       this.activeTouches = {};
       this.touchedObjects = {};
-      this.objectDwelltimes = {};
-      this.dwellTime = 1000;
     },
 
     destroy: function() {
@@ -4649,7 +4646,6 @@ Quintus.Touch = function(Q) {
       Q.el.removeEventListener('touchend',this.boundEnd);
       Q.el.removeEventListener('mouseup',this.boundEnd);
       Q.el.removeEventListener('touchcancel',this.boundEnd);
-
     },
 
     normalizeTouch: function(touch,stage) {
@@ -4675,6 +4671,7 @@ Quintus.Touch = function(Q) {
         canvasPosX = touch.pageX - Q.touch.offsetX;
         canvasPosY = touch.pageY - Q.touch.offsetY;
       }
+
 
       this.touchPos.p.ox = this.touchPos.p.px = canvasPosX / Q.cssWidth * Q.width;
       this.touchPos.p.oy = this.touchPos.p.py = canvasPosY / Q.cssHeight * Q.height;
@@ -4732,7 +4729,9 @@ Quintus.Touch = function(Q) {
             obj.trigger('touch', this.activeTouches[touch.identifier]);
             break;
           }
+
         }
+
       }
       //e.preventDefault();
     },
