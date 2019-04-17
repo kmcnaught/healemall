@@ -3077,7 +3077,7 @@ Quintus.Input = function(Q) {
     }
   });
 
-  Q.component("platformerControlsSmarter", {
+  Q.component("platformerControlsGaze", {
     defaults: {
       jumpSpeed: -300,
       maxSpeed: 250,
