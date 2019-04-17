@@ -48,7 +48,7 @@ Q.scene "gaze_overlay", (stage) ->
           ]
   leftjump_normalised = [
             [0.5, 0.5],
-            [0.5, 0.0714285714285715],
+            [0.5, 0.15],
             [0.428571428571429, -0.0714285714285714],
             [0.214285714285714, -0.321428571428571],
             [0.428571428571429, -0.5],
@@ -60,7 +60,7 @@ Q.scene "gaze_overlay", (stage) ->
           ]   
   rightjump_normalised = [
             [-0.5, 0.5],
-            [-0.5, 0.0714285714285715],
+            [-0.5, 0.15],
             [-0.428571428571429, -0.0714285714285714],
             [-0.214285714285714, -0.321428571428571],
             [-0.428571428571429, -0.5],
@@ -134,10 +134,13 @@ Q.scene "gaze_overlay", (stage) ->
 
     return button
 
+  # we want direction+jump arrows to be left-aligned, not centre-aligned
+  jump_xoffset = w/30
+
   btnLeft = createGazeButton(x_left, y_lower, "", leftarrow_p, "", "left")
   btnRight = createGazeButton(x_right, y_lower, "", rightarrow_p, "", "right")
-  btnJumpLeft = createGazeButton(x_left, y_upper, "", leftjump_p, "jumpleft", "")
-  btnJumpRight = createGazeButton(x_right, y_upper, "", rightjump_p, "jumpright", "")
+  btnJumpLeft = createGazeButton(x_left+jump_xoffset, y_upper, "", leftjump_p, "jumpleft", "")
+  btnJumpRight = createGazeButton(x_right-jump_xoffset, y_upper, "", rightjump_p, "jumpright", "")
 
   # shoot button has extra logic  
   btnShoot = createGazeButton(x_centre, y_lower, "shoot", shoot_p, "shoot", "")
