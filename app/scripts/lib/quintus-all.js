@@ -4811,8 +4811,8 @@ Quintus.Gaze = function(Q) {
     throw "Quintus.Gaze requires Quintus.Sprites Module";
   }
 
-  var touchStage = [0];
-  var touchType = 0;
+  var gazeStage = [0];
+  var objType = 0;
 
   Q.Evented.extend("GazeSystem",{
 
@@ -4826,8 +4826,7 @@ Quintus.Gaze = function(Q) {
       this.touchPos = new Q.Evented();
       this.touchPos.grid = {};
       this.touchPos.p = { w:1, h:1, cx: 0, cy: 0 };
-      this.activeTouches = {};
-      this.touchedObjects = {};
+
       this.objectDwelltimes = {};
       this.dwellTime = 1000;
     },
@@ -4916,8 +4915,8 @@ Quintus.Gaze = function(Q) {
       }  
 
       // search all stages for this object
-      for(var stageIdx=0;stageIdx < touchStage.length;stageIdx++) {
-        var stage = Q.stage(touchStage[stageIdx]);
+      for(var stageIdx=0;stageIdx < gazeStage.length;stageIdx++) {
+        var stage = Q.stage(gazeStage[stageIdx]);
 
         if(!stage) { continue; }
 
@@ -4925,9 +4924,9 @@ Quintus.Gaze = function(Q) {
         var pos = this.normalizeTouch(touch,stage);
 
         stage.regrid(pos,true);
-        var col = stage.search(pos,touchType), obj;
+        var col = stage.search(pos,objType), obj;
 
-        if(col || stageIdx === touchStage.length - 1) {
+        if(col || stageIdx === gazeStage.length - 1) {
           obj = col && col.obj;
           pos.obj = obj;
         }
@@ -4987,10 +4986,10 @@ Quintus.Gaze = function(Q) {
 
   Q.trackGaze = function(type,stage) {
     Q.untrackGaze();
-    touchType = type || Q.SPRITE_UI;
-    touchStage = stage || [2,1,0];
-    if(!Q._isArray(touchStage)) {
-      touchStage = [touchStage];
+    objType = type || Q.SPRITE_UI;
+    gazeStage = stage || [2,1,0];
+    if(!Q._isArray(gazeStage)) {
+      gazeStage = [gazeStage];
     }
 
     if(!Q._gaze) {
