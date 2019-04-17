@@ -163,14 +163,22 @@ Q.Sprite.extend "Player",
       @p.lifePoints += newLives
 
     else
+
+      isOutOfMap = @p.y > Game.map.p.h
+
+      if isOutOfMap
+        Game.infoLabel.lifeLostFall()
+      else
+        Game.infoLabel.lifeLostZombie()
+
       @p.lifePoints -= 1
-      Game.infoLabel.lifeLost()
       @play("hit", 1)
+
       Q.AudioManager.add Game.audio.playerHit
 
       if @p.lifePoints < 0
 
-        if @p.wasZombie or @p.y > Game.map.p.h
+        if @p.wasZombie or isOutOfMap
           @destroy()
           Game.stageGameOverScreen()
           return

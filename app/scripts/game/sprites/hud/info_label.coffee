@@ -57,7 +57,7 @@ Q.UI.InfoLabel = Q.UI.Text.extend "UI.InfoLabel",
   extraLifeFound: ->
     @changeLabel "I feel better now!"
 
-  lifeLost: ->
+  lifeLostZombie: ->
     random = Math.floor(Math.random() * 3)
     if random == 0
       label = "Ouch!"
@@ -65,6 +65,17 @@ Q.UI.InfoLabel = Q.UI.Text.extend "UI.InfoLabel",
       label = "I've been bitten!"
     else 
       label = "That hurts!"
+      
+    @changeLabel label
+
+  lifeLostFall: ->
+    random = Math.floor(Math.random() * 3)
+    if random == 0
+      label = "Ouch!"
+    else if random == 1
+      label = "Oops!"
+    else 
+      label = "That hurt!"
       
     @changeLabel label
 
