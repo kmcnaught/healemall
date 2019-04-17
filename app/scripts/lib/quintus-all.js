@@ -4748,6 +4748,152 @@ Quintus.Touch = function(Q) {
     },
 
     // handle mouse move events for gaze control
+    cursor: function(e) {      
+      
+      //e.preventDefault();
+    },
+
+    drag: function(e) {
+      var touches = e.changedTouches || [ e ];
+
+      for(var i=0;i<touches.length;i++) {
+        var touch = touches[i];
+        touch.identifier = touch.identifier || 0;
+
+        var active = this.activeTouches[touch.identifier],
+            stage = active && active.stage;
+
+        if(active) {
+          var pos = this.normalizeTouch(touch,stage);
+          active.x = pos.p.px;
+          active.y = pos.p.py;
+          active.dx = pos.p.ox - active.sx;
+          active.dy = pos.p.oy - active.sy;
+
+          active.obj.trigger('drag', active);
+        }
+      }
+      e.preventDefault();
+    },
+
+    touchEnd: function(e) {
+      var touches = e.changedTouches || [ e ];
+
+      for(var i=0;i<touches.length;i++) {
+        var touch = touches[i];
+
+        touch.identifier = touch.identifier || 0;
+
+        var active = this.activeTouches[touch.identifier];
+
+        if(active) {
+          active.obj.trigger('touchEnd', active);
+          delete this.touchedObjects[active.obj.p.id];
+          this.activeTouches[touch.identifier] = null;
+        }
+      }
+      e.preventDefault();
+    }
+
+  });
+
+  Q.touch = function(type,stage) {
+    Q.untouch();
+    touchType = type || Q.SPRITE_UI;
+    touchStage = stage || [2,1,0];
+    if(!Q._isArray(touchStage)) {
+      touchStage = [touchStage];
+    }
+
+    if(!Q._touch) {
+      Q.touchInput = new Q.TouchSystem();
+    }
+    return Q;
+  };
+
+  Q.untouch = function() {
+    if(Q.touchInput) {
+      Q.touchInput.destroy();
+      delete Q['touchInput'];
+    }
+    return Q;
+  };
+
+};
+
+
+Quintus.Gaze = function(Q) {
+  // Uses cursor (controlled by eye gaze tracker) for button interaction
+  if(Q._isUndefined(Quintus.Sprites)) {
+    throw "Quintus.Touch requires Quintus.Sprites Module";
+  }
+
+  var touchStage = [0,1,2];
+  var touchType = 0;
+
+  Q.Evented.extend("GazeSystem",{
+
+    init: function() {
+      var touchSystem = this;
+      this.lastCursorTime = 0;
+
+      this.boundCursor = function(e) { touchSystem.cursor(e); };
+      Q.el.addEventListener('mousemove',this.boundCursor);        
+      
+      this.touchPos = new Q.Evented();
+      this.touchPos.grid = {};
+      this.touchPos.p = { w:1, h:1, cx: 0, cy: 0 };
+      this.activeTouches = {};
+      this.touchedObjects = {};
+      this.objectDwelltimes = {};
+      this.dwellTime = 1000;
+    },
+
+    destroy: function() {     
+      Q.el.removeEventListener('mousemove',this.boundCursor);        
+    },
+
+    normalizeTouch: function(touch,stage) {
+      var canvasPosX = touch.offsetX,
+          canvasPosY = touch.offsetY;         
+
+      if(Q._isUndefined(canvasPosX) || Q._isUndefined(canvasPosY)) {
+        canvasPosX = touch.layerX;
+        canvasPosY = touch.layerY;
+      }
+
+      if(Q._isUndefined(canvasPosX) || Q._isUndefined(canvasPosY)) {
+        if(Q.touch.offsetX === void 0) {
+          Q.touch.offsetX = 0;
+          Q.touch.offsetY = 0;
+          var el = Q.el;
+          do {
+            Q.touch.offsetX += el.offsetLeft;
+            Q.touch.offsetY += el.offsetTop;
+          } while(el = el.offsetParent);
+        }
+        canvasPosX = touch.pageX - Q.touch.offsetX;
+        canvasPosY = touch.pageY - Q.touch.offsetY;
+      }
+
+      this.touchPos.p.ox = this.touchPos.p.px = canvasPosX / Q.cssWidth * Q.width;
+      this.touchPos.p.oy = this.touchPos.p.py = canvasPosY / Q.cssHeight * Q.height;
+      
+      if(stage.viewport) {
+        this.touchPos.p.px /= stage.viewport.scale;
+        this.touchPos.p.py /= stage.viewport.scale;
+        this.touchPos.p.px += stage.viewport.x;
+        this.touchPos.p.py += stage.viewport.y;
+      }
+
+      this.touchPos.p.x = this.touchPos.p.px;
+      this.touchPos.p.y = this.touchPos.p.py;
+
+      this.touchPos.obj = null;
+      return this.touchPos;
+    },
+
+    // handle mouse move events for gaze control
     cursor: function(e) {
 
       var touch = e;
@@ -4854,73 +5000,32 @@ Quintus.Touch = function(Q) {
       //e.preventDefault();
     },
 
-    drag: function(e) {
-      var touches = e.changedTouches || [ e ];
-
-      for(var i=0;i<touches.length;i++) {
-        var touch = touches[i];
-        touch.identifier = touch.identifier || 0;
-
-        var active = this.activeTouches[touch.identifier],
-            stage = active && active.stage;
-
-        if(active) {
-          var pos = this.normalizeTouch(touch,stage);
-          active.x = pos.p.px;
-          active.y = pos.p.py;
-          active.dx = pos.p.ox - active.sx;
-          active.dy = pos.p.oy - active.sy;
-
-          active.obj.trigger('drag', active);
-        }
-      }
-      e.preventDefault();
-    },
-
-    touchEnd: function(e) {
-      var touches = e.changedTouches || [ e ];
-
-      for(var i=0;i<touches.length;i++) {
-        var touch = touches[i];
-
-        touch.identifier = touch.identifier || 0;
-
-        var active = this.activeTouches[touch.identifier];
-
-        if(active) {
-          active.obj.trigger('touchEnd', active);
-          delete this.touchedObjects[active.obj.p.id];
-          this.activeTouches[touch.identifier] = null;
-        }
-      }
-      e.preventDefault();
-    }
-
   });
 
-  Q.touch = function(type,stage) {
-    Q.untouch();
-    touchType = type || Q.SPRITE_UI;
-    touchStage = stage || [2,1,0];
-    if(!Q._isArray(touchStage)) {
-      touchStage = [touchStage];
-    }
+  // Q.touch = function(type,stage) {
+  //   Q.untouch();
+  //   touchType = type || Q.SPRITE_UI;
+  //   touchStage = stage || [2,1,0];
+  //   if(!Q._isArray(touchStage)) {
+  //     touchStage = [touchStage];
+  //   }
 
-    if(!Q._touch) {
-      Q.touchInput = new Q.TouchSystem();
-    }
-    return Q;
-  };
+  //   if(!Q._touch) {
+  //     Q.touchInput = new Q.TouchSystem();
+  //   }
+  //   return Q;
+  // };
 
-  Q.untouch = function() {
-    if(Q.touchInput) {
-      Q.touchInput.destroy();
-      delete Q['touchInput'];
-    }
-    return Q;
-  };
+  // Q.untouch = function() {
+  //   if(Q.touchInput) {
+  //     Q.touchInput.destroy();
+  //     delete Q['touchInput'];
+  //   }
+  //   return Q;
+  // };
 
 };
+
 
 /*global Quintus:false */
 

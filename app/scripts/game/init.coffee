@@ -52,7 +52,7 @@ window.Game =
     # Q.debugFill = true
 
     # main setup
-    Q.include "Sprites, Scenes, Input, Touch, UI, 2D, Anim, Audio"
+    Q.include "Sprites, Scenes, Input, Touch, Gaze, UI, 2D, Anim, Audio"
     Q.setup
       # width: 640
       # height: 320
