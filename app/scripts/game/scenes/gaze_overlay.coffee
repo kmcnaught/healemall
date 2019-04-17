@@ -143,7 +143,7 @@ Q.scene "gaze_overlay", (stage) ->
   btnJumpRight = createGazeButton(x_right-jump_xoffset, y_upper, "", rightjump_p, "jumpright", "")
 
   # shoot button has extra logic  
-  btnShoot = createGazeButton(x_centre, y_lower, "shoot", shoot_p, "shoot", "")
+  btnShoot = createGazeButton(x_centre, y_lower, "shoot", shoot_p, "fire", "")
 
   # unhide 'fire' button when we've got a gun
   onChangeHidden = (btn) => () =>
