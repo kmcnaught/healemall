@@ -4835,6 +4835,7 @@ Quintus.Gaze = function(Q) {
       Q.el.removeEventListener('mousemove',this.boundCursor);        
     },
 
+    // TODO: this is duplicated from touchsystem
     normalizeTouch: function(touch,stage) {
       var canvasPosX = touch.offsetX,
           canvasPosY = touch.offsetY;         
