@@ -4862,34 +4862,13 @@ Quintus.Gaze = function(Q) {
         dt = timestamp - this.lastCursorTime;      
       }
       this.lastCursorTime = timestamp
+
+      var found_obj;
+      var found_pid;
+      var found_pos;
       
-
-      // Turn off all controls
-      // Reset all the actions bound to controls
-      // but keep track of all the actions that were on      
-      for (var key in Q.inputs) {
-        Q.inputs[key] = false;
-      } 
-
-      // decrement all dwells in progress
-      // (including this one: we'll have to double-increment when we find it)
-      for (var key in this.objectDwelltimes) {
-        if (this.objectDwelltimes.hasOwnProperty(key) &&
-            key != pid) {
-          this.objectDwelltimes[key].dwell -= dt;
-          // turn off visualisation
-          if ( this.objectDwelltimes[key].active ) {
-            this.objectDwelltimes[key].obj.trigger('dwellIncrement', 0);
-            this.objectDwelltimes[key].active = false;
-          }
-        
-          if (this.objectDwelltimes[key].dwell < 0) {
-            delete this.objectDwelltimes[key]
-          }     
-        }
-      }  
-
-      // search all stages for this object
+      // Search all stages for object under cursor
+      // (this doesn't handle multiple overlapping objects)
       for(var stageIdx=0;stageIdx < gazeStage.length;stageIdx++) {
         var stage = Q.stage(gazeStage[stageIdx]);
 
@@ -4904,55 +4883,85 @@ Quintus.Gaze = function(Q) {
         if(col || stageIdx === gazeStage.length - 1) {
           obj = col && col.obj;
           pos.obj = obj;
-        }
-            
-        if (obj) {
-          var pid = obj.p.id 
+          if (obj) {
+            found_obj = obj;
+            found_pid = obj.p.id;
+            found_pos = pos;
+          }
+        }  
+      }
+
+      // Reset all the actions bound to controls
+      // (they might be turned back on by hover events)
+      for (var key in Q.inputs) {
+        Q.inputs[key] = false;
+      } 
+
+      // Decrement all other dwells in progress
+      for (var key in this.objectDwelltimes) {
+        if (key != found_pid) {
+          this.objectDwelltimes[key].dwell -= dt;
+
+          // turn off visualisation
+          if ( this.objectDwelltimes[key].active ) {
+            this.objectDwelltimes[key].obj.trigger('dwellIncrement', 0);
+            this.objectDwelltimes[key].active = false;
+          }
         
-          // always trigger a hover
-          obj.trigger('hover');
+          if (this.objectDwelltimes[key].dwell < 0) {
+            delete this.objectDwelltimes[key]
+          }     
+        }
+      }  
 
-          // dwell-able objects get new dwell created/old dwell incremented
-          if (obj.doDwell) {   
+      // If we found something, increment its dwell and take some action
+      if (found_obj) {
+        
+        // always trigger a hover
+        found_obj.trigger('hover');
 
-            if (!(pid in this.objectDwelltimes)) {
-              this.objectDwelltimes[pid] = {dwell:dt, obj:obj, active:true};
-            }
-            else {
-              this.objectDwelltimes[pid].dwell += 2*dt; 
-              this.objectDwelltimes[pid].active = true;
+        // dwell-able objects get new dwell created/old dwell incremented
+        if (found_obj.doDwell) {   
 
-              var curr_dwell = this.objectDwelltimes[pid].dwell
-
-              obj.trigger('dwellIncrement', curr_dwell/this.dwellTime);
-
-              if (curr_dwell > this.dwellTime) {
-                currTouch = {
-                    x: pos.p.px,
-                    y: pos.p.py,
-                    origX: obj.p.x,
-                    origY: obj.p.y,
-                    sx: pos.p.ox,
-                    sy: pos.p.oy,
-                    identifier: e.identifier,
-                    obj: obj,
-                    stage: stage
-                  };
-                obj.trigger('touchEnd', currTouch);
-
-                this.objectDwelltimes[pid].dwell = 0; 
-                obj.trigger('dwellIncrement', 0);
-              }        
-            }
+          if (!(found_pid in this.objectDwelltimes)) {
+            // if we weren't on this object last tick, dt could be large without
+            // implying we were here for a long time
+            var init_dt = 100; 
+            this.objectDwelltimes[found_pid] = {dwell:init_dt, obj:found_obj, active:true};
           }
-          // non-dwell buttons still respond to gaze, but just instantly
-          // they go straight to maximum
-          else {  
-            this.objectDwelltimes[pid] = {dwell:1, obj:obj, active:true};
-            obj.trigger('dwellIncrement', 1.0);
+          else {
+            this.objectDwelltimes[found_pid].dwell += dt; 
+            this.objectDwelltimes[found_pid].active = true;
+
+            var curr_dwell = this.objectDwelltimes[found_pid].dwell
+
+            found_obj.trigger('dwellIncrement', curr_dwell/this.dwellTime);
+
+            if (curr_dwell > this.dwellTime) {
+              currTouch = {
+                  x: found_pos.p.px,
+                  y: found_pos.p.py,
+                  origX: found_obj.p.x,
+                  origY: found_obj.p.y,
+                  sx: found_pos.p.ox,
+                  sy: found_pos.p.oy,
+                  identifier: e.identifier,
+                  obj: found_obj,
+                  stage: stage
+                };
+              found_obj.trigger('touchEnd', currTouch);
+
+              this.objectDwelltimes[found_pid].dwell = 0; 
+              found_obj.trigger('dwellIncrement', 0);
+            }        
           }
         }
-      
+        // non-dwell buttons still respond to gaze, but just instantly
+        // they go straight to maximum
+        else {  
+          this.objectDwelltimes[found_pid] = {dwell:1, obj:found_obj, active:true};
+          found_obj.trigger('dwellIncrement', 1.0);
+        }
       }
       //e.preventDefault();
     },
