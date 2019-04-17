@@ -4878,8 +4878,6 @@ Quintus.Gaze = function(Q) {
     // handle mouse move events for gaze control
     cursor: function(e) {
 
-      var touch = e;
-
       // Measure time since last input
       var timestamp = e.timeStamp // millisecs
       dt = 0
@@ -4920,8 +4918,8 @@ Quintus.Gaze = function(Q) {
 
         if(!stage) { continue; }
 
-        touch.identifier = touch.identifier || 0;
-        var pos = this.normalizeTouch(touch,stage);
+        e.identifier = e.identifier || 0;
+        var pos = this.normalizeTouch(e,stage);
 
         stage.regrid(pos,true);
         var col = stage.search(pos,objType), obj;
@@ -4959,7 +4957,7 @@ Quintus.Gaze = function(Q) {
                     origY: obj.p.y,
                     sx: pos.p.ox,
                     sy: pos.p.oy,
-                    identifier: touch.identifier,
+                    identifier: e.identifier,
                     obj: obj,
                     stage: stage
                   };
