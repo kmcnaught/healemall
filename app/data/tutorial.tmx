@@ -21,7 +21,7 @@
   <object id="22" name="key" x="7344" y="764" width="88" height="68"/>
  </objectgroup>
  <objectgroup color="#00aa00" id="2" name="player">
-  <object id="5" name="player" type="player" x="2660" y="910" width="70" height="140"/>
+  <object id="5" name="player" type="player" x="2628" y="694" width="70" height="140"/>
  </objectgroup>
  <objectgroup color="#ff0000" id="3" name="enemies">
   <object id="6" name="zombie" type="enemy" x="5204" y="950" width="70" height="92">
@@ -2469,8 +2469,8 @@
    <tile/>
    <tile/>
    <tile/>
-   <tile/>
-   <tile/>
+   <tile gid="1"/>
+   <tile gid="3"/>
    <tile/>
    <tile/>
    <tile/>
@@ -2862,10 +2862,10 @@
    <tile/>
    <tile/>
    <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
    <tile gid="8"/>
+   <tile/>
+   <tile/>
+   <tile/>
    <tile/>
    <tile/>
    <tile/>
@@ -3062,10 +3062,10 @@
    <tile/>
    <tile/>
    <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
    <tile gid="1"/>
+   <tile gid="2"/>
+   <tile gid="2"/>
+   <tile gid="2"/>
    <tile gid="2"/>
    <tile gid="2"/>
    <tile gid="2"/>
@@ -8473,8 +8473,8 @@
    <tile/>
    <tile/>
    <tile/>
-   <tile/>
-   <tile/>
+   <tile gid="9"/>
+   <tile gid="10"/>
    <tile/>
    <tile/>
    <tile/>
@@ -9069,7 +9069,7 @@
    <tile/>
    <tile/>
    <tile/>
-   <tile gid="9"/>
+   <tile/>
    <tile/>
    <tile/>
    <tile/>
@@ -12439,7 +12439,7 @@
   </data>
  </layer>
  <objectgroup id="15" name="text">
-  <object id="8" name="look to move" x="2712" y="674.121"/>
+  <object id="8" name="look to move" x="2668" y="538.121"/>
   <object id="9" name="longer is faster" x="3354" y="630" width="90" height="64"/>
   <object id="10" name="dwell to jump" x="3982" y="622" width="78" height="82"/>
   <object id="11" name="jump over the gap" x="4476" y="428" width="112" height="68"/>
