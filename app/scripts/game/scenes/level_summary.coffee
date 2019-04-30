@@ -22,7 +22,7 @@ Q.scene "levelSummary", (stage) ->
   # add title
   stage.insert new Q.UI.Text
     x: Q.width/2
-    y: marginY/2
+    y: marginY*.75
     label: "Well done!"
     color: "#f2da38"
     family: "Jolly Lodger"
@@ -104,7 +104,7 @@ Q.scene "levelSummary", (stage) ->
     radius: 10
     fontColor: "#353b47"
     font: "400 58px Jolly Lodger"
-    label: "All levels"
+    label: "Main menu"
     type: Q.SPRITE_UI | Q.SPRITE_DEFAULT
 
   buttonBack.p.x = Q.width/2 - buttonBack.p.w/2 - 40
