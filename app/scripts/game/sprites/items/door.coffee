@@ -37,5 +37,8 @@ Q.Sprite.extend "Door",
         # get game statistics
         Game.currentLevelData.zombies.healed = if @stage.lists.Human? then @stage.lists.Human.length else 0
 
-        Game.stageEndLevelScreen()
+        if Q.state.get("currentLevel") > 0
+          Game.stageEndLevelScreen()
+        else
+          Game.stageScreen("tutorialSummary")
 
