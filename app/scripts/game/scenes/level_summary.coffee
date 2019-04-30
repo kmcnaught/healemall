@@ -121,13 +121,17 @@ Q.scene "levelSummary", (stage) ->
   # count stars
   score = stage.options.zombies.healed/stage.options.zombies.available
   stars = 0
+  performance = "" 
 
   if score <= 0.5
     stars = 1
+    performance = "Okay"
   else if score > 0.5 && score < 0.9
     stars = 2
+    performance = "Good"
   else
     stars = 3
+    performance = "Perfect!"
 
   # save only if better than previous
   previousStars = localStorage.getItem(Game.storageKeys.levelProgress + ":" + Q.state.get("currentLevel"))
@@ -151,6 +155,14 @@ Q.scene "levelSummary", (stage) ->
 
     x += scoreImg.p.w + 20
 
+  # Score:
+  stage.insert new Q.UI.Text
+      x: starsContainer.p.x
+      y: starsContainer.p.y + scoreImg.p.h*0.6
+      label: "Score: " + performance
+      color: "#ffffff"
+      family: "Boogaloo"
+      size: 36
 
   # track events
   Game.trackEvent("levelSummary:" + Q.state.get("currentLevel"), "score", score)
