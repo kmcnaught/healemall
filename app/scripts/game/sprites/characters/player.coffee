@@ -113,14 +113,6 @@ Q.Sprite.extend "Player",
     if @p.timeInvincible > 0
       @p.timeInvincible = Math.max(@p.timeInvincible - dt, 0)
 
-    # jump from too high place
-    if @p.vy > 1100
-      @p.willBeDead = true
-
-    if @p.willBeDead && @p.vy < 1100
-      @updateLifePoints()
-      @p.willBeDead = false
-
     # check if out of map
     if @p.y > Game.map.p.h
       @updateLifePoints()
