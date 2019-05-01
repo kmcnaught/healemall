@@ -143,31 +143,35 @@ window.Game =
       level6:
         dataAsset: "level6.tmx"
         bullets: 3
+        # easy peasy
       level7:      
         dataAsset: "level7.tmx"
         bullets: 10
-        name:"Easy Peasy"
+        name:"Pyramid"
       level8:
         dataAsset: "level8.tmx"
         bullets: 10
-        name: "Too Many Zombies"
+        name: "Hurdles"
       level9:
         dataAsset: "level9.tmx"
         bullets: 10
-        name: "Tricky"
+        name: "Tricky Jumps"
       level10:
         dataAsset: "level10.tmx"
         bullets: 10
-        name: 'Really long name here'
+        name: "Too Many Zombies"
       level11:
         dataAsset: "level11.tmx"
         bullets: 10
+        name: "More Tricky Jumps"
       level12:
         dataAsset: "level12.tmx"
         bullets: 10
+        name: "Steps"
       level13:
         dataAsset: "level13.tmx"
-        bullets: 10
+        bullets: 20
+        name: "Diamond"
       level14:
         dataAsset: "level14.tmx"
         bullets: 10
