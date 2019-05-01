@@ -11,17 +11,24 @@ Q.UI.InfoLabel = Q.UI.Text.extend "UI.InfoLabel",
       family: "Boogaloo"
       pendingLabel: ""
 
+  speak:  (phrase) ->
+    if false # TODO: Add this in :)
+      responsiveVoice.speak(phrase, "UK English Male");
+
   changeLabel: (new_label) ->    
     if new_label is this.pendingLabel
       return
     this.pendingLabel = new_label
     @afterLabelChange "..."
     self = this;
-    setTimeout ( -> self.afterLabelChange new_label), 250
+    setTimeout ( -> 
+      self.afterLabelChange new_label
+      self.speak new_label ), 250
 
   afterLabelChange: (new_label) ->
     if new_label
       @p.label = new_label 
+    
     @calcSize()
     @p.container.p.x = @p.offsetLeft + @p.w/2 + 10
     @p.container.fit(5, 10)
