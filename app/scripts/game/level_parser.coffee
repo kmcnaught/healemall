@@ -80,7 +80,7 @@ Q.LevelParser =
           randomBool = Math.floor(Math.random() * 2) 
           console.log(randomBool)
           item =
-            [obj.name, Q.tilePos(obj.x, obj.y, {startLeft: randomBool})]   
+            [obj.name, Q.tilePos(obj.x, obj.y, {startLeft: randomBool, canFallOff: false})]   
           all_items.push item
         else if obj.name == "Player"
           # Player and camera together, get added differently
