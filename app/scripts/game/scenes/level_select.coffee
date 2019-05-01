@@ -106,7 +106,7 @@ Q.scene "levelSelect", (stage) ->
     container.insert new Q.UI.Text
         x: 0
         y: -fontsize/2
-        label: "More"
+        label: "Extra"
         color: "#404444"
         family: "Jolly Lodger"
         size: fontsize
