@@ -105,6 +105,10 @@ Q.scene "gaze_overlay", (stage) ->
   # positioning
   # lower buttons (left, right, shoot) should centre vertically on platform player is stood on
   y_lower = Q.height/2 + Game.assets.map.tileSize/2
+
+  # shoot is even lower, to leave centre as rest position
+  y_shoot = y_lower + Game.assets.map.tileSize*1.5
+
   # upper buttons (jump) centre just above next platform, for scale = 1, 
   y_upper = y_lower - (3+scale)*Game.assets.map.tileSize 
 
@@ -150,7 +154,7 @@ Q.scene "gaze_overlay", (stage) ->
   btnJumpRight = createGazeButton(x_right-jump_xoffset, y_upper, "", rightjump_p, "jumpright", "")
 
   # shoot button has extra logic  
-  btnShoot = createGazeButton(x_centre, y_lower, "shoot", shoot_p, "fire", "")
+  btnShoot = createGazeButton(x_centre, y_shoot, "shoot", shoot_p, "fire", "")
 
   # unhide 'fire' button when we've got a gun
   onChangeHidden = (btn) => () =>
