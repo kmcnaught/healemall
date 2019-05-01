@@ -106,7 +106,7 @@ Q.Sprite.extend "Player",
     if @p.timeToNextSave > 0
       @p.timeToNextSave = Math.max(@p.timeToNextSave - dt, 0)
 
-    if @p.timeToNextSave == 0
+    if @p.timeToNextSave <= 0
       @savePosition()
 
     # collision with enemy timeout
@@ -142,8 +142,7 @@ Q.Sprite.extend "Player",
       @p.timeInvincible = 3
 
   savePosition: ->
-    dirX = @p.vx/Math.abs(@p.vx)
-    ground = Q.stage().locate(@p.x, @p.y + @p.h/2 + 1, Game.SPRITE_TILES)
+    ground = Q.stage().locate(@p.x, @p.y + @p.h/2 + 0.5, Game.SPRITE_TILES)
 
     if ground
       @p.savedPosition.x = @p.x
@@ -203,4 +202,6 @@ Q.Sprite.extend "Player",
   restore: ->
     @p.timeInvincible = 5
     @p.x = @p.savedPosition.x
-    @p.y = @p.savedPosition.y-25
+    @p.y = @p.savedPosition.y + 0.25*Game.assets.map.tileSize
+    @p.vx = 0
+    @p.vy = 0
