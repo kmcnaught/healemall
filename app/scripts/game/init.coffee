@@ -158,11 +158,11 @@ window.Game =
         name: "Tricky Jumps"
       level10:
         dataAsset: "level10.tmx"
-        bullets: 10
+        bullets: 20
         name: "Too Many Zombies"
       level11:
         dataAsset: "level11.tmx"
-        bullets: 10
+        bullets: 20
         name: "More Tricky Jumps"
       level12:
         dataAsset: "level12.tmx"
