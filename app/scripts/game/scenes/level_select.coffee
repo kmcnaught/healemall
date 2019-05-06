@@ -33,7 +33,7 @@ Q.scene "levelSelect", (stage) ->
   # prepare special buttons for first column
 
   # add level buttons
-  bonusUnlocked = localStorage.getItem(Game.storageKeys.unlockedBonus)
+  bonusUnlocked = true #localStorage.getItem(Game.storageKeys.unlockedBonus)
 
   for item in [0..6]
 
