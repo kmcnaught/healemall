@@ -313,6 +313,12 @@ window.Game =
     # for analytics
     Game.currentScreen = "level" + number
 
+    # unlock the next level
+    if number >= Game.availableLevel
+      Game.availableLevel = number + 1
+      localStorage.setItem(Game.storageKeys.availableLevel, Game.availableLevel)
+
+
   stageLevelSelectScreen: ->
     @Q.input.disableTouchControls()
 
