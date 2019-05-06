@@ -117,19 +117,21 @@ Q.scene "levelSelectMore", (stage) ->
         # add label if level has name
         # ugh, there's a bit of confusion here with off-by-one indexing
         level_name = Game.levels_array[level].name
-        
+
         if level_name
-          name_width = Q.ctx.measureText(level_name).width
           fontsize = 28
+          
+          Q.ctx.font = "400 " + fontsize + "px Jolly Lodger"
+          name_width = Q.ctx.measureText(level_name).width
 
           # background panel
           container.insert new Q.UI.Container
             x: 0
             y: button.p.h*.5-fontsize*0.05
-            w: name_width*1.1
+            w: name_width*1.25
             h: fontsize*1.1
             radius: 2
-            fill: "#81879366",
+            fill: "#81879377",
             type: Q.SPRITE_UI | Q.SPRITE_DEFAULT
 
           # foreground text
