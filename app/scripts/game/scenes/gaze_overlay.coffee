@@ -13,18 +13,15 @@ Q.scene "gaze_overlay", (stage) ->
   
   onClick = (action) => (e) => 
     if action
-      console.log('click %s', action)        
       Q.inputs[action]=1
       Q.input.trigger(action);
 
   onTouch = (action) => (e) => 
     if action
-      console.log('touch %s', action)        
       Q.inputs[action]=1
 
   onTouchEnd = (action) => (e) => 
     if action
-      console.log('touch end %s', action)        
       Q.inputs[action]=0
 
 
