@@ -88,6 +88,16 @@ window.Game =
     Game.showCursor = boolValueOrDefault(Game.storageKeys.showCursor, true)
     Game.unlockedBonus = boolValueOrDefault(Game.storageKeys.unlockedBonus, false)
 
+    
+    # Stuff that gets modified by user
+    # TODO: store this!
+    Game.preferences = {
+      'uiScale': 1.0,
+      'narrate': false,
+      'dwellTime': 1.0
+    }
+    Game.uiScale = 1.0
+
     # used for collision detection
     @SPRITE_NONE = 0
     @SPRITE_PLAYER = 1

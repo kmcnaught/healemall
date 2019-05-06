@@ -2,13 +2,12 @@ Q = Game.Q
 
 Q.Adjuster = 
 
-  add: (stage, x, y, w, h, label) ->
+  add: (stage, x, y, w, h, label, prefKey) ->
     # Add 2 buttons that increment/decrement a label in the middle
 
     cellsize = Math.min(h, w/3)
     fontsize = Math.floor(h/5)
     fontsize_symbols = Math.floor(h/2)
-    val = 1.0
 
     # Left hand: decrement
     decButton = stage.insert new Q.UI.Button
@@ -50,16 +49,28 @@ Q.Adjuster =
     valText = stage.insert new Q.UI.Text
       x: x
       y: y
-      label: val.toFixed(1)
+      label: Game.preferences[prefKey].toFixed(1)
       color: "#f2da38"
       family: "Boogaloo"
       size: fontsize
 
+    # # Callbacks
+    # decButton.on "click", (e) ->
+    #   console.log('-')
+    
+    # incButton.on "click", (e) ->
+    #   console.log('+')
+
     # Callbacks
     decButton.on "click", (e) ->
-      val -= 0.1
-      valText.p.label = "" + val.toFixed(1)
+      Game.preferences[prefKey] -= 0.1
+      valText.p.label = Game.preferences[prefKey].toFixed(1)
+      console.log(Game.preferences['uiScale'])
+      console.log(Game.preferences['dwellTime'])
     
     incButton.on "click", (e) ->
-      val += 0.1
-      valText.p.label = val.toFixed(1)
+      Game.preferences[prefKey] += 0.1
+      valText.p.label = Game.preferences[prefKey].toFixed(1)
+      console.log(Game.preferences['uiScale'])
+      console.log(Game.preferences['dwellTime'])
+

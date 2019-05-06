@@ -130,7 +130,7 @@ Q.scene "controls_settings", (stage) ->
     ]
   
 
-  container_topleft.insert new Q.UI.Button
+  stage.insert new Q.UI.Button
     x: + (cellsize + pad)
     fill: "#c4da4a"
     w: cellsize
@@ -167,6 +167,10 @@ Q.scene "controls_settings", (stage) ->
   button.on "click", (e) ->
     Game.stageLevelSelectScreen()
 
+  Q.Adjuster.add(stage, Q.width/2, Q.height/2+150, 400, 200,'UI scale', 'uiScale')
+  Q.Adjuster.add(stage, Q.width/2, Q.height/2-150, 400, 200,'Dwell time', 'dwellTime')
+
+  Q.Adjuster.add(stage, Q.width/2, Q.height/2, 400, 200,'UI scale', 'uiScale')
 
   # button
   label = "Preview controls"
