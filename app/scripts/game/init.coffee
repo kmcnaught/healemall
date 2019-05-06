@@ -151,58 +151,34 @@ window.Game =
         dataAsset: "level5.tmx"
         bullets: 15
       level6:
-        dataAsset: "level6.tmx"
-        bullets: 3
-        # easy peasy
-      level7:      
-        dataAsset: "level7.tmx"
-        bullets: 10
-        name:"Pyramid"
-      level8:
-        dataAsset: "level8.tmx"
-        bullets: 10
-        name: "Hurdles"
-      level9:
-        dataAsset: "level9.tmx"
-        bullets: 10
-        name: "Tricky Jumps"
-      level10:
-        dataAsset: "level10.tmx"
-        bullets: 20
-        name: "Too Many Zombies"
-      level11:
-        dataAsset: "level11.tmx"
-        bullets: 20
-        name: "More Tricky Jumps"
-      level12:
-        dataAsset: "level12.tmx"
+        dataAsset: "steps.tmx"
         bullets: 10
         name: "Steps"
-      level13:
-        dataAsset: "level13.tmx"
+      level7:
+        dataAsset: "hurdles.tmx"
+        bullets: 10
+        name: "Hurdles"
+      level8:      
+        dataAsset: "pyramid.tmx"
+        bullets: 10
+        name:"Pyramid"  
+      level9:
+        dataAsset: "diamond.tmx"
         bullets: 20
-        name: "Diamond"
-      level14:
-        dataAsset: "level14.tmx"
+        name: "Diamond"        
+      level10:
+        dataAsset: "trickyJumps.tmx"
         bullets: 10
-      level15:
-        dataAsset: "level15.tmx"
-        bullets: 10
-      level16:
-        dataAsset: "level16.tmx"
-        bullets: 10
-      level17:
-        dataAsset: "level17.tmx"
-        bullets: 10
-      level18:
-        dataAsset: "level18.tmx"
-        bullets: 10
-      level19:
-        dataAsset: "level19.tmx"
-        bullets: 10
-      level20:
-        dataAsset: "level20.tmx"
-        bullets: 10
+        name: "Tricky Jumps"
+      level11:
+        dataAsset: "tooManyZombies.tmx"
+        bullets: 20
+        name: "Too Many Zombies"
+      level12:
+        dataAsset: "trickyJumpsMore.tmx"
+        bullets: 20
+        name: "More Tricky Jumps"      
+        
 
     # split into array for accessing level details by index
     # and data assets strings for loading 

@@ -14,7 +14,7 @@
  <objectgroup color="#ffff00" id="1" name="items">
   <object id="1" name="key" type="items" x="5220.54" y="1398.6" width="70" height="70"/>
   <object id="2" name="door" x="4408.85" y="1538.15" width="70" height="70"/>
-  <object id="4" name="gun" x="1380.12" y="1528.06" width="70" height="70"/>
+  <object id="4" name="gun" x="4904.12" y="1392.06" width="70" height="70"/>
   <object id="5" name="health" x="2942.12" y="1436.61" width="70" height="70"/>
  </objectgroup>
  <objectgroup color="#00aa00" id="2" name="player">
