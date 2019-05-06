@@ -191,6 +191,18 @@ Q.scene "levelSelectMore", (stage) ->
       radius: 8, 
       type: Q.SPRITE_UI | Q.SPRITE_DEFAULT
 
+  # background
+  stage.insert new Q.UI.Container
+    x: Q.width/2
+    y: Q.height/2
+    w: x_sep+5
+    h: Q.height*0.65
+    fill: "#81879333",
+    radius: 8, 
+    type: Q.SPRITE_UI | Q.SPRITE_DEFAULT
+
+
+
   # add title
   stage.insert new Q.UI.Text
     x: Q.width/2
