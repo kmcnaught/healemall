@@ -89,15 +89,19 @@ Q.scene "levelSelectMore", (stage) ->
           family: "Jolly Lodger"
           size: fontsize
         
+    else if item == 4
+      # Pause button bottom left
+       pauseButton = container.insert new Q.UI.PauseButton
+        x: 0
+        y: 0 
+        isSmall: false
+
     else
-      # work out level numbr
-      if item == 4
-        level = 6 # special case for last 'main' level
-      else
-        level = item+6+Game.moreLevelsPage*4
-        if item > 3
-          level = level-2
-      
+      # work out level number
+      level = item+5+Game.moreLevelsPage*4
+      if item > 3
+        level = level-2
+    
       if level < Game.levels_array.length
 
         button = new Q.UI.LevelButton
@@ -156,28 +160,11 @@ Q.scene "levelSelectMore", (stage) ->
 
   
   # Back button bottom right
-  container = stage.insert new Q.UI.Container
-      x: x
-      y: y
+  menuButton = stage.insert new Q.UI.MenuButton
+    x: x
+    y: y 
+    isSmall: false
 
-  # TODO: make this a generic 'tombstone button' and
-  # let onclick change for settings/back/etc.
-  back = container.insert new Q.UI.SettingsButton
-      x: 0
-      y: 0
-      w: w
-      h: h
-
-  back.on "click", (e) ->
-    Game.stageLevelSelectScreen()
-  
-  back_label = container.insert new Q.UI.Text
-      x: 0
-      y: 0
-      label: "Back"
-      color: "#404444"
-      family: "Jolly Lodger"
-      size: 32
 
   # separator bars
   x_sep = marginX + columnWidth + gutterX/2
