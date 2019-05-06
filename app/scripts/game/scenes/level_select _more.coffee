@@ -52,57 +52,43 @@ Q.scene "levelSelectMore", (stage) ->
 
     if item == 0 # previous button  
       enabled = Game.moreLevelsPage > 0
-      container.insert new Q.UI.MoreLevelsButton
+      arrow = container.insert new Q.UI.ArrowButton
         x: 0
         y: 0
         w: w
         h: h
+        flip: "x"
         page: Game.moreLevelsPage-1
         enabled: enabled  
-
         fontsize = 32
+
       container.insert new Q.UI.Text
-          x: 0
-          y: -fontsize/2
+          x: 10
+          y: -arrow.p.h/8          
           label: "Previous"
           color: "#404444"
           family: "Jolly Lodger"
-          size: fontsize
-      
-      container.insert new Q.UI.Text
-          x: 0
-          y: fontsize/2
-          label: "page"
-          color: "#404444"
-          family: "Jolly Lodger"
-          size: fontsize       
+          size: fontsize  
 
     else if item == 3 # next button
-      container.insert new Q.UI.MoreLevelsButton
+      arrow = container.insert new Q.UI.ArrowButton
         x: 0
         y: 0
         w: w
         h: h
         page: Game.moreLevelsPage+1
-        # enabled: Game.moreLevelsPage > 0        
+        enabled: Game.moreLevelsPage > 0        
 
         fontsize = 32
+
       container.insert new Q.UI.Text
-          x: 0
-          y: -fontsize/2
+          x: -10
+          y: -arrow.p.h/8         
           label: "Next"
           color: "#404444"
           family: "Jolly Lodger"
           size: fontsize
-      
-      container.insert new Q.UI.Text
-          x: 0
-          y: fontsize/2
-          label: "page"
-          color: "#404444"
-          family: "Jolly Lodger"
-          size: fontsize       
-    
+        
     else
       # work out level numbr
       if item == 4

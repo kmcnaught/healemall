@@ -102,5 +102,13 @@
     "tilew":53,
     "tileh":55,
     "frames":1
+  },
+  "arrow_button": {
+    "sx": 0,
+    "sy": 323,
+    "cols":1,
+    "tilew":149,
+    "tileh":169,
+    "frames":1
   }
 }
