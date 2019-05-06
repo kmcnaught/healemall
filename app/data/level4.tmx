@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.2" tiledversion="1.2.2" orientation="orthogonal" renderorder="right-down" width="60" height="30" tilewidth="70" tileheight="70" infinite="0" backgroundcolor="#3c4556" nextlayerid="14" nextobjectid="11">
+<map version="1.2" tiledversion="1.2.2" orientation="orthogonal" renderorder="right-down" width="60" height="30" tilewidth="70" tileheight="70" infinite="0" backgroundcolor="#3c4556" nextlayerid="14" nextobjectid="14">
  <tileset firstgid="1" name="map_tiles_70" tilewidth="70" tileheight="70" tilecount="16" columns="8">
   <image source="../images/map_tiles.png" width="560" height="140"/>
   <terraintypes>
@@ -18,6 +18,7 @@
   <object id="2" name="door" x="3152.67" y="1046" width="70" height="70"/>
   <object id="3" name="health" x="1509.7" y="1463.94" width="70" height="70"/>
   <object id="4" name="gun" x="955.33" y="691.939" width="70" height="70"/>
+  <object id="11" name="key" x="3000" y="345.455" width="69.697" height="78.7879"/>
  </objectgroup>
  <objectgroup color="#00aa00" id="2" name="player">
   <object id="5" name="player" type="player" x="693.636" y="1037.58" width="70" height="76.3636"/>

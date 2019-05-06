@@ -146,7 +146,7 @@ window.Game =
         bullets: 6
       level4:
         dataAsset: "level4.tmx"
-        bullets: 3
+        bullets: 6
       level5:
         dataAsset: "level5.tmx"
         bullets: 15
