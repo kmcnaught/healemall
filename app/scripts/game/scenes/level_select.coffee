@@ -162,6 +162,7 @@ Q.scene "levelSelect", (stage) ->
   cursorButton = stage.insert new Q.UI.CursorButton   
     y: marginY/2
     
+  stage.insert new Q.UI.CursorWarning
 
   # about button
   aboutButton = stage.insert new Q.UI.Button

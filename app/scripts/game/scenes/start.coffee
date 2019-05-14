@@ -73,6 +73,8 @@ Q.scene "start", (stage) ->
   # authors
   authors = stage.insert new Q.UI.Authors()
 
+  stage.insert new Q.UI.CursorWarning
+
 
   button.on "click", (e) ->
     Game.stageLevelSelectScreen()
