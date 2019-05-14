@@ -1,45 +1,5 @@
 
 
-class Storage 
-  # Store some user stuff in local or session storage
-
-  constructor: ->
-    console.log('storage constructor')
-   
-    @prefix = "zombiegame:"  
-    @storage = localStorage # TODO: revert to sessionStorage if permission denied 
-    
-    @storageKeys = 
-      availableLevel: @prefix + "availableLevel"
-      levelProgress: @prefix + "levelProgress"
-      showCursor: @prefix + "showCursor"
-
-    getBoolValue = (key) => 
-      stringVal = @storage.getItem(key)
-      return true.toString() == stringVal
-
-    isNull = (key) =>
-      stringVal = @storage.getItem(key)
-      return stringVal == null
-
-    setAvailableLevel = (level) =>
-      @storage.setItem(@storageKeys.availableLevel, level)
-
-    setShowCursor = (show_cursor) =>
-      @storage.setItem(@storageKeys.showCursor, show_cursor)
-
-    # Populate
-    if isNull(@storageKeys.availableLevel)
-      setAvailableLevel(1)
-
-    if isNull(@storageKeys.showCursor)
-      setShowCursor(true)
-
-    Game.availableLevel = @storage.getItem(@storageKeys.availableLevel)
-    Game.showCursor = @storage.getItem(@storageKeys.showCursor)
-    Game.moreLevelsPage = 0
-
-
 # main game object
 window.Game =
   init: ->
