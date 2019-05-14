@@ -89,11 +89,10 @@ Q.scene "levelSummary", (stage) ->
 
   buttonNext.on "click", (e) ->
     # last level just finished
-    if Q.state.get("currentLevel") == 6
+    if Q.state.get("currentLevel") == 5
       Game.stageEndScreen()
-      return
-
-    Game.stageLevel(Q.state.get("currentLevel") + 1)
+    else
+      Game.stageLevel(Q.state.get("currentLevel") + 1)
 
   # button back
   buttonBack = stage.insert new Q.UI.Button
