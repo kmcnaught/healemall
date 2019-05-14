@@ -226,7 +226,7 @@ Q.scene "levelSelectMore", (stage) ->
 
     
   aboutButton.on "click", (e) ->
-    console.log('About!')
+    Game.stageScreen("about")    
 
   aboutButton.p.x = marginX + aboutButton.p.w/2
   audioButton.p.x = Q.width - marginX - audioButton.p.w/2
