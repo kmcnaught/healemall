@@ -112,10 +112,11 @@ Q.scene "levelSummary", (stage) ->
     Game.stageLevelSelectScreen()
 
   # save progress in game
-  if Q.state.get("currentLevel") >= Game.availableLevel
+  # We only save progress up to Level 5; bonus levels are always available
+  currLevel = Q.state.get("currentLevel")
+  if currLevel > 5 and currentLevel >= Game.availableLevel
     Game.availableLevel = Q.state.get("currentLevel") + 1
     localStorage.setItem(Game.storageKeys.availableLevel, Game.availableLevel)
-
 
   # count stars
   score = stage.options.zombies.healed/stage.options.zombies.available

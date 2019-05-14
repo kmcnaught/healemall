@@ -291,7 +291,8 @@ window.Game =
     Game.currentScreen = "level" + number
 
     # unlock the next level
-    if number >= Game.availableLevel
+    # We only save progress up to Level 5; bonus levels are always available
+    if number <= 5 and number >= Game.availableLevel
       Game.availableLevel = number + 1
       localStorage.setItem(Game.storageKeys.availableLevel, Game.availableLevel)
 
