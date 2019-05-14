@@ -19,8 +19,8 @@ window.Game =
       maximize: true
       upsampleWidth: 640
       upsampleHeight: 320
-    Q.controls().touch(Q.SPRITE_UI, [0,1])
-    Q.controls().trackGaze(Q.SPRITE_UI, [0,1,2])
+    Q.controls().touch(Q.SPRITE_UI, [0,1,10])
+    Q.controls().trackGaze(Q.SPRITE_UI, [0,1,2,10])
     Q.enableSound()
 
     # Extra keybindings not in quintus defaults

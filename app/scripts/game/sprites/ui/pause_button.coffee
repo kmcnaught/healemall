@@ -7,10 +7,11 @@ Q.UI.PauseButton = Q.UI.Button.extend "UI.PauseButton",
       y: 110
       z: 100
       type: Q.SPRITE_UI | Q.SPRITE_DEFAULT
-      isPaused: false
       keyActionName: "pause" # button that will trigger click event
       isSmall: true
+      unpause: false   
 
+    pauseStage = 10   
 
     if @p.isSmall
       @p.sheet = "hud_pause_button_small"
@@ -19,41 +20,30 @@ Q.UI.PauseButton = Q.UI.Button.extend "UI.PauseButton",
     
     @size(true) # force resize 
 
-    pausedScreen = new Q.UI.Container
-      x: Q.width/2,
-      y: Q.height/2,
-      w: Q.width,
-      h: Q.height
-      z: 50
-      fill: "rgba(0,0,0,0.75)"
-
-    pausedText = new Q.UI.Text
-      x: 0
-      y: 0
-      label: "Paused"
-      color: "#f2da38"
-      family: "Jolly Lodger"
-      size: 100
-
+    # Each button will be a "pause button" or an "unpause button"
+    # not a toggle
     @on 'click', =>
-      if !@isPaused
-        Q.stage().pause()
-        Q.AudioManager.stopAll()
-        @isPaused = true
-
-        @stage.insert pausedScreen
-        pausedScreen.insert pausedText
-
-        Game.trackEvent("Pause Button", "clicked", "on")
-
-      else
-        Q.stage().unpause()
+      if @p.unpause
+        Game.trackEvent("Pause Button", "clicked", "off")
+        
         if !Game.isMuted
           Q.AudioManager.playAll()
 
-        @isPaused = false
+        for stage in Q.stages
+          if stage
+            stage.unpause()
+        
+        Q.clearStage(pauseStage)
 
-        @stage.remove pausedScreen
+      else      
+        Game.trackEvent("Pause Button", "clicked", "on")
 
-        Game.trackEvent("Pause Button", "clicked", "off")
+        Q.AudioManager.stopAll()        
+
+        for stage in Q.stages
+          if stage
+            stage.pause()
+
+        Q.stageScene("paused", pauseStage)
+
 
