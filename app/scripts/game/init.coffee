@@ -63,6 +63,9 @@ window.Game =
     Q.controls().trackGaze(Q.SPRITE_UI, [0,1,2])
     Q.enableSound()
 
+    # Extra keybindings not in quintus defaults
+    Q.input.bindKey(67, "cursor")
+
     # game progress
     Game.storageKeys =
       availableLevel: "zombieGame:availableLevel"
@@ -85,10 +88,11 @@ window.Game =
           console.error("Cannot read bool value for key #{key}")
           return defaultVal
     
-    Game.showCursor = boolValueOrDefault(Game.storageKeys.showCursor, true)
     Game.unlockedBonus = boolValueOrDefault(Game.storageKeys.unlockedBonus, false)
 
-    
+    @setCursorState(boolValueOrDefault(Game.storageKeys.showCursor, true))
+    Q.input.on("cursor", @, "toggleCursor")
+
     # Stuff that gets modified by user
     # TODO: store this!
     Game.preferences = {
@@ -122,11 +126,23 @@ window.Game =
 
       Q._extend position, otherParams
 
-    if not Game.showCursor
-      element = document.getElementById("quintus_container")
-      element.style.cursor = "none"
-
     return
+
+  setCursorState: (cursor_on) ->
+    console.log("Setting cursor state: " + cursor_on)
+    # Update game state
+    @Q.state.set "showCursor", cursor_on
+
+    # Change styling to hide/show cursor
+    element = document.getElementById("quintus_container")
+  
+    if cursor_on
+      element.style.cursor = "auto"     
+    else
+      element.style.cursor = "none"     
+
+  toggleCursor: ->
+    @setCursorState(!Q.state.get("showCursor"))
 
   # one place of defining assets
   prepareAssets: ->
@@ -266,7 +282,7 @@ window.Game =
   stageLevel: (number = 1) ->
     Q = @Q
 
-    Q.state.reset
+    Q.state.set
       enemiesCounter: 0
       lives: 5
       bullets: 0
@@ -377,7 +393,7 @@ window.Game =
   stageTutorial: ->
     Q = @Q
 
-    Q.state.reset
+    Q.state.set
       enemiesCounter: 0
       lives: 5
       bullets: 0
