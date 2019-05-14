@@ -32,6 +32,7 @@ window.Game =
       levelProgress: "zombieGame:levelProgress"
       showCursor: "zombieGame:showCursor"
       unlockedBonus: "zombieGame:unlockedBonus"
+      cookiesAccepted: "zombiegame:cookiesAccepted"
 
     Game.availableLevel = localStorage.getItem(Game.storageKeys.availableLevel) || 1
     

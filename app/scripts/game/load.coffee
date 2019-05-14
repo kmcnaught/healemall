@@ -16,7 +16,10 @@ Q.load Game.assets.all,
     Q.compileSheets Game.assets.controls.sheet, Game.assets.controls.dataAsset
 
     # first stage
-    Game.stageScreen("start")
+    if localStorage.getItem(Game.storageKeys.cookiesAccepted)
+      Game.stageScreen("start")
+    else
+      Game.stageScreen("cookies")
 
   , {
     progressCallback: (loaded, total) ->
