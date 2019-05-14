@@ -4696,6 +4696,7 @@ Quintus.Touch = function(Q) {
               stage = Q.stage(touchStage[stageIdx]);
 
           if(!stage) { continue; }
+          if(stage.paused) { continue; }
 
           touch.identifier = touch.identifier || 0;
           var pos = this.normalizeTouch(touch,stage);
@@ -4891,6 +4892,7 @@ Quintus.Gaze = function(Q) {
         var stage = Q.stage(gazeStage[stageIdx]);
 
         if(!stage) { continue; }
+        if(stage.paused) { continue; }
 
         e.identifier = e.identifier || 0;
         var pos = this.normalizeTouch(e,stage);
