@@ -108,6 +108,35 @@ window.Game =
   toggleCursor: ->
     @setCursorState(!Q.state.get("showCursor"))
 
+
+  hasCompletedMainLevels: ->      
+    for level in [1..5]
+      prog = localStorage.getItem(Game.storageKeys.levelProgress + ":" + level)
+      if prog == null
+        return false
+    return true
+
+  hasCompletedMainLevelsFullStars: ->      
+    for level in [1..5]
+      prog = localStorage.getItem(Game.storageKeys.levelProgress + ":" + level)
+      if prog == null or prog < 3
+        return false
+    return true
+
+  hasCompletedAllLevels: ->      
+    for level in [1..Game.levels_array.length-1]      
+      prog = localStorage.getItem(Game.storageKeys.levelProgress + ":" + level)
+      if prog == null
+        return false
+    return true
+
+  hasCompletedAllLevelsFullStars: ->      
+    for level in [1..Game.levels_array.length-1]
+      prog = localStorage.getItem(Game.storageKeys.levelProgress + ":" + level)
+      if prog == null or prog < 3
+        return false
+    return true 
+
   # one place of defining assets
   prepareAssets: ->
 
