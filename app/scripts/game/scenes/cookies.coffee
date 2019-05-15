@@ -22,9 +22,9 @@ Q.scene "cookies", (stage) ->
     family: "Jolly Lodger"
     size: 70
 
-  description = "This site uses cookies and local data\n"
-  description += "to save your game progress and to enable\n"
-  description += "narration services."
+  description = "This site uses cookies and local data storage\n"
+  description += "to save your game progress and preferences\n"
+  description += "and to enable narration services."
 
   desc = titleContainer.insert new Q.UI.Text
       x: 0,
