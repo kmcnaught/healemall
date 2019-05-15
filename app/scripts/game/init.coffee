@@ -288,7 +288,7 @@ window.Game =
 
     Q.state.set
       enemiesCounter: 0
-      lives: 5
+      lives: 3
       bullets: 0
       hasKey: false
       hasGun: false
@@ -401,7 +401,7 @@ window.Game =
 
     Q.state.set
       enemiesCounter: 0
-      lives: 5
+      lives: 15
       bullets: 0
       hasKey: false
       hasGun: false
