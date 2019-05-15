@@ -9,6 +9,7 @@ Q.scene "start", (stage) ->
     x: Q.width/2
     y: Q.height/2
 
+  marginButtonsY = Q.height/8
 
   # description = "Imagine, what if the cure exists?\n"
   description = "You have found the cure for the zombie plague!\n\n"
@@ -40,13 +41,13 @@ Q.scene "start", (stage) ->
   
   title = titleContainer.insert new Q.UI.Text
     x: 0
-    y: desc.p.y - desc.p.h/2
+    y: -(Q.height/2 - marginButtonsY)
     label: "Heal'em All"
     color: "#f2da38"
     family: "Jolly Lodger"
     size: 90
 
-  title.p.y = title.p.y - title.p.h/2 - y_pad
+  # title.p.y = title.p.y - title.p.h/2 - y_pad
   title.size()
 
 
@@ -55,7 +56,7 @@ Q.scene "start", (stage) ->
   buttonTextSize = Q.ctx.measureText(label)
   button = titleContainer.insert new Q.UI.Button
     x: 0
-    y: desc.p.y + desc.p.h/2
+    y: (Q.height/2 - marginButtonsY)
     w: buttonTextSize.width*1.3
     h: 80
     fill: "#c4da4a"
@@ -66,7 +67,7 @@ Q.scene "start", (stage) ->
     keyActionName: "confirm"
     type: Q.SPRITE_UI | Q.SPRITE_DEFAULT
 
-  button.p.y = button.p.y + button.p.h/2 + y_pad*2
+  # button.p.y = button.p.y + button.p.h/2 + y_pad*2
 
   titleContainer.fit()
 
