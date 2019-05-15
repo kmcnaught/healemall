@@ -114,13 +114,6 @@ Q.scene "levelSummary", (stage) ->
   buttonBack.on "click", (e) ->
     Game.stageLevelSelectScreen()
 
-  # save progress in game
-  # We only save progress up to Level 5; bonus levels are always available
-  currLevel = Q.state.get("currentLevel")
-  if currLevel > 5 and currentLevel >= Game.availableLevel
-    Game.availableLevel = Q.state.get("currentLevel") + 1
-    localStorage.setItem(Game.storageKeys.availableLevel, Game.availableLevel)
-
   if not nextLevelAvailable
     buttonBack.p.x = Q.width/2
  
