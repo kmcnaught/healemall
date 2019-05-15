@@ -180,6 +180,9 @@ Q.scene "gaze_overlay", (stage) ->
     y: Q.height - marginBottomButtons    
     isSmall: false
 
+  menuButton.on "click", (e) ->
+    Q.stageScene("restartOptions")
+
   audioButton = stage.insert new Q.UI.AudioButton
     x: marginBottomButtons
     y: Q.height - marginBottomButtons    

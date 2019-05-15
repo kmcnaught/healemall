@@ -292,6 +292,7 @@ window.Game =
 
     # for analytics
     Game.currentScreen = "level" + number
+    @Q.state.set "currentLevel", number
 
     # unlock the next level
     # We only save progress up to Level 5; bonus levels are always available
@@ -394,6 +395,7 @@ window.Game =
 
     # for analytics
     Game.currentScreen = "tutorial"
+    @Q.state.set "currentLevel", 0
 
 
   stageGameOverScreen: ->
