@@ -167,10 +167,7 @@ Q.scene "controls_settings", (stage) ->
   button.on "click", (e) ->
     Game.stageLevelSelectScreen()
 
-  Q.Adjuster.add(stage, Q.width/2, Q.height/2+150, 400, 200,'UI scale', 'uiScale')
-  Q.Adjuster.add(stage, Q.width/2, Q.height/2-150, 400, 200,'Dwell time', 'dwellTime')
-
-  Q.Adjuster.add(stage, Q.width/2, Q.height/2, 400, 200,'UI scale', 'uiScale')
+  Q.Adjuster.add(stage, Q.width/2, Q.height/2, 400, 200,'Dwell time (s)', 'dwellTime')
 
   # button
   label = "Preview controls"

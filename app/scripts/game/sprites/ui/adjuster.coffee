@@ -63,7 +63,8 @@ Q.Adjuster =
 
     # Callbacks
     decButton.on "click", (e) ->
-      Game.preferences[prefKey] -= 0.1
+      if Game.preferences[prefKey] > 0.25
+        Game.preferences[prefKey] -= 0.1
       valText.p.label = Game.preferences[prefKey].toFixed(1)
       console.log(Game.preferences['uiScale'])
       console.log(Game.preferences['dwellTime'])
