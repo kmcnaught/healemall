@@ -6,7 +6,7 @@
 
   window.Game = {
     init: function() {
-      var Q, boolValueOrDefault;
+      var Q, boolValueOrDefault, dwellTime;
       // engine instance
       this.Q = Q = Quintus({
         development: true,
@@ -15,6 +15,16 @@
       // Q.debug = true
       // Q.debugFill = true
 
+      // game progress
+      Game.storageKeys = {
+        availableLevel: "zombieGame:availableLevel",
+        levelProgress: "zombieGame:levelProgress",
+        showCursor: "zombieGame:showCursor",
+        unlockedBonus: "zombieGame:unlockedBonus",
+        cookiesAccepted: "zombiegame:cookiesAccepted",
+        showCursor: "zombieGame:showCursor",
+        dwellTime: "zombieGame:dwellTime"
+      };
       // main setup
       Q.include("Sprites, Scenes, Input, Touch, Gaze, UI, 2D, Anim, Audio");
       Q.setup({
@@ -25,18 +35,11 @@
         upsampleHeight: 320
       });
       Q.controls().touch(Q.SPRITE_UI, [0, 1, 10]);
-      Q.controls().trackGaze(Q.SPRITE_UI, [0, 1, 2, 10]);
+      dwellTime = localStorage.getItem(Game.storageKeys.dwellTime) || 1000;
+      this.setupGaze(dwellTime);
       Q.enableSound();
       // Extra keybindings not in quintus defaults
       Q.input.bindKey(67, "cursor");
-      // game progress
-      Game.storageKeys = {
-        availableLevel: "zombieGame:availableLevel",
-        levelProgress: "zombieGame:levelProgress",
-        showCursor: "zombieGame:showCursor",
-        unlockedBonus: "zombieGame:unlockedBonus",
-        cookiesAccepted: "zombiegame:cookiesAccepted"
-      };
       Game.availableLevel = localStorage.getItem(Game.storageKeys.availableLevel) || 1;
       boolValueOrDefault = (key, defaultVal) => {
         var stringVal;
@@ -88,6 +91,10 @@
         };
         return Q._extend(position, otherParams);
       };
+    },
+    setupGaze: function(dwell_time) {
+      this.Q.controls().untrackGaze();
+      return this.Q.controls().trackGaze(this.Q.SPRITE_UI, [0, 1, 2, 10], dwell_time);
     },
     setCursorState: function(cursor_on) {
       var element;
@@ -1173,9 +1180,9 @@
       family: "Jolly Lodger",
       size: 70
     }));
-    description = "This site uses cookies and local data\n";
-    description += "to save your game progress and to enable\n";
-    description += "narration services.";
+    description = "This site uses cookies and local data storage\n";
+    description += "to save your game progress and preferences\n";
+    description += "and to enable narration services.";
     desc = titleContainer.insert(new Q.UI.Text({
       x: 0,
       y: 0,
@@ -2358,6 +2365,80 @@
     authors = stage.insert(new Q.UI.Authors());
     stage.insert(new Q.UI.CursorWarning);
     return button.on("click", function(e) {
+      return Game.stageScreen("start_settings");
+    });
+  });
+
+  Q = Game.Q;
+
+  Q.scene("start_settings", function(stage) {
+    var audioButton, audioLabel, authors, button, buttonPosX, buttonPosY, buttonTextSize, cursorButton, cursorLabel, label, label_pad, marginButtonsY, title, titleContainer, y_pad;
+    // add title
+    y_pad = Q.height / 20;
+    titleContainer = stage.insert(new Q.UI.Container({
+      x: Q.width / 2,
+      y: Q.height / 2
+    }));
+    buttonPosX = Q.width / 12;
+    buttonPosY = Q.height / 8;
+    marginButtonsY = Q.height / 8;
+    // Sound
+    audioButton = titleContainer.insert(new Q.UI.AudioButton({
+      x: buttonPosX,
+      y: -buttonPosY,
+      isSmall: false
+    }));
+    cursorButton = titleContainer.insert(new Q.UI.CursorButton({
+      x: buttonPosX,
+      y: buttonPosY,
+      isSmall: false
+    }));
+    audioLabel = titleContainer.insert(new Q.UI.Text({
+      y: -buttonPosY,
+      label: "Play sounds/music?",
+      color: "#818793",
+      family: "Boogaloo",
+      size: 36
+    }));
+    cursorLabel = titleContainer.insert(new Q.UI.Text({
+      y: buttonPosY,
+      label: "Show cursor?",
+      color: "#818793",
+      family: "Boogaloo",
+      size: 36
+    }));
+    label_pad = cursorButton.p.w / 4;
+    cursorLabel.p.x = cursorButton.p.x - cursorButton.p.w / 2 - cursorLabel.p.w / 2 - label_pad;
+    audioLabel.p.x = audioButton.p.x - audioButton.p.w / 2 - audioLabel.p.w / 2 - label_pad;
+    title = titleContainer.insert(new Q.UI.Text({
+      x: 0,
+      y: -(Q.height / 2 - marginButtonsY),
+      label: "Heal'em All",
+      color: "#f2da38",
+      family: "Jolly Lodger",
+      size: 90
+    }));
+    // button
+    label = "Continue";
+    buttonTextSize = Q.ctx.measureText(label);
+    button = titleContainer.insert(new Q.UI.Button({
+      x: 0,
+      y: Q.height / 2 - marginButtonsY,
+      w: buttonTextSize.width * 1.3,
+      h: 80,
+      fill: "#c4da4a",
+      radius: 10,
+      fontColor: "#353b47",
+      font: "400 58px Jolly Lodger",
+      label: label,
+      keyActionName: "confirm",
+      type: Q.SPRITE_UI | Q.SPRITE_DEFAULT
+    }));
+    titleContainer.fit();
+    // authors
+    authors = stage.insert(new Q.UI.Authors());
+    stage.insert(new Q.UI.CursorWarning);
+    return button.on("click", function(e) {
       return Game.stageLevelSelectScreen();
     });
   });
@@ -2601,311 +2682,84 @@
   Q = Game.Q;
 
   Q.scene("controls_settings", function(stage) {
-    var button, buttonTextSize, cellsize, columnInP, columnWidth, columnsNo, container_bottomleft, container_bottomright, container_topleft, container_topright, gutterX, gutterXinP, label, marginX, marginXinP, marginY, pad, rowHeight, titleContainer, x_pad;
+    var authors, button, buttonTextSize, desc, description, dwell_getter, dwell_setter, label, title, titleContainer, y_pad;
     // audio
     Q.AudioManager.stopAll();
     Q.AudioManager.clear();
-    // some math
+    // add title
+    y_pad = Q.height / 20;
     titleContainer = stage.insert(new Q.UI.Container({
       x: Q.width / 2,
       y: Q.height / 2
     }));
-    // vertical divider in center
-    titleContainer.insert(new Q.UI.Container({
+    description = "More settings coming soon...\n";
+    description += "including difficulty, narration, and in-game UI size...";
+    title = titleContainer.insert(new Q.UI.Text({
       x: 0,
-      y: 0,
-      w: 10,
-      h: Q.height * 0.65,
-      fill: "#2a2f38",
-      radius: 8,
-      type: Q.SPRITE_UI | Q.SPRITE_DEFAULT
-    }));
-    // headings
-    titleContainer.insert(new Q.UI.Text({
-      x: -Q.width / 4,
-      y: -Q.height * .4,
+      y: -Q.height * 0.35,
+      label: "Settings",
+      color: "#f2da38",
       family: "Jolly Lodger",
-      size: 40,
-      label: "SELECTION METHOD",
-      fill: "#353b47",
-      radius: 10,
-      type: Q.SPRITE_UI | Q.SPRITE_DEFAULT
+      size: 90
     }));
-    titleContainer.insert(new Q.UI.Text({
-      x: Q.width / 4,
-      y: -Q.height * .4,
-      label: "APPEARANCE",
-      family: "Jolly Lodger",
-      size: 40,
-      fill: "#353b47",
-      radius: 10,
-      type: Q.SPRITE_UI | Q.SPRITE_DEFAULT
-    }));
-    // layout math
-    marginY = Q.height * 0.15;
-    marginXinP = 10; // %
-    gutterXinP = 8; // %
-    columnsNo = 2;
-    columnInP = (100 - (marginXinP * 2) - (columnsNo - 1) * gutterXinP) / columnsNo; // 24%
-    marginX = Q.width * marginXinP * 0.01;
-    gutterX = Q.width * gutterXinP * 0.01;
-    columnWidth = Q.width * columnInP * 0.01;
-    rowHeight = Q.height * 0.3;
-    x_pad = 10;
-    // Add containers for diff settings
-    // Each one will contain three cells, e.g. [-] [label] [+]
-    container_topleft = titleContainer.insert(new Q.UI.Container({
-      x: -(marginX / 2 + columnWidth / 2),
-      y: -(rowHeight / 2 + marginY / 4),
-      w: columnWidth,
-      h: rowHeight,
-      fill: "#2a2f38",
-      opacity: 0.8,
-      radius: 8,
-      type: Q.SPRITE_UI | Q.SPRITE_DEFAULT
-    }));
-    container_bottomleft = titleContainer.insert(new Q.UI.Container({
-      x: -(marginX / 2 + columnWidth / 2),
-      y: +(rowHeight / 2 + marginY / 4),
-      w: columnWidth,
-      h: rowHeight,
-      fill: "#2a2f38",
-      opacity: 0.8,
-      radius: 8,
-      type: Q.SPRITE_UI | Q.SPRITE_DEFAULT
-    }));
-    container_topright = titleContainer.insert(new Q.UI.Container({
-      x: +(marginX / 2 + columnWidth / 2),
-      y: -(rowHeight / 2 + marginY / 4),
-      w: columnWidth,
-      h: rowHeight,
-      fill: "#2a2f38",
-      opacity: 0.8,
-      radius: 8,
-      type: Q.SPRITE_UI | Q.SPRITE_DEFAULT
-    }));
-    container_bottomright = titleContainer.insert(new Q.UI.Container({
-      x: +(marginX / 2 + columnWidth / 2),
-      y: +(rowHeight / 2 + marginY / 4),
-      w: columnWidth,
-      h: rowHeight,
-      fill: "#2a2f38",
-      opacity: 0.8,
-      radius: 8,
-      type: Q.SPRITE_UI | Q.SPRITE_DEFAULT
-    }));
-    // more math
-    cellsize = container_topleft.p.w / 4;
-    pad = 10;
-    // Click method
-    container_topleft.insert(new Q.UI.PolygonButton({
-      fill: "#c4da4a",
-      x: -(cellsize + pad),
-      w: cellsize,
-      h: cellsize,
-      radius: 10,
-      height: 60,
-      fontColor: "#353b47",
-      font: "400 40px Jolly Lodger",
-      label: "Dwell Click",
-      keyActionName: "confirm",
-      type: Q.SPRITE_UI | Q.SPRITE_DEFAULT,
-      points: [[0, 90], [-60, -50], [85, 0], [-70, 60], [30, -90]]
-    }));
-    stage.insert(new Q.UI.Button({
-      x: +(cellsize + pad),
-      fill: "#c4da4a",
-      w: cellsize,
-      h: cellsize,
-      radius: 10,
-      height: 60,
-      fontColor: "#353b47",
-      font: "400 40px Jolly Lodger",
-      label: "Own Click",
-      keyActionName: "confirm",
-      type: Q.SPRITE_UI | Q.SPRITE_DEFAULT,
-      z: 100
-    }));
-    container_topleft.on("click", function(e) {
-      return console.log('wibble');
-    });
+    title.size();
     // button
     label = "Back";
     buttonTextSize = Q.ctx.measureText(label);
-    button = stage.insert(new Q.UI.Button({
-      x: Q.width / 2,
-      y: Q.height * 0.9,
+    button = titleContainer.insert(new Q.UI.Button({
+      x: 0,
+      y: Q.height * 0.35,
+      w: buttonTextSize.width * 1.3,
+      h: 80,
       fill: "#c4da4a",
-      w: buttonTextSize * 1.2,
       radius: 10,
-      height: 60,
       fontColor: "#353b47",
       font: "400 58px Jolly Lodger",
       label: label,
       keyActionName: "confirm",
       type: Q.SPRITE_UI | Q.SPRITE_DEFAULT
     }));
+    desc = titleContainer.insert(new Q.UI.Text({
+      x: 0,
+      y: Q.height * 0.15,
+      align: 'center',
+      label: description,
+      color: "#000000",
+      family: "Jolly Lodger",
+      size: 36
+    }));
+    // panel
+    titleContainer.insert(new Q.UI.Container({
+      x: desc.p.x,
+      y: desc.p.y,
+      w: desc.p.w * 1.1,
+      h: desc.p.h * 1.1,
+      z: desc.p.z - 1,
+      fill: "#e3ecf933",
+      radius: 8,
+      type: Q.SPRITE_UI | Q.SPRITE_DEFAULT
+    }));
+    titleContainer.fit();
+    // authors
+    authors = stage.insert(new Q.UI.Authors());
     button.on("click", function(e) {
       return Game.stageLevelSelectScreen();
     });
-    Q.Adjuster.add(stage, Q.width / 2, Q.height / 2 + 150, 400, 200, 'UI scale', 'uiScale');
-    Q.Adjuster.add(stage, Q.width / 2, Q.height / 2 - 150, 400, 200, 'Dwell time', 'dwellTime');
-    Q.Adjuster.add(stage, Q.width / 2, Q.height / 2, 400, 200, 'UI scale', 'uiScale');
-    // button
-    label = "Preview controls";
-    buttonTextSize = Q.ctx.measureText(label);
-    button = stage.insert(new Q.UI.Button({
-      x: Q.width / 2,
-      y: Q.height * 0.1,
-      w: buttonTextSize * 1.6,
-      fill: "#c4da4a",
-      radius: 10,
-      fontColor: "#353b47",
-      font: "400 58px Jolly Lodger",
-      height: 60,
-      label: label,
-      keyActionName: "confirm",
-      type: Q.SPRITE_UI | Q.SPRITE_DEFAULT
-    }));
-    return button.on("click", function(e) {
-      return Game.stageLevelSelectScreen();
-    });
+    // TODO: actually, maybe have all adjuster stuff as callback, rather than hacking into preferences struct
+    dwell_getter = function() {
+      var dTimeMs;
+      dTimeMs = localStorage.getItem(Game.storageKeys.dwellTime) || 1000;
+      return dTimeMs / 1000;
+    };
+    dwell_setter = function(val) {
+      console.log('new dwell time! ' + val);
+      val = val * 1000;
+      Game.setupGaze(val);
+      return localStorage.setItem(Game.storageKeys.dwellTime, val);
+    };
+    return Q.Adjuster.add(stage, Q.width / 2, Q.height * 0.4, 400, 200, 'Dwell time (s)', dwell_getter, dwell_setter);
   });
 
-  // # add cells, 2x2
-  // x_pad = -50 # to account for images on right of centralised text
-
-  // cell1 = stage.insert new Q.UI.Container
-  //   x: marginX + columnWidth/2 + x_pad
-  //   y: Q.height/2 - rowHeight/2 + title.p.h
-  //   w: columnWidth
-  //   h: rowHeight
-
-  // cell2 = stage.insert new Q.UI.Container
-  //   x: cell1.p.x + gutterX + columnWidth + x_pad 
-  //   y: Q.height/2 - rowHeight/4 + title.p.h
-  //   w: columnWidth
-  //   h: rowHeight
-
-  // cell3 = stage.insert new Q.UI.Container
-  //   x: marginX + columnWidth/2 + x_pad 
-  //   y: Q.height/2 + rowHeight/4 + title.p.h
-  //   w: columnWidth
-  //   h: rowHeight
-
-  // cell4 = stage.insert new Q.UI.Container
-  //   x: cell1.p.x + gutterX + columnWidth + x_pad 
-  //   y: Q.height/2 + rowHeight/2 + title.p.h
-  //   w: columnWidth
-  //   h: rowHeight
-
-  // # add 1 step
-  // numberpad = 40
-  // row2offset = 30
-
-  // step1text = cell1.insert new Q.UI.Text
-  //   x: 0
-  //   y: -100
-  //   label: "Explore the graveyard"
-  //   color: "#9ca2ae"
-  //   family: "Boogaloo"
-  //   size: 30
-
-  // cell1.insert new Q.UI.Text
-  //   x: step1text.p.x - step1text.p.w/2 - numberpad
-  //   y: step1text.p.y
-  //   label: "1."
-  //   color: "#f2da38"
-  //   family: "Boogaloo"
-  //   size: 44
-
-  // cell1.insert new Q.Sprite
-  //   x: step1text.p.x + step1text.p.w/2 + 160 
-  //   y: step1text.p.y  - 15
-  //   sheet: "controls_eyegaze"
-
-  // # add 2 step
-  // step2text = cell2.insert new Q.UI.Text
-  //   x: 0
-  //   y: step1text.p.y
-  //   label: "Find Healing Gun"
-  //   color: "#9ca2ae"
-  //   family: "Boogaloo"
-  //   size: 30
-
-  // cell2.insert new Q.UI.Text
-  //   x: step2text.p.x - step2text.p.w/2 - numberpad 
-  //   y: step2text.p.y
-  //   label: "2."
-  //   color: "#f2da38"
-  //   family: "Boogaloo"
-  //   size: 44
-
-  // sprite = cell2.insert new Q.Sprite
-  //   x: step2text.p.x + step2text.p.w/2 + 120 
-  //   y: step2text.p.y
-  //   sheet: "controls_gun"
-
-  // # add 3 step
-
-  // step3text = cell3.insert new Q.UI.Text
-  //   x: step1text.p.x
-  //   y: step1text.p.y
-  //   label: "Shoot the zombies!"
-  //   color: "#9ca2ae"
-  //   family: "Boogaloo"
-  //   size: 30
-
-  // cell3.insert new Q.UI.Text
-  //   x: step3text.p.x - step3text.p.w/2 - numberpad 
-  //   y: step3text.p.y
-  //   label: "3."
-  //   color: "#f2da38"
-  //   family: "Boogaloo"
-  //   size: 44
-
-  // cell3.insert new Q.Sprite
-  //   x: step3text.p.x + step3text.p.w/2 + 100 
-  //   y: step3text.p.y
-  //   sheet: "controls_zombie"
-
-  // step4text = cell4.insert new Q.UI.Text
-  //   x: step2text.p.x
-  //   y: step1text.p.y
-  //   label: "Find the exit"
-  //   color: "#9ca2ae"
-  //   family: "Boogaloo"
-  //   size: 30
-
-  // cell4.insert new Q.UI.Text
-  //   x: step4text.p.x - step4text.p.w/2 - numberpad 
-  //   y: step4text.p.y
-  //   label: "4."
-  //   color: "#f2da38"
-  //   family: "Boogaloo"
-  //   size: 44
-
-  // cell4.insert new Q.Sprite
-  //   x: step4text.p.x + step4text.p.w/2 + 120 
-  //   y: step4text.p.y
-  //   sheet: "controls_door"
-
-  // # button
-  // button = stage.insert new Q.UI.Button
-  //   x: Q.width/2
-  //   y: Q.height - marginY
-  //   w: Q.width/2
-  //   h: 70
-  //   fill: "#c4da4a"
-  //   radius: 10
-  //   fontColor: "#353b47"
-  //   font: "400 58px Jolly Lodger"
-  //   label: "Give me some zombies"
-  //   keyActionName: "confirm"
-  //   type: Q.SPRITE_UI | Q.SPRITE_DEFAULT
-
-  // button.on "click", (e) ->
-  //   Game.stageLevel(1)
   Q = Game.Q;
 
   Q.Sprite.extend('Background', {
@@ -3991,12 +3845,14 @@
   Q = Game.Q;
 
   Q.Adjuster = {
-    add: function(stage, x, y, w, h, label, prefKey) {
-      var cellsize, decButton, fontsize, fontsize_symbols, incButton, valText;
+    add: function(stage, x, y, w, h, label, getter, setter, inc = 0.1) {
+      var cellsize, decButton, fontsize, fontsize_symbols, incButton, init_val, valText;
       // Add 2 buttons that increment/decrement a label in the middle
       cellsize = Math.min(h, w / 3);
       fontsize = Math.floor(h / 5);
       fontsize_symbols = Math.floor(h / 2);
+      init_val = getter();
+      
       // Left hand: decrement
       decButton = stage.insert(new Q.UI.Button({
         x: x - cellsize,
@@ -4036,30 +3892,19 @@
       valText = stage.insert(new Q.UI.Text({
         x: x,
         y: y,
-        label: Game.preferences[prefKey].toFixed(1),
+        label: init_val.toFixed(1),
         color: "#f2da38",
         family: "Boogaloo",
         size: fontsize
       }));
-      // # Callbacks
-      // decButton.on "click", (e) ->
-      //   console.log('-')
-
-      // incButton.on "click", (e) ->
-      //   console.log('+')
-
       // Callbacks
       decButton.on("click", function(e) {
-        Game.preferences[prefKey] -= 0.1;
-        valText.p.label = Game.preferences[prefKey].toFixed(1);
-        console.log(Game.preferences['uiScale']);
-        return console.log(Game.preferences['dwellTime']);
+        setter(getter() - inc);
+        return valText.p.label = getter().toFixed(1);
       });
       return incButton.on("click", function(e) {
-        Game.preferences[prefKey] += 0.1;
-        valText.p.label = Game.preferences[prefKey].toFixed(1);
-        console.log(Game.preferences['uiScale']);
-        return console.log(Game.preferences['dwellTime']);
+        setter(getter() + inc);
+        return valText.p.label = getter().toFixed(1);
       });
     }
   };
@@ -4142,7 +3987,7 @@
   Q.UI.Authors = Q.UI.Text.extend("UI.Authors", {
     init: function(p) {
       this._super(p, {
-        label: "Created by @krzysu and @pawelmadeja, adapted for eye gaze by @SpecialEffect",
+        label: "Created by @krzysu and @pawelmadeja, extended and adapted for eye gaze by @SpecialEffect",
         color: "#c4da4a",
         family: "Boogaloo",
         size: 22
@@ -4470,9 +4315,11 @@
       this.p.cx = this.p.sheetW / 2;
       this.p.cy = this.p.sheetH / 2;
       return this.on('click', () => {
-        return Game.stageScreen("settingsPlaceholder");
+        return Game.stageScreen("controls_settings");
       });
     }
   });
+
+  //      Game.stageScreen("settingsPlaceholder")
 
 }).call(this);
