@@ -11,6 +11,18 @@ window.Game =
     # Q.debug = true
     # Q.debugFill = true
 
+
+    # game progress
+    Game.storageKeys =
+      availableLevel: "zombieGame:availableLevel"
+      levelProgress: "zombieGame:levelProgress"
+      showCursor: "zombieGame:showCursor"
+      unlockedBonus: "zombieGame:unlockedBonus"
+      cookiesAccepted: "zombiegame:cookiesAccepted"
+      showCursor: "zombieGame:showCursor"
+      dwellTime: "zombieGame:dwellTime"
+
+
     # main setup
     Q.include "Sprites, Scenes, Input, Touch, Gaze, UI, 2D, Anim, Audio"
     Q.setup
@@ -20,19 +32,14 @@ window.Game =
       upsampleWidth: 640
       upsampleHeight: 320
     Q.controls().touch(Q.SPRITE_UI, [0,1,10])
-    Q.controls().trackGaze(Q.SPRITE_UI, [0,1,2,10])
+
+    dwellTime = localStorage.getItem(Game.storageKeys.dwellTime) || 1000
+    @setupGaze(dwellTime)
+    
     Q.enableSound()
 
     # Extra keybindings not in quintus defaults
     Q.input.bindKey(67, "cursor")
-
-    # game progress
-    Game.storageKeys =
-      availableLevel: "zombieGame:availableLevel"
-      levelProgress: "zombieGame:levelProgress"
-      showCursor: "zombieGame:showCursor"
-      unlockedBonus: "zombieGame:unlockedBonus"
-      cookiesAccepted: "zombiegame:cookiesAccepted"
 
     Game.availableLevel = localStorage.getItem(Game.storageKeys.availableLevel) || 1
     
@@ -88,6 +95,10 @@ window.Game =
       Q._extend position, otherParams
 
     return
+
+  setupGaze: (dwell_time) ->
+    @Q.controls().untrackGaze()
+    @Q.controls().trackGaze(@Q.SPRITE_UI, [0,1,2,10], dwell_time)
 
   setCursorState: (cursor_on) ->
     console.log("Setting cursor state: " + cursor_on)
