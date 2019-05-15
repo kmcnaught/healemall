@@ -93,6 +93,9 @@ window.Game =
     console.log("Setting cursor state: " + cursor_on)
     # Update game state
     @Q.state.set "showCursor", cursor_on
+    
+    # Persist in local storage
+    localStorage.setItem(Game.storageKeys.showCursor, cursor_on)
 
     # Change styling to hide/show cursor
     element = document.getElementById("quintus_container")
