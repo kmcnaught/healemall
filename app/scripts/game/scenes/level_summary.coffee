@@ -73,28 +73,31 @@ Q.scene "levelSummary", (stage) ->
 
 
   # button next
-  buttonNext = stage.insert new Q.UI.Button
-    y: Q.height - marginY
-    w: Q.width/4
-    h: 70
-    fill: "#c4da4a"
-    radius: 10
-    fontColor: "#353b47"
-    font: "400 58px Jolly Lodger"
-    label: "Play next"
-    keyActionName: "confirm"
-    type: Q.SPRITE_UI | Q.SPRITE_DEFAULT
+  nextLevelAvailable = Q.state.get("currentLevel") < Game.levels_array.length - 1
+  if nextLevelAvailable
 
-  buttonNext.p.x = Q.width/2 + buttonNext.p.w/2 + 40
+    buttonNext = stage.insert new Q.UI.Button
+      y: Q.height - marginY
+      w: Q.width/4
+      h: 70
+      fill: "#c4da4a"
+      radius: 10
+      fontColor: "#353b47"
+      font: "400 58px Jolly Lodger"
+      label: "Play next"
+      keyActionName: "confirm"  
+      type: Q.SPRITE_UI | Q.SPRITE_DEFAULT
 
-  buttonNext.on "click", (e) ->
-    # last level just finished
-    if Q.state.get("currentLevel") == 5
-      Game.stageEndScreen()
-    else
-      Game.stageLevel(Q.state.get("currentLevel") + 1)
+    buttonNext.p.x = Q.width/2 + buttonNext.p.w/2 + 40
 
-  # button back
+    buttonNext.on "click", (e) ->
+      # last level just finished
+      if Q.state.get("currentLevel") == 5
+        Game.stageEndScreen()
+      else
+        Game.stageLevel(Q.state.get("currentLevel") + 1) 
+
+  # button back  
   buttonBack = stage.insert new Q.UI.Button
     y: Q.height - marginY
     w: Q.width/4
@@ -118,6 +121,9 @@ Q.scene "levelSummary", (stage) ->
     Game.availableLevel = Q.state.get("currentLevel") + 1
     localStorage.setItem(Game.storageKeys.availableLevel, Game.availableLevel)
 
+  if not nextLevelAvailable
+    buttonBack.p.x = Q.width/2
+ 
   # count stars
   score = stage.options.zombies.healed/stage.options.zombies.available
   stars = 0
