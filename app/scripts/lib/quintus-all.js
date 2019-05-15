@@ -4813,7 +4813,7 @@ Quintus.Gaze = function(Q) {
 
   Q.Evented.extend("GazeSystem",{
 
-    init: function() {
+    init: function(dwellTime) {
       var gazeSystem = this;
       this.lastCursorTime = 0;
 
@@ -4825,7 +4825,7 @@ Quintus.Gaze = function(Q) {
       this.touchPos.p = { w:1, h:1, cx: 0, cy: 0 };
 
       this.objectDwelltimes = {};
-      this.dwellTime = 1000;
+      this.dwellTime = dwellTime;
     },
 
     destroy: function() {     
@@ -4986,7 +4986,7 @@ Quintus.Gaze = function(Q) {
 
   });
 
-  Q.trackGaze = function(type,stage) {
+  Q.trackGaze = function(type,stage, dwellTime=1000) {
     Q.untrackGaze();
     objType = type || Q.SPRITE_UI;
     gazeStage = stage || [2,1,0];
@@ -4995,7 +4995,7 @@ Quintus.Gaze = function(Q) {
     }
 
     if(!Q._gaze) {
-      Q.gazeInput = new Q.GazeSystem();
+      Q.gazeInput = new Q.GazeSystem(dwellTime);
     }
     return Q;
   };
