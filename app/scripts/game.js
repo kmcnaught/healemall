@@ -323,7 +323,7 @@
       Q = this.Q;
       Q.state.set({
         enemiesCounter: 0,
-        lives: 5,
+        lives: 3,
         bullets: 0,
         hasKey: false,
         hasGun: false,
@@ -425,7 +425,7 @@
       Q = this.Q;
       Q.state.set({
         enemiesCounter: 0,
-        lives: 5,
+        lives: 15,
         bullets: 0,
         hasKey: false,
         hasGun: false,
@@ -2300,13 +2300,14 @@
   Q = Game.Q;
 
   Q.scene("start", function(stage) {
-    var authors, button, buttonTextSize, desc, description, label, title, titleContainer, y_pad;
+    var authors, button, buttonTextSize, desc, description, label, marginButtonsY, title, titleContainer, y_pad;
     // add title
     y_pad = Q.height / 20;
     titleContainer = stage.insert(new Q.UI.Container({
       x: Q.width / 2,
       y: Q.height / 2
     }));
+    marginButtonsY = Q.height / 8;
     // description = "Imagine, what if the cure exists?\n"
     description = "You have found the cure for the zombie plague!\n\n";
     description += "Explore an old, abandoned graveyard,\n";
@@ -2335,20 +2336,20 @@
     }));
     title = titleContainer.insert(new Q.UI.Text({
       x: 0,
-      y: desc.p.y - desc.p.h / 2,
+      y: -(Q.height / 2 - marginButtonsY),
       label: "Heal'em All",
       color: "#f2da38",
       family: "Jolly Lodger",
       size: 90
     }));
-    title.p.y = title.p.y - title.p.h / 2 - y_pad;
+    // title.p.y = title.p.y - title.p.h/2 - y_pad
     title.size();
     // button
     label = "Continue";
     buttonTextSize = Q.ctx.measureText(label);
     button = titleContainer.insert(new Q.UI.Button({
       x: 0,
-      y: desc.p.y + desc.p.h / 2,
+      y: Q.height / 2 - marginButtonsY,
       w: buttonTextSize.width * 1.3,
       h: 80,
       fill: "#c4da4a",
@@ -2359,7 +2360,7 @@
       keyActionName: "confirm",
       type: Q.SPRITE_UI | Q.SPRITE_DEFAULT
     }));
-    button.p.y = button.p.y + button.p.h / 2 + y_pad * 2;
+    // button.p.y = button.p.y + button.p.h/2 + y_pad*2
     titleContainer.fit();
     // authors
     authors = stage.insert(new Q.UI.Authors());
