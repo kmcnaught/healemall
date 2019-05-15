@@ -77,4 +77,4 @@ Q.scene "start", (stage) ->
 
 
   button.on "click", (e) ->
-    Game.stageLevelSelectScreen()
+    Game.stageScreen("start_settings")
