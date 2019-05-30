@@ -1,5 +1,95 @@
 
 
+class StorageItem
+  # Something store-able in local storage, with a default
+  constructor: (key, default_val) ->
+    @key = "zombieGame:" + key
+    @default_val = default_val
+    @is_boolean = (typeof default_val == "boolean")
+
+  get: () ->
+    console.log('getting val for '+@key)
+    console.log(localStorage.getItem(@key))
+    if @is_boolean
+      return @boolValueOrDefault(@key, @default_val)
+    else
+      return localStorage.getItem(@key) || @default_val
+
+  set: (s) ->    
+    # TODO: check cookies permission, error here if not given 
+    localStorage.setItem(@key, s) 
+
+  boolValueOrDefault: (key, defaultVal) ->
+      stringVal = localStorage.getItem(key)
+      if (stringVal == null)
+        return defaultVal
+      else
+        if (stringVal == false.toString())
+          return false
+        else if (stringVal == true.toString())
+          return true
+        else
+          console.error("Cannot read bool value for key #{key}")
+          return defaultVal
+
+
+class Achievements
+  # Progress in game, saved in local storage
+  # Also encapsulates any composite achievements, like getting full marks.
+
+  constructor: (total_levels) ->
+    @availableLevel = new StorageItem("availableLevel", 1)        
+    @total_levels = total_levels
+
+    # progress is stored individually per-level
+    @progressKey = "levelProgress"
+    
+    @progress = []
+    for level in [0..total_levels]  
+      @progress.push new StorageItem(@progressKey + ":" + level, 0)
+
+  hasCompletedMainLevels: ->      
+    for level in [1..5]
+      prog = @progress[level]
+      if prog == 0
+        return false      
+    return true
+
+  hasCompletedMainLevelsFullStars: ->      
+    for level in [1..5]
+      prog = @progress[level]
+      if prog < 3
+        return false
+    return true
+
+  hasCompletedAllLevels: ->      
+    for level in [1..@total_levels]      
+      prog = @progress[level]
+      if prog == 0
+        return false
+    return true
+
+  hasCompletedAllLevelsFullStars: ->      
+    for level in [1..@total_levels]      
+      prog = @progress[level]
+      if prog < 3
+        return false
+    return true 
+
+
+class Settings
+  
+  constructor: () ->
+    console.log('storage ctr')
+    @showCursor = new StorageItem("showCursor", true)
+    @dwellTime = new StorageItem("dwellTime", 1000)
+    @cookiesAccepted = new StorageItem("cookiesAccepted", false)
+    @narrationEnabled = new StorageItem("narrationEnabled", false)
+    @useBuiltinDwell = new StorageItem("useBuiltinDwell", true)
+    @disableMusic = new StorageItem("disableMusic", false)
+    @useKeyboardInstead = new StorageItem("useKeyboardInstead", false)
+
+
 # main game object
 window.Game =
   init: ->
