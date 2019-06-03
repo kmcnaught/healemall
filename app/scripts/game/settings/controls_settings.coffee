@@ -71,7 +71,7 @@ Q.scene "controls_settings", (stage) ->
     Game.stageLevelSelectScreen()
 
   dwell_getter = () ->
-    dTimeMs =  Game.settings.dwellTime.get()
+    dTimeMs =  Number.parseFloat(Game.settings.dwellTime.get())
     return dTimeMs/1000
 
   dwell_setter = (val) ->
@@ -80,4 +80,15 @@ Q.scene "controls_settings", (stage) ->
     Game.setupGaze(val)
     Game.settings.dwellTime.set(val)
 
-  Q.Adjuster.add(stage, Q.width/2, Q.height*0.4, 400, 200,'Dwell time (s)', dwell_getter, dwell_setter)
+
+  scale_getter = () ->
+    console.log('UI Scale:')
+    console.log(Game.settings.uiScale.get())
+    return Number.parseFloat(Game.settings.uiScale.get())
+
+  scale_setter = (val) ->    
+    console.log('new scale! ' + val)
+    Game.settings.uiScale.set(val)
+
+  Q.Adjuster.add(stage, 1.3*Q.width/2, Q.height*0.4, 400, 200,'Dwell time (s)', dwell_getter, dwell_setter)
+  Q.Adjuster.add(stage, 0.7*Q.width/2, Q.height*0.4, 400, 200,'UI scale', scale_getter, scale_setter)

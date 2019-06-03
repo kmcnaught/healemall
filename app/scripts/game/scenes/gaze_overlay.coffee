@@ -2,7 +2,7 @@ Q = Game.Q
 
 Q.scene "gaze_overlay", (stage) ->
   
-  scale = 1.0 # TODO: make this a setting
+  scale = Number.parseFloat(Game.settings.uiScale.get())
 
   base_width = Q.width/10
   width = base_width*scale
