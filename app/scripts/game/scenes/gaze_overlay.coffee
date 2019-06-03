@@ -153,6 +153,14 @@ Q.scene "gaze_overlay", (stage) ->
   # shoot button has extra logic  
   btnShoot = createGazeButton(x_centre, y_shoot, "shoot", shoot_p, "fire", "")
 
+  # make sure jump buttons haven't gone off top of screen
+  min_clearance = 0
+  top_of_buttons = btnJumpRight.p.y - btnJumpRight.p.h/2
+  if top_of_buttons < min_clearance
+    d = min_clearance - top_of_buttons
+    btnJumpRight.p.y += d
+    btnJumpLeft.p.y += d
+
   # unhide 'fire' button when we've got a gun
   onChangeHidden = (btn) => () =>
     btn.p.hidden = !Q.state.get("hasGun");
