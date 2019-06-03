@@ -459,6 +459,10 @@ window.Game =
       sort: true
     Q.stageScene "hud", 2,
       sort: true
+
+    # info speaking interferes with (more important) narration of tutorial instrucitons
+    if Game.settings.narrate.get()
+      Game.infoLabel.disable()
     
     if not Game.settings.useKeyboardInstead
       Q.stageScene "gaze_overlay", 1,

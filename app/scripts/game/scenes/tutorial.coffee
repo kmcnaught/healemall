@@ -31,6 +31,7 @@ Q.scene "tutorial", (stage) ->
 
   # Add help texts
   yFudge = 1.75
+
   texts = [
     Q.tilePos(38, 8+yFudge, {label: "Look at the left and right arrows below to walk"}),
     Q.tilePos(46, 11+yFudge, {label: "The longer you look, the faster you'll walk"}),
@@ -39,17 +40,55 @@ Q.scene "tutorial", (stage) ->
     Q.tilePos(73-1.5, 9+yFudge, {label: "Watch out for zombies!"}),
     Q.tilePos(77, 11+yFudge, {label: "Try to get past without being bitten"}),    
 
-    Q.tilePos(83, 10.5+yFudge, {label: "Collect the healing gun,"}),
-    Q.tilePos(83, 11+yFudge, {label: "and fire at the zombie"}),
+    [Q.tilePos(83, 10.5+yFudge, {label: "Collect the healing gun,"}),
+     Q.tilePos(83, 11+yFudge, {label: "and fire at the zombie"}),],
 
     Q.tilePos(88, 9+yFudge, {label: "Health packs give you an extra life -->"}),
 
-    Q.tilePos(92, 13+yFudge, {label: "To complete the level,"}),
-    Q.tilePos(92, 13.5+yFudge, {label: "find the key and exit"}),
+    [Q.tilePos(92, 13+yFudge, {label: "To complete the level,"}),
+     Q.tilePos(92, 13.5+yFudge, {label: "find the key and exit"})],
   ]
 
+  typeIsArray = ( value ) ->
+    value and
+        typeof value is 'object' and
+        value instanceof Array and
+        typeof value.length is 'number' and
+        typeof value.splice is 'function' and
+        not ( value.propertyIsEnumerable 'length' )
+
+  clone = (obj) ->
+    if not obj? or typeof obj isnt 'object'
+      return obj
+
+    newInstance  = new obj.constructor()
+    newInstance[key] = clone(obj[key]) for key of obj
+    return newInstance
+
+
   for text_props in texts
-    stage.insert new Q.UI.HelpText(text_props)    
+    # If we split text over multiple lines (to get nice centering)
+    # we need to re-combine for narration.
+    if typeIsArray(text_props)
+      combined_label = ""
+      for component in text_props 
+        stage.insert new Q.UI.HelpText(clone(component))    
+        combined_label += " " + component.label
+
+      combined_prop = text_props.pop()
+      combined_prop.label = combined_label
+
+      helptext = [
+        ["InfoPoint", combined_prop]
+      ]
+    else
+      stage.insert new Q.UI.HelpText(text_props)    
+    
+      helptext = [
+        ["InfoPoint", text_props]
+      ]
+
+    stage.loadAssets(helptext)    
 
 
   # # store level data for level summary

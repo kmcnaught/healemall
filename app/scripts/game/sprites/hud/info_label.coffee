@@ -10,20 +10,28 @@ Q.UI.InfoLabel = Q.UI.Text.extend "UI.InfoLabel",
       size: 24
       family: "Boogaloo"
       pendingLabel: ""
+      disabled: false
+
+  disable: () ->
+    @p.disabled = true
+
+  enable: () ->
+    @p.disabled = false
 
   speak:  (phrase) ->
-    if false # TODO: Add this in :)
+    if Game.settings.narrate.get()
       responsiveVoice.speak(phrase, "UK English Male");
 
   changeLabel: (new_label) ->    
-    if new_label is this.pendingLabel
-      return
-    this.pendingLabel = new_label
-    @afterLabelChange "..."
-    self = this;
-    setTimeout ( -> 
-      self.afterLabelChange new_label
-      self.speak new_label ), 250
+    if not @p.disabled
+      if new_label is this.pendingLabel
+        return
+      this.pendingLabel = new_label
+      @afterLabelChange "..."
+      self = this;
+      setTimeout ( -> 
+        self.afterLabelChange new_label
+        self.speak new_label ), 250
 
   afterLabelChange: (new_label) ->
     if new_label
