@@ -78,7 +78,7 @@ Q.scene "tutorialSummary", (stage) ->
   buttonNext.p.x = Q.width/2 + buttonNext.p.w/2 + 40
 
   buttonNext.on "click", (e) ->
-    Game.stageLevel(Q.state.get("currentLevel"))
+    Game.stageTutorial()
 
   # button back
   buttonBack = stage.insert new Q.UI.Button
