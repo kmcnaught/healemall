@@ -1,23 +1,22 @@
 
-
 class StorageItem
   # Something store-able in local storage, with a default
   constructor: (key, default_val) ->
-    @key = "zombieGame:" + key
+    @key = @getKey(key)
     @default_val = default_val
-    @is_boolean = (typeof default_val == "boolean")
+    @is_boolean = (typeof default_val == "boolean")  
+
+  getKey: (key) ->
+    return "zombieGame:" + key
 
   get: () ->
-    console.log('getting val for '+@key)
-    console.log(localStorage.getItem(@key))
     if @is_boolean
       return @boolValueOrDefault(@key, @default_val)
     else
       return localStorage.getItem(@key) || @default_val
 
   set: (s) ->    
-    # TODO: check cookies permission, error here if not given 
-    localStorage.setItem(@key, s) 
+    localStorage.setItem(@key, s)     
 
   boolValueOrDefault: (key, defaultVal) ->
       stringVal = localStorage.getItem(key)
@@ -47,6 +46,9 @@ class Achievements
     @progress = []
     for level in [0..total_levels]  
       @progress.push new StorageItem(@progressKey + ":" + level, 0)
+
+  getProgressForLevel: (level) ->
+    return @progress[level].get()
 
   hasCompletedMainLevels: ->      
     for level in [1..5]
@@ -80,14 +82,15 @@ class Achievements
 class Settings
   
   constructor: () ->
-    console.log('storage ctr')
+    @cookiesAccepted = new StorageItem("cookiesAccepted", false)
     @showCursor = new StorageItem("showCursor", true)
     @dwellTime = new StorageItem("dwellTime", 1000)
-    @cookiesAccepted = new StorageItem("cookiesAccepted", false)
     @narrationEnabled = new StorageItem("narrationEnabled", false)
     @useBuiltinDwell = new StorageItem("useBuiltinDwell", true)
     @disableMusic = new StorageItem("disableMusic", false)
     @useKeyboardInstead = new StorageItem("useKeyboardInstead", false)
+    @uiScale =  new StorageItem("uiScale", 1.0)
+    @narrate =  new StorageItem("narrate", false)
 
 
 # main game object
@@ -98,22 +101,10 @@ window.Game =
       development: true
       audioSupported: [ 'ogg', 'mp3' ]
 
-    # Q.debug = true
-    # Q.debugFill = true
+    Game.settings = new Settings()
+    Game.achievements = new Achievements()
 
-
-    # game progress
-    Game.storageKeys =
-      availableLevel: "zombieGame:availableLevel"
-      levelProgress: "zombieGame:levelProgress"
-      showCursor: "zombieGame:showCursor"
-      unlockedBonus: "zombieGame:unlockedBonus"
-      cookiesAccepted: "zombiegame:cookiesAccepted"
-      showCursor: "zombieGame:showCursor"
-      dwellTime: "zombieGame:dwellTime"
-
-
-    # main setup
+    # Quintus setup
     Q.include "Sprites, Scenes, Input, Touch, Gaze, UI, 2D, Anim, Audio"
     Q.setup
       # width: 640
@@ -123,43 +114,11 @@ window.Game =
       upsampleHeight: 320
     Q.controls().touch(Q.SPRITE_UI, [0,1,10])
 
-    dwellTime = localStorage.getItem(Game.storageKeys.dwellTime) || 1000
-    @setupGaze(dwellTime)
-    
     Q.enableSound()
 
     # Extra keybindings not in quintus defaults
-    Q.input.bindKey(67, "cursor")
-
-    Game.availableLevel = localStorage.getItem(Game.storageKeys.availableLevel) || 1
+    Q.input.bindKey(67, "cursor")    
     
-    boolValueOrDefault = (key, defaultVal) =>
-      stringVal = localStorage.getItem(key)
-      if (stringVal == null)
-        return defaultVal
-      else
-        if (stringVal == false.toString())
-          return false
-        else if (stringVal == true.toString())
-          return true
-        else
-          console.error("Cannot read bool value for key #{key}")
-          return defaultVal
-    
-    Game.unlockedBonus = boolValueOrDefault(Game.storageKeys.unlockedBonus, false)
-
-    @setCursorState(boolValueOrDefault(Game.storageKeys.showCursor, true))
-    Q.input.on("cursor", @, "toggleCursor")
-
-    # Stuff that gets modified by user
-    # TODO: store this!
-    Game.preferences = {
-      'uiScale': 1.0,
-      'narrate': false,
-      'dwellTime': 1.0
-    }
-    Game.uiScale = 1.0
-
     # used for collision detection
     @SPRITE_NONE = 0
     @SPRITE_PLAYER = 1
@@ -184,19 +143,25 @@ window.Game =
 
       Q._extend position, otherParams
 
+    # Set up some things from settings
+    @setupGaze(Game.settings.dwellTime.get())
+    @setCursorState(Game.settings.showCursor.get(), false) # don't save since we might not have cookie acceptance yet
+    Q.input.on("cursor", @, "toggleCursor")  
+
     return
 
   setupGaze: (dwell_time) ->
     @Q.controls().untrackGaze()
     @Q.controls().trackGaze(@Q.SPRITE_UI, [0,1,2,10], dwell_time)
 
-  setCursorState: (cursor_on) ->
+  setCursorState: (cursor_on, save_state=true) ->
     console.log("Setting cursor state: " + cursor_on)
     # Update game state
     @Q.state.set "showCursor", cursor_on
     
     # Persist in local storage
-    localStorage.setItem(Game.storageKeys.showCursor, cursor_on)
+    if save_state
+      Game.settings.showCursor.set(cursor_on)
 
     # Change styling to hide/show cursor
     element = document.getElementById("quintus_container")
@@ -208,35 +173,6 @@ window.Game =
 
   toggleCursor: ->
     @setCursorState(!Q.state.get("showCursor"))
-
-
-  hasCompletedMainLevels: ->      
-    for level in [1..5]
-      prog = localStorage.getItem(Game.storageKeys.levelProgress + ":" + level)
-      if prog == null
-        return false
-    return true
-
-  hasCompletedMainLevelsFullStars: ->      
-    for level in [1..5]
-      prog = localStorage.getItem(Game.storageKeys.levelProgress + ":" + level)
-      if prog == null or prog < 3
-        return false
-    return true
-
-  hasCompletedAllLevels: ->      
-    for level in [1..Game.levels_array.length-1]      
-      prog = localStorage.getItem(Game.storageKeys.levelProgress + ":" + level)
-      if prog == null
-        return false
-    return true
-
-  hasCompletedAllLevelsFullStars: ->      
-    for level in [1..Game.levels_array.length-1]
-      prog = localStorage.getItem(Game.storageKeys.levelProgress + ":" + level)
-      if prog == null or prog < 3
-        return false
-    return true 
 
   # one place of defining assets
   prepareAssets: ->
@@ -327,6 +263,8 @@ window.Game =
       tutorial:
         dataAsset: "tutorial.tmx"
       
+    Game.achievements = new Achievements(Game.levels_array.length - 1)
+
     # audio
     @audio =
       zombieMode: "zombie_mode.mp3"
@@ -426,9 +364,8 @@ window.Game =
 
     # unlock the next level
     # We only save progress up to Level 5; bonus levels are always available
-    if number <= 5 and number >= Game.availableLevel
-      Game.availableLevel = number + 1
-      localStorage.setItem(Game.storageKeys.availableLevel, Game.availableLevel)
+    if number <= 5 and number >= Game.achievements.availableLevel.get()      
+      Game.achievements.availableLevel.set(number + 1)
 
 
   stageLevelSelectScreen: ->

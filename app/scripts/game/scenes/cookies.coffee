@@ -51,7 +51,7 @@ Q.scene "cookies", (stage) ->
     type: Q.SPRITE_UI | Q.SPRITE_DEFAULT
 
   button.on "click", (e) ->    
-    localStorage.setItem(Game.storageKeys.cookiesAccepted, "true")
+    Game.settings.cookiesAccepted.set("true")    
     Game.stageScreen("start")
     
   titleContainer.fit()

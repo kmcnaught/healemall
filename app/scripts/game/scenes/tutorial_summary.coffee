@@ -98,10 +98,8 @@ Q.scene "tutorialSummary", (stage) ->
     Game.stageLevelSelectScreen()
 
   # save progress in game
-  if Q.state.get("currentLevel") >= Game.availableLevel
-    Game.availableLevel = Q.state.get("currentLevel") + 1
-    localStorage.setItem(Game.storageKeys.availableLevel, Game.availableLevel)
-
+  if Q.state.get("currentLevel") >= Game.achievements.availableLevel.get()
+    Game.achievements.availableLevel.set(Q.state.get("currentLevel") + 1)
 
   # count stars
   score = stage.options.zombies.healed/stage.options.zombies.available
@@ -115,9 +113,10 @@ Q.scene "tutorialSummary", (stage) ->
     stars = 3
 
   # save only if better than previous
-  previousStars = localStorage.getItem(Game.storageKeys.levelProgress + ":" + Q.state.get("currentLevel"))
+  level = Q.state.get("currentLevel")
+  previousStars = Game.achievements.progress[level].get()
   if previousStars < stars
-    localStorage.setItem(Game.storageKeys.levelProgress + ":" + Q.state.get("currentLevel"), stars)
+    Game.achievements.progress[level].set(stars)
 
   # insert stars on the screen
   starsContainer = stage.insert new Q.UI.Container

@@ -70,16 +70,14 @@ Q.scene "controls_settings", (stage) ->
   button.on "click", (e) ->
     Game.stageLevelSelectScreen()
 
-  # TODO: actually, maybe have all adjuster stuff as callback, rather than hacking into preferences struct
-  
   dwell_getter = () ->
-    dTimeMs = localStorage.getItem(Game.storageKeys.dwellTime) || 1000
+    dTimeMs =  Game.settings.dwellTime.get()
     return dTimeMs/1000
 
   dwell_setter = (val) ->
     console.log('new dwell time! ' + val)
     val = val*1000
     Game.setupGaze(val)
-    localStorage.setItem(Game.storageKeys.dwellTime, val)
+    Game.settings.dwellTime.set(val)
 
   Q.Adjuster.add(stage, Q.width/2, Q.height*0.4, 400, 200,'Dwell time (s)', dwell_getter, dwell_setter)

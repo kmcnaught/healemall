@@ -33,7 +33,6 @@ Q.scene "levelSelect", (stage) ->
   # prepare special buttons for first column
 
   # add level buttons
-  bonusUnlocked = true #localStorage.getItem(Game.storageKeys.unlockedBonus)
 
   for item in [0..6]
 
@@ -43,7 +42,7 @@ Q.scene "levelSelect", (stage) ->
       if item > 0
         y += rowHeight + gutterY
 
-    enabled = if item <= Game.availableLevel then true else false
+    enabled = if item <= Game.achievements.availableLevel.get() then true else false
 
     # put button into container
     container = stage.insert new Q.UI.Container
@@ -53,7 +52,7 @@ Q.scene "levelSelect", (stage) ->
     x += columnWidth + gutterX
 
     # If we've unlocked levels, we'll replace L6 with a link to "more levels"
-    if item == 6 and bonusUnlocked 
+    if item == 6
       break
 
     container.insert new Q.UI.LevelButton
@@ -77,7 +76,7 @@ Q.scene "levelSelect", (stage) ->
     # add progress stars
     level = item
     if item > 0
-      stars = localStorage.getItem(Game.storageKeys.levelProgress + ":" + level)
+      stars = Game.achievements.progress[level].get()
 
     if stars
       starsX = -60
@@ -92,32 +91,30 @@ Q.scene "levelSelect", (stage) ->
 
   # end of adding level buttons
 
-  # "More levels!" if unlocked
-  if bonusUnlocked 
+  # "More levels!"  
+  bonus = container.insert new Q.UI.MoreLevelsButton
+      x: 0
+      y: 0
+      w: w
+      h: h
 
-    bonus = container.insert new Q.UI.MoreLevelsButton
-        x: 0
-        y: 0
-        w: w
-        h: h
-
-    
-    fontsize = 32
-    container.insert new Q.UI.Text
-        x: 0
-        y: -fontsize/2
-        label: "Extra"
-        color: "#404444"
-        family: "Jolly Lodger"
-        size: fontsize
-    
-    container.insert new Q.UI.Text
-        x: 0
-        y: fontsize/2
-        label: "levels"
-        color: "#404444"
-        family: "Jolly Lodger"
-        size: fontsize
+  
+  fontsize = 32
+  container.insert new Q.UI.Text
+      x: 0
+      y: -fontsize/2
+      label: "Extra"
+      color: "#404444"
+      family: "Jolly Lodger"
+      size: fontsize
+  
+  container.insert new Q.UI.Text
+      x: 0
+      y: fontsize/2
+      label: "levels"
+      color: "#404444"
+      family: "Jolly Lodger"
+      size: fontsize
 
   # settings button bottom right
   container = stage.insert new Q.UI.Container

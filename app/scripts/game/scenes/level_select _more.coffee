@@ -33,7 +33,6 @@ Q.scene "levelSelectMore", (stage) ->
   # prepare special buttons for first column
 
   # add level buttons
-  bonusUnlocked = localStorage.getItem(Game.storageKeys.unlockedBonus)
 
   for item in [0..6]
 
@@ -143,9 +142,9 @@ Q.scene "levelSelectMore", (stage) ->
             family: "Jolly Lodger"
             size: fontsize   
         
-        # add progress stars#          
+        # add progress stars          
         if item > 0
-          stars = localStorage.getItem(Game.storageKeys.levelProgress + ":" + level)
+          stars = Game.achievements.progress[level].get()
 
         if stars
           starsX = -60

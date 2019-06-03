@@ -16,7 +16,7 @@ Q.load Game.assets.all,
     Q.compileSheets Game.assets.controls.sheet, Game.assets.controls.dataAsset
 
     # first stage
-    if localStorage.getItem(Game.storageKeys.cookiesAccepted)
+    if (Game.settings.cookiesAccepted.get())    
       Game.stageScreen("start")
     else
       Game.stageScreen("cookies")

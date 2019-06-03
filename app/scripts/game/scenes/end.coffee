@@ -43,5 +43,4 @@ Q.scene "end", (stage) ->
 
   button.on "click", (e) ->
     Game.stageLevelSelectScreen()
-    localStorage.setItem(Game.storageKeys.unlockedBonus, true)
-
+    
