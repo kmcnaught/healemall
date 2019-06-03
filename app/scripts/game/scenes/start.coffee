@@ -78,4 +78,4 @@ Q.scene "start", (stage) ->
 
 
   button.on "click", (e) ->
-    Game.stageScreen("start_settings")
+    Game.stageScreen("start_controls")

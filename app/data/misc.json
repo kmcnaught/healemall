@@ -110,5 +110,37 @@
     "tilew":149,
     "tileh":169,
     "frames":1
+  },
+  "gaze_touch_etc": {
+    "sx": 179,
+    "sy": 189,
+    "cols":1,
+    "tilew":255,
+    "tileh":198,
+    "frames":1
+  },
+  "keyboard_controls": {
+    "sx": 436,
+    "sy": 189,
+    "cols":1,
+    "tilew":214,
+    "tileh":126,
+    "frames":1
+  },
+  "button_pressed": {
+    "sx": 276,
+    "sy": 492,
+    "cols":1,
+    "tilew":276,
+    "tileh":276,
+    "frames":1
+  },
+  "button_not_pressed": {
+    "sx": 0,
+    "sy": 492,
+    "cols":1,
+    "tilew":276,
+    "tileh":276,
+    "frames":1
   }
 }

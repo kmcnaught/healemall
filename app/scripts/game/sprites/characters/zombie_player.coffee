@@ -47,7 +47,11 @@ Q.Sprite.extend "ZombiePlayer",
     @on "ready", @, "enableZombieMode"
 
   enableZombieMode: ->
-    @add "platformerControlsGaze"
+    if Game.settings.useKeyboardInstead
+      @add "platformerControls"
+    else
+      @add "platformerControlsGaze"
+
     @p.direction = @p.playerDirection
     Game.infoLabel.zombieModeOnNext()
     Game.currentLevelData.zombieModeFound = true

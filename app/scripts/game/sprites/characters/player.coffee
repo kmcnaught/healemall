@@ -50,7 +50,12 @@ Q.Sprite.extend "Player",
       type: Game.SPRITE_PLAYER
       collisionMask: Game.SPRITE_TILES | Game.SPRITE_ENEMY | Game.SPRITE_PLAYER_COLLECTIBLE
 
-    @add("2d, platformerControlsGaze, animation")
+    @add("2d, animation")
+
+    if Game.settings.useKeyboardInstead
+      @add "platformerControls"
+    else
+      @add "platformerControlsGaze"      
 
     if Q.state.get "hasGun"
       @add("gun")
