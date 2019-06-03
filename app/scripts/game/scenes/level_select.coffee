@@ -44,6 +44,10 @@ Q.scene "levelSelect", (stage) ->
 
     enabled = if item <= Game.achievements.availableLevel.get() then true else false
 
+    # tutorial disabled in keyboard-mode
+    if Game.settings.useKeyboardInstead and item == 0
+      enabled = false
+
     # put button into container
     container = stage.insert new Q.UI.Container
       x: x

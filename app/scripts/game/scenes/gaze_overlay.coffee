@@ -167,23 +167,4 @@ Q.scene "gaze_overlay", (stage) ->
   stage.insert(btnJumpRight)
   stage.insert(btnShoot)
 
-  # Bottom buttons
-  marginBottomButtons = Q.height * 0.1
-
-  pauseButton = stage.insert new Q.UI.PauseButton
-    x: Q.width/2
-    y: Q.height - marginBottomButtons    
-    isSmall: false
-
-  menuButton = stage.insert new Q.UI.MenuButton
-    x: Q.width - marginBottomButtons
-    y: Q.height - marginBottomButtons    
-    isSmall: false
-
-  menuButton.on "click", (e) ->
-    Q.stageScene("restartOptions")
-
-  audioButton = stage.insert new Q.UI.AudioButton
-    x: marginBottomButtons
-    y: Q.height - marginBottomButtons    
-    isSmall: false
+ 

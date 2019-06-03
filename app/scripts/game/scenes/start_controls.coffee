@@ -73,7 +73,9 @@ Q.scene "start_controls", (stage) ->
     gazeText.p.color = yellow
 
   gazeButton.pressed = true
+  keyboardText.p.color = gray
   gazeText.p.color = yellow
+
 
 
   
@@ -132,3 +134,4 @@ Q.scene "start_controls", (stage) ->
       console.log('Using keyboard!')
       Game.settings.useKeyboardInstead = true
       Game.stageLevelSelectScreen()
+      Game.turnOffGaze()

@@ -112,7 +112,7 @@ window.Game =
       maximize: true
       upsampleWidth: 640
       upsampleHeight: 320
-    Q.controls().touch(Q.SPRITE_UI, [0,1,10])
+    Q.controls().touch(Q.SPRITE_UI, [0,1,2,10])
 
     Q.enableSound()
 
@@ -153,6 +153,9 @@ window.Game =
   setupGaze: (dwell_time) ->
     @Q.controls().untrackGaze()
     @Q.controls().trackGaze(@Q.SPRITE_UI, [0,1,2,10], dwell_time)
+
+  turnOffGaze: () ->
+    @Q.controls().untrackGaze()
 
   setCursorState: (cursor_on, save_state=true) ->
     console.log("Setting cursor state: " + cursor_on)
@@ -352,8 +355,10 @@ window.Game =
       sort: true
     Q.stageScene "hud", 2,
       sort: true
-    Q.stageScene "gaze_overlay", 1, 
-      sort: true
+
+    if not Game.settings.useKeyboardInstead
+      Q.stageScene "gaze_overlay", 1, 
+        sort: true
 
     # the story
     Game.infoLabel.intro()
@@ -454,8 +459,10 @@ window.Game =
       sort: true
     Q.stageScene "hud", 2,
       sort: true
-    Q.stageScene "gaze_overlay", 1,
-      sort: true
+    
+    if not Game.settings.useKeyboardInstead
+      Q.stageScene "gaze_overlay", 1,
+        sort: true
 
     # the story
     Game.infoLabel.tutorial()

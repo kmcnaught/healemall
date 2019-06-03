@@ -68,4 +68,24 @@ Q.scene "hud", (stage) ->
   keyContainer.fit(5, 8)
   keyContainer.p.x = healthContainer.p.x - healthContainer.p.w/2 - keyContainer.p.w/2 - 34
 
-  
+  # Buttons
+
+  marginBottomButtons = Q.height * 0.1
+
+  pauseButton = stage.insert new Q.UI.PauseButton
+    x: Q.width/2
+    y: Q.height - marginBottomButtons    
+    isSmall: false
+
+  menuButton = stage.insert new Q.UI.MenuButton
+    x: Q.width - marginBottomButtons
+    y: Q.height - marginBottomButtons    
+    isSmall: false
+
+  menuButton.on "click", (e) ->
+    Q.stageScene("restartOptions")
+
+  audioButton = stage.insert new Q.UI.AudioButton
+    x: marginBottomButtons
+    y: Q.height - marginBottomButtons    
+    isSmall: false
