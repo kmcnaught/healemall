@@ -73,7 +73,7 @@ Q.scene "hud", (stage) ->
   marginBottomButtons = Q.height * 0.1
 
   pauseButton = stage.insert new Q.UI.PauseButton
-    x: Q.width/2
+    x: marginBottomButtons
     y: Q.height - marginBottomButtons    
     isSmall: false
 
@@ -85,7 +85,4 @@ Q.scene "hud", (stage) ->
   menuButton.on "click", (e) ->
     Q.stageScene("restartOptions")
 
-  audioButton = stage.insert new Q.UI.AudioButton
-    x: marginBottomButtons
-    y: Q.height - marginBottomButtons    
-    isSmall: false
+ 

@@ -26,7 +26,7 @@ Q.scene "paused", (stage) ->
   marginBottomButtons = Q.height * 0.1
 
   pauseButton = stage.insert new Q.UI.PauseButton
-    x: Q.width/2
+    x: marginBottomButtons
     y: Q.height - marginBottomButtons    
     isSmall: false
     unpause: true
