@@ -104,18 +104,28 @@ Q.scene "controls_settings", (stage) ->
     console.log('preview coming soon!')
 
 
-  # TOP ROW: which control are you using?
+
   mainSection = pageContainer.subplot(8,1,1,0,6,0)
 
-  row1 = stage.insert mainSection.subplot(3,1,0,0)
-  row2 = stage.insert mainSection.subplot(3,1,1,0)
-  row3 = stage.insert mainSection.subplot(3,1,2,0)
-  
-  
+    
+  cursor_layout =   stage.insert mainSection.subplot(3,2, 0,1, 0,1, 0.1)
 
-  # mainSection = stage.insert pageContainer.subplot(5,4,1,1,2,1)
+  cursorButton = cursor_layout.insert new Q.UI.CursorButton        
+    isSmall: false
 
-  # topRow = stage.insert mainSection.subplot(3,1,0,0)
+
+  cursorLabel = cursor_layout.insert new Q.UI.Text    
+    label: "Show cursor?"
+    color: "#818793"
+    family: "Boogaloo"
+    size: 36
+
+  label_pad = cursorButton.p.w/4
+  delta =  cursorButton.p.w/2 + cursorLabel.p.w/2 + label_pad
+  cursorLabel.p.x = cursorLabel.p.x - delta/2
+  cursorButton.p.x = cursorButton.p.x + delta/2
+
+
 
   dwell_getter = () ->
     dTimeMs =  Number.parseFloat(Game.settings.dwellTime.get())
