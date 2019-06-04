@@ -4,12 +4,13 @@ Q.UI.ArrowDwellButton = Q.UI.PolygonButton.extend "UI.ArrowDwellButton",
   init: (p, defaultProps) ->
     @_super p,
       type: Q.SPRITE_UI | Q.SPRITE_DEFAULT
-      fill: "#c4da4a50"
+      fill: "#c4da4a"      
       radius: 10
       fontColor: "#353b47"
       font: "400 58px Jolly Lodger"
       faces_left: true      
 
+    @p.opacity = Number.parseFloat(Game.settings.uiOpacity.get())
     @doDwell = false
 
     if @p.h is undefined

@@ -109,12 +109,14 @@ Q.scene "gaze_overlay", (stage) ->
     h: h
     z: 1         
     type: Q.SPRITE_UI | Q.SPRITE_DEFAULT
-    fill: "#c4da4a50"
+    fill: "#c4da4a"
     radius: 10
     fontColor: "#353b47"
     font: "400 58px Jolly Lodger"
     label: "shoot"
     points: shoot_p
+
+  btnShoot.p.opacity = Number.parseFloat(Game.settings.uiOpacity.get())
 
   btnShoot.on "click", (e) -> 
     Q.inputs["fire"]=1

@@ -106,30 +106,32 @@ Q.scene "controls_settings", (stage) ->
     return dTimeMs/1000
 
   dwell_setter = (val) ->
-    console.log('new dwell time! ' + val)
     val = val*1000
     Game.setupGaze(val)
     Game.settings.dwellTime.set(val)
-  # buttonBar = stage.insert pageContainer.subplot(2,2,0,0)
-  # buttonBar = stage.insert pageContainer.subplot(2,2,1,1)
-
+  
   scale_getter = () ->
-    console.log('UI Scale:')
-    console.log(Game.settings.uiScale.get())
     return Number.parseFloat(Game.settings.uiScale.get())
-  # grid = new GridContainer(0, 0, Q.width, Q.height, 8, 1)
-  # title_bar = grid.
-
+  
   scale_setter = (val) ->    
-    console.log('new scale! ' + val)
     Game.settings.uiScale.set(val)
 
+  opacity_getter = () ->
+    return Number.parseFloat(Game.settings.uiOpacity.get())
+  
+  opacity_setter = (val) ->    
+    Game.settings.uiOpacity.set(val)
 
-  dwell_layout = stage.insert mainSection.subplot(3,2,1,0,1,0,0.1)
-  scale_layout = stage.insert mainSection.subplot(3,2,1,1,1,1,0.1)
+
+
+  scale_layout =   stage.insert mainSection.subplot(3,2, 1,0, 1,0, 0.1)
+  dwell_layout =   stage.insert mainSection.subplot(3,2, 2,1, 2,1, 0.1)
+  opacity_layout = stage.insert mainSection.subplot(3,2, 2,0, 2,0, 0.1)
 
   Q.Adjuster.add(dwell_layout, 'Dwell time (s)', dwell_getter, dwell_setter, 0.1, 0.1, 3.0)
-  Q.Adjuster.add(scale_layout, 'UI scale', scale_getter, scale_setter, 0.1, 0.2, 2.5)
+  Q.Adjuster.add(scale_layout, 'Size of gaze controls', scale_getter, scale_setter, 0.1, 0.2, 2.5)
+  Q.Adjuster.add(opacity_layout, 'Opacity of gaze controls', opacity_getter, opacity_setter, 0.05, 0.05, 0.95)
+
 
   # x, y, w, h, label, getter, setter, inc=0.1
   

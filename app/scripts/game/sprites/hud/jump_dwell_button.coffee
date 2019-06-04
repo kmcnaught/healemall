@@ -4,12 +4,13 @@ Q.UI.JumpDwellButton = Q.UI.PolygonButton.extend "UI.JumpDwellButton",
   init: (p, defaultProps) ->
     @_super p,
       type: Q.SPRITE_UI | Q.SPRITE_DEFAULT
-      fill: "#c4da4a50"
+      fill: "#c4da4a"
       radius: 10
-      fontColor: "#353b47"
+      fontColor: "black"
       font: "400 58px Jolly Lodger"
       faces_left: true      
 
+    @p.opacity = Number.parseFloat(Game.settings.uiOpacity.get())
     @doDwell = true
 
     if @p.h is undefined

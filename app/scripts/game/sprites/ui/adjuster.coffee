@@ -8,6 +8,7 @@ Q.Adjuster =
     h = layout.p.h
     w = layout.p.w    
 
+    num_digits = Math.ceil(-Math.log10(inc*1.05)) # *1.05 to avoid rounding exaggerations
 
     title_fontsize = Math.floor(h/6)
     label_fontsize = Math.floor(h/4)    
@@ -61,7 +62,7 @@ Q.Adjuster =
     valText = layout.insert new Q.UI.Text
       x: x
       y: title.p.h/2
-      label: init_val.toFixed(1)
+      label: init_val.toFixed(num_digits)
       color: "#f2da38"
       family: "Boogaloo"
       size: fontsize
@@ -73,12 +74,12 @@ Q.Adjuster =
         new_val = min_val
 
       setter(new_val)
-      valText.p.label = getter().toFixed(1)
+      valText.p.label = getter().toFixed(num_digits)
       
     incButton.on "click", (e) ->      
       new_val = getter() + inc
       if max_val? and new_val > max_val
         new_val = max_val
       setter(new_val)
-      valText.p.label = getter().toFixed(1)
+      valText.p.label = getter().toFixed(num_digits)
       
