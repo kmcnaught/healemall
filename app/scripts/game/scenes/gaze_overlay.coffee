@@ -24,31 +24,7 @@ Q.scene "gaze_overlay", (stage) ->
     if action
       Q.inputs[action]=0
 
-  # TODO extract this to elsewhere
-  leftjump_normalised = [
-            [0.5, 0.5],
-            [0.5, 0.15],
-            [0.428571428571429, -0.0714285714285714],
-            [0.214285714285714, -0.321428571428571],
-            [0.428571428571429, -0.5],
-            [-0.5, -0.5],
-            [-0.5, 0.321428571428571],
-            [-0.321428571428571, 0.142857142857143],
-            [-0.214285714285714, 0.25],
-            [-0.214285714285714, 0.5],
-          ]   
-  rightjump_normalised = [
-            [-0.5, 0.5],
-            [-0.5, 0.15],
-            [-0.428571428571429, -0.0714285714285714],
-            [-0.214285714285714, -0.321428571428571],
-            [-0.428571428571429, -0.5],
-            [0.5, -0.5],
-            [0.5, 0.321428571428571],
-            [0.321428571428571, 0.142857142857143],
-            [0.214285714285714, 0.25],
-            [0.214285714285714, 0.5],
-          ]  
+
   # (drew in inkscape, exported points)
   shoot_points_normalised =  [
     [-0.55601, -0.06244],
@@ -68,13 +44,12 @@ Q.scene "gaze_overlay", (stage) ->
 
   # scale shapes up
   shoot_p = ([p[0]*w*.9, p[1]*h*.9] for p in shoot_points_normalised)
-  rightjump_p = ([p[0]*w*.9, p[1]*h*.9] for p in rightjump_normalised)
-  leftjump_p = ([p[0]*w*.9, p[1]*h*.9] for p in leftjump_normalised)
-  
-  leftarrow_p = ([p[0]*1.2, p[1]*1.2] for p in leftarrow_p)
-  rightarrow_p = ([p[0]*1.2, p[1]*1.2] for p in rightarrow_p)
+  # rightjump_p = ([p[0]*w*.9, p[1]*h*.9] for p in rightjump_normalised)
+  # leftjump_p = ([p[0]*w*.9, p[1]*h*.9] for p in leftjump_normalised)
 
-  button_points = [leftjump_p, leftarrow_p, shoot_p, rightarrow_p, rightjump_p ]               
+  # interact zone for jump buttons is ~90% inside
+  # rightjump_p_interact = ([p[0]*.9, p[1]*.9] for p in rightjump_p)
+  # leftjump_p_interact = ([p[0]*.9, p[1]*.9] for p in leftjump_p)  
 
   # positioning
   # lower buttons (left, right, shoot) should centre vertically on platform player is stood on
@@ -90,35 +65,7 @@ Q.scene "gaze_overlay", (stage) ->
   x_left = Q.width/2 + camera_offset - (width + margin*2)
   x_right = Q.width/2 + camera_offset + (width + margin*2)
   x_centre = Q.width/2 + camera_offset
-
-  # define button-adding function
-  createGazeButton = (x, y, label, points, dwell_action, hover_action) => 
-    button = new Q.UI.PolygonButton
-      x: x
-      y: y
-      w: w
-      h: h
-      z: 1         
-      type: Q.SPRITE_UI | Q.SPRITE_DEFAULT
-      fill: "#c4da4a50"
-      radius: 10
-      fontColor: "#353b47"
-      font: "400 58px Jolly Lodger"
-      label: label
-      points: points
-
-    if (dwell_action)
-      button.on "click", onClick dwell_action
-    else
-      button.doDwell = false
-
-    if (hover_action)
-      button.on "hover", onTouch hover_action
-      button.on "touch", onTouch hover_action
-      button.on "touchEnd", onTouchEnd hover_action
-
-    return button
-
+ 
   # we want direction+jump arrows to be left-aligned, not centre-aligned
   jump_xoffset = w/30
 
@@ -138,11 +85,47 @@ Q.scene "gaze_overlay", (stage) ->
     faces_left: false
     hover_action: "right"
 
-  btnJumpLeft = createGazeButton(x_left+jump_xoffset, y_upper, "", leftjump_p, leftjump_p_interact, "jumpleft", "")
-  btnJumpRight = createGazeButton(x_right-jump_xoffset, y_upper, "", rightjump_p, rightjump_p, "jumpright", "")
+  btnJumpLeft = new Q.UI.JumpDwellButton
+    x: x_left+jump_xoffset
+    y: y_upper
+    w: w
+    h: h
+    faces_left: true
+    dwell_action: "jumpleft"
 
-  # shoot button has extra logic  
-  btnShoot = createGazeButton(x_centre, y_shoot, "shoot", shoot_p, "fire", "")
+  btnJumpRight = new Q.UI.JumpDwellButton
+    x: x_right-jump_xoffset
+    y: y_upper
+    w: w
+    h: h
+    faces_left: false
+    dwell_action: "jumpright"
+
+  # shoot button 
+  btnShoot = new Q.UI.PolygonButton
+    x: x_centre
+    y: y_shoot
+    w: w
+    h: h
+    z: 1         
+    type: Q.SPRITE_UI | Q.SPRITE_DEFAULT
+    fill: "#c4da4a50"
+    radius: 10
+    fontColor: "#353b47"
+    font: "400 58px Jolly Lodger"
+    label: "shoot"
+    points: shoot_p
+
+  btnShoot.on "click", (e) -> 
+    Q.inputs["fire"]=1
+    Q.input.trigger("fire");
+
+  # unhide 'fire' button when we've got a gun
+  onChangeHidden = (btn) => () =>
+    btn.p.hidden = !Q.state.get("hasGun");
+
+  btnShoot.p.hidden = !Q.state.get("hasGun")
+  Q.state.on "change.hasGun", onChangeHidden btnShoot
 
   # make sure jump buttons haven't gone off top of screen
   min_clearance = 0
@@ -151,13 +134,6 @@ Q.scene "gaze_overlay", (stage) ->
     d = min_clearance - top_of_buttons
     btnJumpRight.p.y += d
     btnJumpLeft.p.y += d
-
-  # unhide 'fire' button when we've got a gun
-  onChangeHidden = (btn) => () =>
-    btn.p.hidden = !Q.state.get("hasGun");
-
-  btnShoot.p.hidden = !Q.state.get("hasGun")
-  Q.state.on "change.hasGun", onChangeHidden btnShoot
 
   # Add everything to the stage
   stage.insert(btnLeft)
