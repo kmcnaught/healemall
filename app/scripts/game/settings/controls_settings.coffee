@@ -1,5 +1,48 @@
 Q = Game.Q
 
+
+class GridContainer
+  constructor: (x, y, w, h, rows, cols) ->
+    @cells = []
+    cell_w = h/rows
+    cell_h = w/cols
+    for r in [0..rows-1]
+      row_container = []    
+      for c in [0..cols-1]
+        cell = stage.insert new Q.UI.Container
+          x: x + (c+0.5)*cell_w
+          y: y + (r+0.5)*cell_h
+          w: cell_w
+          h: cell_h        
+
+        row_container.push cell  
+
+      @cells.push row_container  
+
+  get_cell: (r, c) ->
+    return @cells[r][c]
+
+Q.UI.Container::subplot = (nrows, ncols, rowFrom, colFrom, rowTo, colTo) ->
+  cell_w = @p.w/ncols
+  cell_h = @p.h/nrows
+
+  rowTo = rowFrom if rowTo is undefined
+  colTo = colFrom if colTo is undefined  
+
+  nRowsInSubplot = (1+rowTo-rowFrom)
+  nColsInSubplot = (1+colTo-colFrom)
+
+  x = @p.x - @p.w/2 + (colFrom+nColsInSubplot*0.5)*cell_w
+  y = @p.y - @p.h/2 + (rowFrom+nRowsInSubplot*0.5)*cell_h
+
+  console.log("container (x, y) = (%d, %d) (w,h) = (%d,%d)", @p.x, @p.y, @p.w, @p.h);
+
+  return new Q.UI.Container
+          x: x
+          y: y
+          w: cell_w*nColsInSubplot
+          h: cell_h*nRowsInSubplot
+ 
 Q.scene "controls_settings", (stage) ->
 
   # audio
@@ -9,29 +52,28 @@ Q.scene "controls_settings", (stage) ->
   # add title
   y_pad = Q.height/20
 
-  titleContainer = stage.insert new Q.UI.Container
+  pageContainer = stage.insert new Q.UI.Container
     x: Q.width/2
     y: Q.height/2
+    w: Q.width
+    h: Q.height
 
-  description = "More settings coming soon...\n"
-  description += "including difficulty, narration, and in-game UI size..."
-  
-  title = titleContainer.insert new Q.UI.Text
-    x: 0
-    y: -Q.height*0.35
-    label: "Settings"
+  titleBar = stage.insert pageContainer.subplot(8,1,0,0)
+
+  # console.log("titleBar (x, y) = (%d, %d) (w,h) = (%d,%d)", titleBar.p.x, titleBar.p.y, titleBar.p.w, titleBar.p.h);
+
+  title = titleBar.insert new Q.UI.Text    
+    label: "Controls"
     color: "#f2da38"
     family: "Jolly Lodger"
-    size: 90
+    size: titleBar.p.h*0.8
 
-  title.size()
+  buttonBar = stage.insert pageContainer.subplot(8,1,7,0)
 
   # button
   label = "Back"
   buttonTextSize = Q.ctx.measureText(label)
-  button = titleContainer.insert new Q.UI.Button
-    x: 0
-    y: Q.height*0.35
+  button = buttonBar.insert new Q.UI.Button
     w: buttonTextSize.width*1.3
     h: 80
     fill: "#c4da4a"
@@ -42,33 +84,21 @@ Q.scene "controls_settings", (stage) ->
     keyActionName: "confirm"
     type: Q.SPRITE_UI | Q.SPRITE_DEFAULT
 
-  desc = titleContainer.insert new Q.UI.Text
-      x: 0
-      y: Q.height*0.15
-      align: 'center'
-      label: description
-      color: "#000000"
-      family: "Jolly Lodger"
-      size: 36
-
-  # panel
-  titleContainer.insert new Q.UI.Container
-    x: desc.p.x
-    y: desc.p.y
-    w: desc.p.w*1.1
-    h: desc.p.h*1.1
-    z: desc.p.z - 1
-    fill: "#e3ecf933",
-    radius: 8, 
-    type: Q.SPRITE_UI | Q.SPRITE_DEFAULT
-
-  titleContainer.fit()
-
-  # authors
-  authors = stage.insert new Q.UI.Authors()
-
   button.on "click", (e) ->
     Game.stageLevelSelectScreen()
+
+  # TOP ROW: which control are you using?
+  mainSection = pageContainer.subplot(8,1,1,0,6,0)
+
+  row1 = stage.insert mainSection.subplot(3,1,0,0)
+  row2 = stage.insert mainSection.subplot(3,1,1,0)
+  row3 = stage.insert mainSection.subplot(3,1,2,0)
+  
+  
+
+  # mainSection = stage.insert pageContainer.subplot(5,4,1,1,2,1)
+
+  # topRow = stage.insert mainSection.subplot(3,1,0,0)
 
   dwell_getter = () ->
     dTimeMs =  Number.parseFloat(Game.settings.dwellTime.get())
@@ -79,16 +109,49 @@ Q.scene "controls_settings", (stage) ->
     val = val*1000
     Game.setupGaze(val)
     Game.settings.dwellTime.set(val)
-
+  # buttonBar = stage.insert pageContainer.subplot(2,2,0,0)
+  # buttonBar = stage.insert pageContainer.subplot(2,2,1,1)
 
   scale_getter = () ->
     console.log('UI Scale:')
     console.log(Game.settings.uiScale.get())
     return Number.parseFloat(Game.settings.uiScale.get())
+  # grid = new GridContainer(0, 0, Q.width, Q.height, 8, 1)
+  # title_bar = grid.
 
   scale_setter = (val) ->    
     console.log('new scale! ' + val)
     Game.settings.uiScale.set(val)
 
-  Q.Adjuster.add(stage, 1.3*Q.width/2, Q.height*0.4, 400, 200,'Dwell time (s)', dwell_getter, dwell_setter)
-  Q.Adjuster.add(stage, 0.7*Q.width/2, Q.height*0.4, 400, 200,'UI scale', scale_getter, scale_setter)
+
+  dwell_layout = stage.insert mainSection.subplot(3,2,1,0)
+  scale_layout = stage.insert mainSection.subplot(3,2,1,1)
+
+  Q.Adjuster.add(dwell_layout, 0,0, 400, 200,'Dwell time (s)', dwell_getter, dwell_setter)
+  Q.Adjuster.add(scale_getter, 0,0, 400, 200,'UI scale', scale_getter, scale_setter)
+
+  # x, y, w, h, label, getter, setter, inc=0.1
+  
+
+  # desc = titleContainer.insert new Q.UI.Text
+  #     x: 0
+  #     y: Q.height*0.15
+  #     align: 'center'
+  #     label: description
+  #     color: "#000000"
+  #     family: "Jolly Lodger"
+  #     size: 36
+
+  # # panel
+  # titleContainer.insert new Q.UI.Container
+  #   x: desc.p.x
+  #   y: desc.p.y
+  #   w: desc.p.w*1.1
+  #   h: desc.p.h*1.1
+  #   z: desc.p.z - 1
+  #   fill: "#e3ecf933",
+  #   radius: 8, 
+  #   type: Q.SPRITE_UI | Q.SPRITE_DEFAULT
+
+  # button.on "click", (e) ->
+  #   Game.stageLevelSelectScreen()
