@@ -90,6 +90,7 @@ class Settings
     @disableMusic = new StorageItem("disableMusic", false)
     @useKeyboardInstead = new StorageItem("useKeyboardInstead", false)
     @uiScale =  new StorageItem("uiScale", 1.0)
+    @uiOpacity = new StorageItem("uiOpacity", 0.25)
     @narrate =  new StorageItem("narrate", false)
 
 
