@@ -139,15 +139,36 @@ Q.scene "controls_settings", (stage) ->
     Game.settings.uiOpacity.set(val)
 
 
+  input_layout =   stage.insert mainSection.subplot(3,2, 0,0, 0,0, 0.1)
 
   scale_layout =   stage.insert mainSection.subplot(3,2, 1,0, 1,0, 0.1)
   dwell_layout =   stage.insert mainSection.subplot(3,2, 2,1, 2,1, 0.1)
   opacity_layout = stage.insert mainSection.subplot(3,2, 2,0, 2,0, 0.1)
+  click_layout =   stage.insert mainSection.subplot(3,2, 1,1, 1,1, 0.1)
 
   Q.CompositeUI.add_adjuster(dwell_layout, 'Dwell time (s)', dwell_getter, dwell_setter, 0.1, 0.1, 3.0)
   Q.CompositeUI.add_adjuster(scale_layout, 'Size of gaze controls', scale_getter, scale_setter, 0.1, 0.2, 2.5)
   Q.CompositeUI.add_adjuster(opacity_layout, 'Opacity of gaze controls', opacity_getter, opacity_setter, 0.05, 0.05, 0.95)
 
+  btn1 = {
+    label: "Keyboard"
+    sheet: "keyboard_controls"
+  }
+  btn2 = {    
+    label: "Gaze/mouse/touch"
+    sheet: "gaze_touch_etc"
+  }
+  Q.CompositeUI.add_exclusive_toggle_buttons(input_layout, btn1, btn2, ["Input","method"])
+
+  btn1 = {
+    label: "Own click"
+    sheet: "own_click"
+  }
+  btn2 = {    
+    label: "Built in dwell"
+    sheet: "dwell_click"
+  }
+  Q.CompositeUI.add_exclusive_toggle_buttons(click_layout, btn1, btn2, ["Click", "method"])
 
   # x, y, w, h, label, getter, setter, inc=0.1
   

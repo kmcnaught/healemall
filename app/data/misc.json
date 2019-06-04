@@ -128,19 +128,35 @@
     "frames":1
   },
   "button_pressed": {
-    "sx": 276,
-    "sy": 492,
+    "sx": 262,
+    "sy": 489,
     "cols":1,
-    "tilew":276,
-    "tileh":276,
+    "tilew":261,
+    "tileh":260,
     "frames":1
   },
   "button_not_pressed": {
     "sx": 0,
-    "sy": 492,
+    "sy": 489,
     "cols":1,
-    "tilew":276,
-    "tileh":276,
+    "tilew":261,
+    "tileh":259,
+    "frames":1
+  },
+  "own_click": {
+    "sx": 0,
+    "sy": 750,
+    "cols":1,
+    "tilew":116,
+    "tileh":146,
+    "frames":1
+  },
+  "dwell_click": {
+    "sx": 117,
+    "sy": 749,
+    "cols":1,
+    "tilew":174,
+    "tileh":174,
     "frames":1
   }
 }
