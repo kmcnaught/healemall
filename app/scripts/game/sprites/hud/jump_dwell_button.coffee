@@ -66,4 +66,41 @@ Q.UI.JumpDwellButton = Q.UI.PolygonButton.extend "UI.JumpDwellButton",
     return points
 
   get_interact_points: () ->    
-    return @get_render_points()
+    # same shape, but any bits that cause the convex hull to stick 
+    # out the shape have been chopped off (approximately)
+    leftjump_normalised = [
+            [0.5, 0.5],
+            [0.5, 0.15],
+            [0.428571428571429, -0.0714285714285714],
+            [0.214285714285714, -0.321428571428571],
+            [0.0, -0.5],
+            [-0.5, -0.5],
+            [-0.5, 0.0],
+            [-0.321428571428571, 0.142857142857143],
+            [-0.214285714285714, 0.25],
+            [-0.0, 0.5],
+          ]   
+    rightjump_normalised = [
+            [-0.5, 0.5],
+            [-0.5, 0.15],
+            [-0.428571428571429, -0.0714285714285714],
+            [-0.214285714285714, -0.321428571428571],
+            [-0.0, -0.5],
+            [0.5, -0.5],
+            [0.5, 0.0],
+            [0.321428571428571, 0.142857142857143],
+            [0.214285714285714, 0.25],
+            [0.0, 0.5],
+          ]
+
+    if @p.faces_left
+      points = leftjump_normalised
+    else
+      points = rightjump_normalised
+
+    # scale up
+    h = @p.h
+    w = @p.w
+    points = ([p[0]*w*.9, p[1]*h*.9] for p in points)
+
+    return points
