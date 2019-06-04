@@ -127,8 +127,8 @@ Q.scene "controls_settings", (stage) ->
   dwell_layout = stage.insert mainSection.subplot(3,2,1,0)
   scale_layout = stage.insert mainSection.subplot(3,2,1,1)
 
-  Q.Adjuster.add(dwell_layout, 0,0, 400, 200,'Dwell time (s)', dwell_getter, dwell_setter)
-  Q.Adjuster.add(scale_getter, 0,0, 400, 200,'UI scale', scale_getter, scale_setter)
+  Q.Adjuster.add(dwell_layout, 'Dwell time (s)', dwell_getter, dwell_setter, 0.1, 0.1, 3.0)
+  Q.Adjuster.add(scale_layout, 'UI scale', scale_getter, scale_setter, 0.1, 0.2, 2.5)
 
   # x, y, w, h, label, getter, setter, inc=0.1
   

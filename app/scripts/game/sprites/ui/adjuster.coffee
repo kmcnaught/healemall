@@ -2,19 +2,39 @@ Q = Game.Q
 
 Q.Adjuster = 
 
-  add: (stage, x, y, w, h, label, getter, setter, inc=0.1) ->
+  add: (layout, label, getter, setter, inc=0.1, min_val, max_val) ->
     # Add 2 buttons that increment/decrement a label in the middle
 
-    cellsize = Math.min(h, w/3)
+    h = layout.p.h
+    w = layout.p.w    
+
+
+    title_fontsize = Math.floor(h/6)
+    label_fontsize = Math.floor(h/4)    
+
+    title = new Q.UI.Text
+      label: label
+      color: "#f2da38"
+      family: "Boogaloo"
+      size: title_fontsize
+
+    title.p.y -= (h - title.p.h)/2
+
+    layout.insert title
+
+    x = 0
+    y = 0 
+    cellsize = Math.min(h, w/3) - title.p.h
+
     fontsize = Math.floor(h/5)
     fontsize_symbols = Math.floor(h/2)
 
     init_val = getter()  
 
     # Left hand: decrement
-    decButton = stage.insert new Q.UI.Button
-      x: x - cellsize
-      y: y
+    decButton = layout.insert new Q.UI.Button
+      x: -cellsize
+      y: title.p.h/2
       fill: "#c4da4a"
       w: cellsize
       h: cellsize
@@ -25,10 +45,10 @@ Q.Adjuster =
       type: Q.SPRITE_UI | Q.SPRITE_DEFAULT
 
     # Right hand: increment
-    incButton = stage.insert new Q.UI.Button
-      x: x + cellsize
+    incButton = layout.insert new Q.UI.Button
+      x: cellsize
       fill: "#c4da4a"
-      y: y
+      y: title.p.h/2
       w: cellsize
       h: cellsize
       radius: 10
@@ -37,20 +57,10 @@ Q.Adjuster =
       label: "+"
       type: Q.SPRITE_UI | Q.SPRITE_DEFAULT
 
-
-    # Label for setting
-    stage.insert new Q.UI.Text
-      x: x
-      y: y-cellsize/2-fontsize/2
-      label: label
-      color: "#f2da38"
-      family: "Boogaloo"
-      size: fontsize
-
     # Value for setting
-    valText = stage.insert new Q.UI.Text
+    valText = layout.insert new Q.UI.Text
       x: x
-      y: y
+      y: title.p.h/2
       label: init_val.toFixed(1)
       color: "#f2da38"
       family: "Boogaloo"
@@ -58,10 +68,17 @@ Q.Adjuster =
 
     # Callbacks
     decButton.on "click", (e) ->
-      setter(getter() - inc)
+      new_val = getter() - inc
+      if min_val? and new_val < min_val
+        new_val = min_val
+
+      setter(new_val)
       valText.p.label = getter().toFixed(1)
       
     incButton.on "click", (e) ->      
-      setter(getter() + inc)
+      new_val = getter() + inc
+      if max_val? and new_val > max_val
+        new_val = max_val
+      setter(new_val)
       valText.p.label = getter().toFixed(1)
       
