@@ -357,7 +357,7 @@ window.Game =
     Q.stageScene "hud", 2,
       sort: true
 
-    if not Game.settings.useKeyboardInstead
+    if not Game.settings.useKeyboardInstead.get()
       Q.stageScene "gaze_overlay", 1, 
         sort: true
 
@@ -465,7 +465,7 @@ window.Game =
     if Game.settings.narrate.get()
       Game.infoLabel.disable()
     
-    if not Game.settings.useKeyboardInstead
+    if not Game.settings.useKeyboardInstead.get()
       Q.stageScene "gaze_overlay", 1,
         sort: true
 

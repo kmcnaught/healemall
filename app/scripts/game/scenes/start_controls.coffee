@@ -127,11 +127,11 @@ Q.scene "start_controls", (stage) ->
     # Save the controls
     if gazeButton.pressed
       console.log('Using gaze!')
-      Game.settings.useKeyboardInstead = false
+      Game.settings.useKeyboardInstead.set(false)
       Game.stageScreen("start_settings")
 
     else if keyboardButton.pressed
       console.log('Using keyboard!')
-      Game.settings.useKeyboardInstead = true
+      Game.settings.useKeyboardInstead.set(true)
       Game.stageLevelSelectScreen()
       Game.turnOffGaze()
