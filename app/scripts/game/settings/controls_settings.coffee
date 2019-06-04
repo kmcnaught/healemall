@@ -144,9 +144,9 @@ Q.scene "controls_settings", (stage) ->
   dwell_layout =   stage.insert mainSection.subplot(3,2, 2,1, 2,1, 0.1)
   opacity_layout = stage.insert mainSection.subplot(3,2, 2,0, 2,0, 0.1)
 
-  Q.Adjuster.add(dwell_layout, 'Dwell time (s)', dwell_getter, dwell_setter, 0.1, 0.1, 3.0)
-  Q.Adjuster.add(scale_layout, 'Size of gaze controls', scale_getter, scale_setter, 0.1, 0.2, 2.5)
-  Q.Adjuster.add(opacity_layout, 'Opacity of gaze controls', opacity_getter, opacity_setter, 0.05, 0.05, 0.95)
+  Q.CompositeUI.add_adjuster(dwell_layout, 'Dwell time (s)', dwell_getter, dwell_setter, 0.1, 0.1, 3.0)
+  Q.CompositeUI.add_adjuster(scale_layout, 'Size of gaze controls', scale_getter, scale_setter, 0.1, 0.2, 2.5)
+  Q.CompositeUI.add_adjuster(opacity_layout, 'Opacity of gaze controls', opacity_getter, opacity_setter, 0.05, 0.05, 0.95)
 
 
   # x, y, w, h, label, getter, setter, inc=0.1

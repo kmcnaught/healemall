@@ -1,8 +1,8 @@
 Q = Game.Q
 
-Q.Adjuster = 
+Q.CompositeUI = 
 
-  add: (layout, label, getter, setter, inc=0.1, min_val, max_val) ->
+  add_adjuster: (layout, label, getter, setter, inc=0.1, min_val, max_val) ->
     # Add 2 buttons that increment/decrement a label in the middle
 
     h = layout.p.h
