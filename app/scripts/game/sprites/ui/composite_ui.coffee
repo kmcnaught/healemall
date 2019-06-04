@@ -101,12 +101,16 @@ Q.CompositeUI =
       button2.pressed = false
       label2.p.color = gray
     
+      btn1_opts.on_click(e)
+    
     callback2 = (e) ->
       button1.pressed = false
       label1.p.color = gray
 
       button2.pressed = true
       label2.p.color = yellow
+
+      btn2_opts.on_click(e)
 
     button1.on "click", callback1      
     button2.on "click", callback2 

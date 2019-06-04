@@ -90,9 +90,9 @@ Q.scene "controls_settings", (stage) ->
 
   # preview button
   label = "Preview\ncontrols"  
-  button = buttonBar.insert new Q.UI.Button
+  previewButton = buttonBar.insert new Q.UI.Button
     x: - Q.width/4    
-    h: 80
+    h: 50
     fill: "#c4da4a"
     radius: 10
     fontColor: "#353b47"
@@ -100,7 +100,7 @@ Q.scene "controls_settings", (stage) ->
     label: label
     type: Q.SPRITE_UI | Q.SPRITE_DEFAULT
 
-  button.on "click", (e) ->
+  previewButton.on "click", (e) ->
     console.log('preview coming soon!')
 
 
@@ -165,11 +165,27 @@ Q.scene "controls_settings", (stage) ->
     sheet: "keyboard_controls"
     init_state: Game.settings.useKeyboardInstead.get()
     doDwell: false
+    on_click: () ->
+      Game.settings.useKeyboardInstead.set(true)
+      scale_layout.p.hidden = true
+      opacity_layout.p.hidden = true
+      dwell_layout.p.hidden = true
+      click_layout.p.hidden = true
+      previewButton.p.hidden = true
+      cursor_layout.p.hidden = true 
   }
   btn2 = {    
     label: "Gaze/mouse/touch"
     sheet: "gaze_touch_etc"
     init_state: !Game.settings.useKeyboardInstead.get()
+    on_click: () ->
+      Game.settings.useKeyboardInstead.set(false)
+      scale_layout.p.hidden = false
+      opacity_layout.p.hidden = false
+      dwell_layout.p.hidden = Game.settings.useOwnClickInstead.get()
+      click_layout.p.hidden = false
+      previewButton.p.hidden = false
+      cursor_layout.p.hidden = false
   }
   Q.CompositeUI.add_exclusive_toggle_buttons(input_layout, btn1, btn2, ["Input","method"])
 
@@ -178,11 +194,17 @@ Q.scene "controls_settings", (stage) ->
     sheet: "own_click"
     init_state: Game.settings.useOwnClickInstead.get()
     doDwell: false
+    on_click: () ->
+      Game.settings.useOwnClickInstead.set(true)
+      dwell_layout.p.hidden = true
   }
   btn2 = {    
     label: "Built in dwell"
     sheet: "dwell_click"
     init_state: !Game.settings.useOwnClickInstead.get()
+    on_click: () ->
+      Game.settings.useOwnClickInstead.set(false)
+      dwell_layout.p.hidden = false
   }
   Q.CompositeUI.add_exclusive_toggle_buttons(click_layout, btn1, btn2, ["Click", "method"])
 
