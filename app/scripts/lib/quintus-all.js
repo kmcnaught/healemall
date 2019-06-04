@@ -5367,15 +5367,15 @@ Quintus.UI = function(Q) {
       });      
     },
     
-    drawPolygon: function(ctx) {
+    drawPolygon: function(ctx, points) {
 
       ctx.beginPath();
       
-      ctx.moveTo(this.p.points[0][0], this.p.points[0][1]);
+      ctx.moveTo(points[0][0], points[0][1]);
       for(var i=0; i<this.p.points.length; i++) {
-        ctx.lineTo(this.p.points[i][0], this.p.points[i][1]);
+        ctx.lineTo(points[i][0], points[i][1]);
       }
-      ctx.lineTo(this.p.points[0][0], this.p.points[0][1]);
+      ctx.lineTo(points[0][0], points[0][1]);
 
       ctx.closePath();
       if(this.p.fill) { 
@@ -5395,9 +5395,12 @@ Quintus.UI = function(Q) {
       }
       ctx.strokeStyle = this.p.stroke;
 
-      
-      if (this.p.points) { 
-        this.drawPolygon(ctx);
+      if (this.p.polygon) {
+        this.drawPolygon(ctx, this.p.polygon)
+      }
+      else if (this.p.points) 
+      {
+        this.drawPolygon(ctx, this.p.points)
       }
 
       if(this.p.asset || this.p.sheet) {
