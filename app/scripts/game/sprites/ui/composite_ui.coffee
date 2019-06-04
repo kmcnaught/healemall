@@ -89,19 +89,28 @@ Q.CompositeUI =
 
 
     # Callbacks
-    button1.on "click", (e) ->
+    callback1 = (e) ->
       button1.pressed = true
       label1.p.color = yellow
 
       button2.pressed = false
       label2.p.color = gray
-        
-    button2.on "click", (e) ->
+    
+    callback2 = (e) ->
       button1.pressed = false
       label1.p.color = gray
 
       button2.pressed = true
       label2.p.color = yellow
+
+    button1.on "click", callback1      
+    button2.on "click", callback2 
+
+    # Initial state: equivalent to clicking one of them
+    if btn1_opts.init_state
+      callback1()
+    else
+      callback2()
 
   add_adjuster: (layout, label, getter, setter, inc=0.1, min_val, max_val) ->
     # Add 2 buttons that increment/decrement a label in the middle
