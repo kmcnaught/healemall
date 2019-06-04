@@ -153,20 +153,24 @@ Q.scene "controls_settings", (stage) ->
   btn1 = {
     label: "Keyboard"
     sheet: "keyboard_controls"
+    init_state: Game.settings.useKeyboardInstead.get()
   }
   btn2 = {    
     label: "Gaze/mouse/touch"
     sheet: "gaze_touch_etc"
+    init_state: !Game.settings.useKeyboardInstead.get()
   }
   Q.CompositeUI.add_exclusive_toggle_buttons(input_layout, btn1, btn2, ["Input","method"])
 
   btn1 = {
     label: "Own click"
     sheet: "own_click"
+    init_state: Game.settings.useOwnClickInstead.get()
   }
   btn2 = {    
     label: "Built in dwell"
     sheet: "dwell_click"
+    init_state: !Game.settings.useOwnClickInstead.get()
   }
   Q.CompositeUI.add_exclusive_toggle_buttons(click_layout, btn1, btn2, ["Click", "method"])
 
