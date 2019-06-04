@@ -71,7 +71,7 @@ Q.scene "controls_settings", (stage) ->
 
   buttonBar = stage.insert pageContainer.subplot(8,1,7,0)
 
-  # button
+  # back button
   label = "Back"
   buttonTextSize = Q.ctx.measureText(label)
   button = buttonBar.insert new Q.UI.Button
@@ -87,6 +87,22 @@ Q.scene "controls_settings", (stage) ->
 
   button.on "click", (e) ->
     Game.stageLevelSelectScreen()
+
+  # preview button
+  label = "Preview\ncontrols"  
+  button = buttonBar.insert new Q.UI.Button
+    x: - Q.width/4    
+    h: 80
+    fill: "#c4da4a"
+    radius: 10
+    fontColor: "#353b47"
+    font: "400 32px Jolly Lodger"
+    label: label
+    type: Q.SPRITE_UI | Q.SPRITE_DEFAULT
+
+  button.on "click", (e) ->
+    console.log('preview coming soon!')
+
 
   # TOP ROW: which control are you using?
   mainSection = pageContainer.subplot(8,1,1,0,6,0)
