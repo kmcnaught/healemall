@@ -24,30 +24,7 @@ Q.scene "gaze_overlay", (stage) ->
     if action
       Q.inputs[action]=0
 
-
-  # define some shapes for the main gaze controls  
-  stem_h = h*.275 # varies height of arrow stem (from centre)
-  stem_w = w*.05 # varies length of arrow stem (from centre)
-  stem_start = w*0.4 # varies how much stem is shrunk to balance the visual weight
-
-  leftarrow_p = [
-            [stem_start, -stem_h],
-            [-stem_w, -stem_h],
-            [-stem_w, -h/2],
-            [-w/2, 0],
-            [-stem_w, h/2],
-            [-stem_w, stem_h],
-            [stem_start, stem_h],
-          ]   
-  rightarrow_p = [
-            [-stem_start, stem_h],
-            [stem_w, stem_h],
-            [stem_w, h/2],
-            [+w/2, 0],
-            [stem_w, -h/2],
-            [stem_w, -stem_h],
-            [-stem_start, -stem_h],
-          ]
+  # TODO extract this to elsewhere
   leftjump_normalised = [
             [0.5, 0.5],
             [0.5, 0.15],
@@ -145,10 +122,24 @@ Q.scene "gaze_overlay", (stage) ->
   # we want direction+jump arrows to be left-aligned, not centre-aligned
   jump_xoffset = w/30
 
-  btnLeft = createGazeButton(x_left, y_lower, "", leftarrow_p, "", "left")
-  btnRight = createGazeButton(x_right, y_lower, "", rightarrow_p, "", "right")
-  btnJumpLeft = createGazeButton(x_left+jump_xoffset, y_upper, "", leftjump_p, "jumpleft", "")
-  btnJumpRight = createGazeButton(x_right-jump_xoffset, y_upper, "", rightjump_p, "jumpright", "")
+  btnLeft = new Q.UI.ArrowDwellButton
+    x: x_left
+    y: y_lower
+    h: h
+    w: w
+    faces_left: true
+    hover_action: "left"
+
+  btnRight = new Q.UI.ArrowDwellButton
+    x: x_right
+    y: y_lower
+    w: w
+    h: h
+    faces_left: false
+    hover_action: "right"
+
+  btnJumpLeft = createGazeButton(x_left+jump_xoffset, y_upper, "", leftjump_p, leftjump_p_interact, "jumpleft", "")
+  btnJumpRight = createGazeButton(x_right-jump_xoffset, y_upper, "", rightjump_p, rightjump_p, "jumpright", "")
 
   # shoot button has extra logic  
   btnShoot = createGazeButton(x_centre, y_shoot, "shoot", shoot_p, "fire", "")
