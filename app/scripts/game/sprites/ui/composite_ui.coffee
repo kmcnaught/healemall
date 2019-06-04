@@ -66,7 +66,9 @@ Q.CompositeUI =
       y: label1.p.h/2
       do_toggle: false    
       btn_sheet: btn1_opts.sheet
-      
+
+    if btn1_opts.doDwell?
+      button1.doDwell = btn1_opts.doDwell
 
     # Right hand: btn2
     button2 = layout.insert new Q.UI.ToggleButton
@@ -75,6 +77,9 @@ Q.CompositeUI =
       y: label1.p.h/2
       do_toggle: false  
       btn_sheet: btn2_opts.sheet
+
+    if btn2_opts.doDwell?
+      button2.doDwell = btn2_opts.doDwell
 
     # Rescale buttons to fit
     rescale = cellsize/Math.max(button1.p.h, button1.p.w)

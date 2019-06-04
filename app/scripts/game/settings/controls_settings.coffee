@@ -154,6 +154,7 @@ Q.scene "controls_settings", (stage) ->
     label: "Keyboard"
     sheet: "keyboard_controls"
     init_state: Game.settings.useKeyboardInstead.get()
+    doDwell: false
   }
   btn2 = {    
     label: "Gaze/mouse/touch"
@@ -166,6 +167,7 @@ Q.scene "controls_settings", (stage) ->
     label: "Own click"
     sheet: "own_click"
     init_state: Game.settings.useOwnClickInstead.get()
+    doDwell: false
   }
   btn2 = {    
     label: "Built in dwell"
