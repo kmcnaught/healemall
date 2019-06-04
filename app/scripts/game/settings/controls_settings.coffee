@@ -22,7 +22,7 @@ class GridContainer
   get_cell: (r, c) ->
     return @cells[r][c]
 
-Q.UI.Container::subplot = (nrows, ncols, rowFrom, colFrom, rowTo, colTo) ->
+Q.UI.Container::subplot = (nrows, ncols, rowFrom, colFrom, rowTo, colTo, padding_fraction=0) ->
   cell_w = @p.w/ncols
   cell_h = @p.h/nrows
 
@@ -36,12 +36,13 @@ Q.UI.Container::subplot = (nrows, ncols, rowFrom, colFrom, rowTo, colTo) ->
   y = @p.y - @p.h/2 + (rowFrom+nRowsInSubplot*0.5)*cell_h
 
   console.log("container (x, y) = (%d, %d) (w,h) = (%d,%d)", @p.x, @p.y, @p.w, @p.h);
+  fill = 1.0-padding_fraction;
 
   return new Q.UI.Container
           x: x
           y: y
-          w: cell_w*nColsInSubplot
-          h: cell_h*nRowsInSubplot
+          w: cell_w*nColsInSubplot*fill
+          h: cell_h*nRowsInSubplot*fill
  
 Q.scene "controls_settings", (stage) ->
 
@@ -124,8 +125,8 @@ Q.scene "controls_settings", (stage) ->
     Game.settings.uiScale.set(val)
 
 
-  dwell_layout = stage.insert mainSection.subplot(3,2,1,0)
-  scale_layout = stage.insert mainSection.subplot(3,2,1,1)
+  dwell_layout = stage.insert mainSection.subplot(3,2,1,0,1,0,0.1)
+  scale_layout = stage.insert mainSection.subplot(3,2,1,1,1,1,0.1)
 
   Q.Adjuster.add(dwell_layout, 'Dwell time (s)', dwell_getter, dwell_setter, 0.1, 0.1, 3.0)
   Q.Adjuster.add(scale_layout, 'UI scale', scale_getter, scale_setter, 0.1, 0.2, 2.5)
