@@ -184,6 +184,38 @@ Q.CompositeUI =
     else
       callback2()
 
+  add_checkbox: (layout, label, callback) ->
+    h = layout.p.h
+    w = layout.p.w    
+
+    chk = layout.insert new Q.UI.Checkbox
+
+    rescale = layout.p.h*0.75/chk.p.h    
+    chk.p.scale = rescale
+
+    if callback?      
+      chk.on "click", (e) ->
+        callback(chk.checked)
+
+    fontsize = Math.floor(h/5)
+    label = layout.insert new Q.UI.Text
+      label: label
+      color: "#f2da38"
+      family: "Boogaloo"
+      size: fontsize    
+
+    delta = label.p.w/2 + rescale*chk.p.w/2
+    
+    # if label.p.w + chk.p.w + delta > layout.p.h
+      # delta = layout.p.h - (label.p.w + chk.p.w)
+
+    label.p.x += delta/2
+    chk.p.x -= delta/2
+
+    return chk
+
+
+
   add_adjuster: (layout, label, getter, setter, inc=0.1, min_val, max_val) ->
     # Add 2 buttons that increment/decrement a label in the middle
 

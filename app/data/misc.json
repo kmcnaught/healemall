@@ -182,5 +182,22 @@
     "tilew":154,
     "tileh":105,
     "frames":1
+  },
+  "checkbox_checked": {
+    "sx": 0,
+    "sy": 1079,
+    "cols":1,
+    "tilew":195,
+    "tileh":232,
+    "frames":1
+  },
+  "checkbox": {
+    "sx": 195,
+    "sy": 1079,
+    "cols":1,
+    "tilew":195,
+    "tileh":232,
+    "frames":1
   }
+
 }
