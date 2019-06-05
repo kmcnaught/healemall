@@ -158,5 +158,29 @@
     "tilew":174,
     "tileh":174,
     "frames":1
+  },
+  "music": {
+    "sx": 0,
+    "sy": 923,
+    "cols":1,
+    "tilew":134,
+    "tileh":147,
+    "frames":1
+  },
+  "soundfx": {
+    "sx": 134,
+    "sy": 923,
+    "cols":1,
+    "tilew":183,
+    "tileh":156,
+    "frames":1
+  },
+  "narration": {
+    "sx": 317,
+    "sy": 923,
+    "cols":1,
+    "tilew":154,
+    "tileh":105,
+    "frames":1
   }
 }
