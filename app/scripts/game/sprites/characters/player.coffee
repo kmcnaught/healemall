@@ -52,7 +52,7 @@ Q.Sprite.extend "Player",
 
     @add("2d, animation")
 
-    if Game.settings.useKeyboardInstead
+    if Game.settings.useKeyboardInstead.get()
       @add "platformerControls"
     else
       @add "platformerControlsGaze"      
