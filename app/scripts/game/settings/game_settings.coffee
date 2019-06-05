@@ -38,7 +38,7 @@ Q.scene "game_settings", (stage) ->
       Game.settings.lives.set(val)
     
 
-  update_lives = Q.CompositeUI.add_adjuster(lives_layout, 'Extra lives', getter, setter, 1, 0, 100)
+  update_lives = Q.CompositeUI.add_adjuster(lives_layout, 'Spare lives', getter, setter, 1, 0, 100)
 
   # Zombie speed
   getter = () ->
