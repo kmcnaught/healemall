@@ -263,4 +263,9 @@ Q.CompositeUI =
         new_val = max_val
       setter(new_val)
       valText.p.label = getter().toFixed(num_digits)
-      
+  
+    updateCallback = (new_val) ->
+      setter(new_val)
+      valText.p.label = getter().toFixed(num_digits)   
+
+    return updateCallback
