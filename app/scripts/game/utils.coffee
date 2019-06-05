@@ -16,7 +16,6 @@ Q.UI.Container::subplot_multiple = (nrows, ncols, rowFrom, colFrom, rowTo, colTo
   x = @p.x - @p.w/2 + (colFrom+nColsInSubplot*0.5)*cell_w
   y = @p.y - @p.h/2 + (rowFrom+nRowsInSubplot*0.5)*cell_h
 
-  console.log("container (x, y) = (%d, %d) (w,h) = (%d,%d)", @p.x, @p.y, @p.w, @p.h);
   fill = 1.0-padding_fraction;
 
   return new Q.UI.Container
