@@ -6,9 +6,10 @@ Q.scene "controls_settings", (stage) ->
   [titleBar, mainSection, buttonBar] = Q.CompositeUI.setup_settings_page(stage, "Controls")
 
   # preview button
+  preview_layout = stage.insert buttonBar.subplot(1,2, 0,0)
+
   label = "Preview\ncontrols"  
-  previewButton = buttonBar.insert new Q.UI.Button
-    x: - Q.width/4    
+  previewButton = preview_layout.insert new Q.UI.Button    
     h: 50
     fill: "#c4da4a"
     radius: 10

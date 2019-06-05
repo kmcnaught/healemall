@@ -18,7 +18,7 @@ Q.CompositeUI =
 
     titleBar = stage.insert pageContainer.subplot(8,1, 0,0)
     mainSection = pageContainer.subplot_multiple(8,1, 1,0, 6,0)
-    buttonBar = stage.insert pageContainer.subplot(8,2, 7,1)    
+    buttonBar = stage.insert pageContainer.subplot(8,1, 7,0)    
 
     # Title
     title = titleBar.insert new Q.UI.Text    
@@ -28,9 +28,10 @@ Q.CompositeUI =
       size: titleBar.p.h*0.8
 
     # back button
+    backLayout = stage.insert buttonBar.subplot(1,2,0,1)
     label = "Back"
     buttonTextSize = Q.ctx.measureText(label)
-    button = buttonBar.insert new Q.UI.Button
+    button = backLayout.insert new Q.UI.Button
       w: buttonTextSize.width*1.3
       h: 80
       fill: "#c4da4a"
