@@ -21,10 +21,7 @@ Q.scene "controls_settings", (stage) ->
     console.log('preview coming soon!')
 
 
-
-  mainSection = pageContainer.subplot_multiple(8,1, 1,0, 6,0)
-
-    
+  # cursor    
   cursor_layout =   stage.insert mainSection.subplot(3,2, 0,1, 0.1)
 
   cursorButton = cursor_layout.insert new Q.UI.CursorButton        
@@ -42,7 +39,7 @@ Q.scene "controls_settings", (stage) ->
   cursorLabel.p.x = cursorLabel.p.x - delta/2
   cursorButton.p.x = cursorButton.p.x + delta/2
 
-
+  # Various adjusters
 
   dwell_getter = () ->
     dTimeMs =  Number.parseFloat(Game.settings.dwellTime.get())
@@ -125,28 +122,4 @@ Q.scene "controls_settings", (stage) ->
   }
   Q.CompositeUI.add_exclusive_toggle_buttons(click_layout, btn1, btn2, ["Click", "method"])
 
-  # x, y, w, h, label, getter, setter, inc=0.1
   
-
-  # desc = titleContainer.insert new Q.UI.Text
-  #     x: 0
-  #     y: Q.height*0.15
-  #     align: 'center'
-  #     label: description
-  #     color: "#000000"
-  #     family: "Jolly Lodger"
-  #     size: 36
-
-  # # panel
-  # titleContainer.insert new Q.UI.Container
-  #   x: desc.p.x
-  #   y: desc.p.y
-  #   w: desc.p.w*1.1
-  #   h: desc.p.h*1.1
-  #   z: desc.p.z - 1
-  #   fill: "#e3ecf933",
-  #   radius: 8, 
-  #   type: Q.SPRITE_UI | Q.SPRITE_DEFAULT
-
-  # button.on "click", (e) ->
-  #   Game.stageLevelSelectScreen()
