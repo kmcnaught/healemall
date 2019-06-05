@@ -63,6 +63,8 @@ Q.scene "game_settings", (stage) ->
     update_lives(Game.settings.lives.get())
     update_zombieSpeed(Game.settings.zombieSpeed.get())
 
+  # Make sure we start reflecting correct state
+  update_all() 
 
   # Background panel to hold elements together visually    
   panel = presets_layout.insert new Q.UI.Container      
