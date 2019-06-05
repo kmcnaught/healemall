@@ -93,6 +93,9 @@ class Settings
     @uiOpacity = new StorageItem("uiOpacity", 0.25)
     @musicEnabled = new StorageItem("disableMusic", true)
     @soundFxEnabled = new StorageItem("disableSoundFx", true)
+    @lives = new StorageItem("lives", 3)
+    @zombieSpeed = new StorageItem("zombieSpeed", 1.0)
+    @zombiesChase = new StorageItem("zombiesChase", true)
 
 
 # main game object
