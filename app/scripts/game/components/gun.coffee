@@ -38,10 +38,11 @@ Q.component "gun",
           bullet = @stage.insert new Q.Bullet
             x: @p.x + delta
             y: @p.y + 3
-            direction: @p.direction
-        else
-          Game.infoLabel.outOfBullets()
+            direction: @p.direction        
 
           # update counter
           if not Game.settings.unlimitedAmmo.get()
             Q.state.dec "bullets", 1
+
+        else
+          Game.infoLabel.outOfBullets()
