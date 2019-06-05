@@ -2,47 +2,8 @@ Q = Game.Q
  
 Q.scene "controls_settings", (stage) ->
 
-  # audio
-  Q.AudioManager.stopAll()
-  Q.AudioManager.clear()
-
-  # add title
-  y_pad = Q.height/20
-
-  pageContainer = stage.insert new Q.UI.Container
-    x: Q.width/2
-    y: Q.height/2
-    w: Q.width
-    h: Q.height
-
-  titleBar = stage.insert pageContainer.subplot(8,1,0,0)
-
-  # console.log("titleBar (x, y) = (%d, %d) (w,h) = (%d,%d)", titleBar.p.x, titleBar.p.y, titleBar.p.w, titleBar.p.h);
-
-  title = titleBar.insert new Q.UI.Text    
-    label: "Controls"
-    color: "#f2da38"
-    family: "Jolly Lodger"
-    size: titleBar.p.h*0.8
-
-  buttonBar = stage.insert pageContainer.subplot(8,1,7,0)
-
-  # back button
-  label = "Back"
-  buttonTextSize = Q.ctx.measureText(label)
-  button = buttonBar.insert new Q.UI.Button
-    w: buttonTextSize.width*1.3
-    h: 80
-    fill: "#c4da4a"
-    radius: 10
-    fontColor: "#353b47"
-    font: "400 58px Jolly Lodger"
-    label: label
-    keyActionName: "confirm"
-    type: Q.SPRITE_UI | Q.SPRITE_DEFAULT
-
-  button.on "click", (e) ->
-    Game.stageLevelSelectScreen()
+  # settings page structure
+  [titleBar, mainSection, buttonBar] = Q.CompositeUI.setup_settings_page(stage, "Controls")
 
   # preview button
   label = "Preview\ncontrols"  

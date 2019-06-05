@@ -2,6 +2,50 @@ Q = Game.Q
 
 Q.CompositeUI = 
 
+
+  setup_settings_page: (stage, page_title) ->
+
+    # Audio
+    Q.AudioManager.stopAll()
+    Q.AudioManager.clear()
+
+    # Layouts
+    pageContainer = stage.insert new Q.UI.Container
+      x: Q.width/2
+      y: Q.height/2
+      w: Q.width
+      h: Q.height
+
+    titleBar = stage.insert pageContainer.subplot(8,1, 0,0)
+    mainSection = pageContainer.subplot_multiple(8,1, 1,0, 6,0)
+    buttonBar = stage.insert pageContainer.subplot(8,2, 7,1)    
+
+    # Title
+    title = titleBar.insert new Q.UI.Text    
+      label: page_title
+      color: "#f2da38"
+      family: "Jolly Lodger"
+      size: titleBar.p.h*0.8
+
+    # back button
+    label = "Back"
+    buttonTextSize = Q.ctx.measureText(label)
+    button = buttonBar.insert new Q.UI.Button
+      w: buttonTextSize.width*1.3
+      h: 80
+      fill: "#c4da4a"
+      radius: 10
+      fontColor: "#353b47"
+      font: "400 58px Jolly Lodger"
+      label: label
+      keyActionName: "confirm"
+      type: Q.SPRITE_UI | Q.SPRITE_DEFAULT
+
+    button.on "click", (e) ->
+      Game.stageLevelSelectScreen()
+
+    return [titleBar, mainSection, buttonBar]
+
   add_exclusive_toggle_buttons: (layout, btn1_opts, btn2_opts, label_array) ->
 
     h = layout.p.h
