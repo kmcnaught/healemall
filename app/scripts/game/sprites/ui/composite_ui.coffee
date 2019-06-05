@@ -8,10 +8,19 @@ Q.CompositeUI =
     w = layout.p.w    
 
     gray = "#818793"
+    darkgray = "#363738"
     yellow = "#f2da38"
 
-    title_fontsize = Math.floor(h/6)
-    label_fontsize = Math.floor(h/4)    
+    # Background panel to hold elements together visually    
+    # (we'll size it later)
+    panel = layout.insert new Q.UI.Container      
+      fill: "#e3ecf933",      
+      radius: 12,
+      w:10
+      h:10
+      type: Q.SPRITE_UI | Q.SPRITE_DEFAULT
+
+    title_fontsize = Math.floor(h/6.5)      
 
     label1 = layout.insert new Q.UI.Text      
       label: btn1_opts.label
@@ -33,8 +42,8 @@ Q.CompositeUI =
         return layout.insert new Q.UI.Text
           label: text
           y: label1.p.h/2
-          color: gray
-          family: "Boogaloo"
+          color: darkgray
+          family: "Jolly Lodger"
           size: title_fontsize
 
       # Label for control, goes in middle - may be split into 1-3 lines
@@ -58,6 +67,12 @@ Q.CompositeUI =
     label1.p.x = -cellsize
     label2.p.x = +cellsize
 
+    # Panel sizing    
+    panel.p.w = 3*cellsize
+    panel.p.h = cellsize
+    panel.p.x = -panel.p.w/2 + 5
+    panel.p.y = -panel.p.h/2 + label1.p.h/2 + 5
+    
 
     # Left hand: btn1
     button1 = layout.insert new Q.UI.ToggleButton
@@ -129,8 +144,7 @@ Q.CompositeUI =
 
     num_digits = Math.ceil(-Math.log10(inc*1.05)) # *1.05 to avoid rounding exaggerations
 
-    title_fontsize = Math.floor(h/6)
-    label_fontsize = Math.floor(h/4)    
+    title_fontsize = Math.floor(h/6.5)
 
     title = new Q.UI.Text
       label: label
