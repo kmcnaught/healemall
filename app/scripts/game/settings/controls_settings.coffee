@@ -1,27 +1,4 @@
 Q = Game.Q
-
-
-Q.UI.Container::subplot = (nrows, ncols, rowFrom, colFrom, rowTo, colTo, padding_fraction=0) ->
-  cell_w = @p.w/ncols
-  cell_h = @p.h/nrows
-
-  rowTo = rowFrom if rowTo is undefined
-  colTo = colFrom if colTo is undefined  
-
-  nRowsInSubplot = (1+rowTo-rowFrom)
-  nColsInSubplot = (1+colTo-colFrom)
-
-  x = @p.x - @p.w/2 + (colFrom+nColsInSubplot*0.5)*cell_w
-  y = @p.y - @p.h/2 + (rowFrom+nRowsInSubplot*0.5)*cell_h
-
-  console.log("container (x, y) = (%d, %d) (w,h) = (%d,%d)", @p.x, @p.y, @p.w, @p.h);
-  fill = 1.0-padding_fraction;
-
-  return new Q.UI.Container
-          x: x
-          y: y
-          w: cell_w*nColsInSubplot*fill
-          h: cell_h*nRowsInSubplot*fill
  
 Q.scene "controls_settings", (stage) ->
 
@@ -84,10 +61,10 @@ Q.scene "controls_settings", (stage) ->
 
 
 
-  mainSection = pageContainer.subplot(8,1,1,0,6,0)
+  mainSection = pageContainer.subplot_multiple(8,1, 1,0, 6,0)
 
     
-  cursor_layout =   stage.insert mainSection.subplot(3,2, 0,1, 0,1, 0.1)
+  cursor_layout =   stage.insert mainSection.subplot(3,2, 0,1, 0.1)
 
   cursorButton = cursor_layout.insert new Q.UI.CursorButton        
     isSmall: false
@@ -128,12 +105,12 @@ Q.scene "controls_settings", (stage) ->
     Game.settings.uiOpacity.set(val)
 
 
-  input_layout =   stage.insert mainSection.subplot(3,2, 0,0, 0,0, 0.1)
+  input_layout =   stage.insert mainSection.subplot(3,2, 0,0, 0.1)
 
-  scale_layout =   stage.insert mainSection.subplot(3,2, 1,0, 1,0, 0.1)
-  dwell_layout =   stage.insert mainSection.subplot(3,2, 2,1, 2,1, 0.1)
-  opacity_layout = stage.insert mainSection.subplot(3,2, 2,0, 2,0, 0.1)
-  click_layout =   stage.insert mainSection.subplot(3,2, 1,1, 1,1, 0.1)
+  scale_layout =   stage.insert mainSection.subplot(3,2, 1,0, 0.1)
+  dwell_layout =   stage.insert mainSection.subplot(3,2, 2,1, 0.1)
+  opacity_layout = stage.insert mainSection.subplot(3,2, 2,0, 0.1)
+  click_layout =   stage.insert mainSection.subplot(3,2, 1,1, 0.1)
 
   Q.CompositeUI.add_adjuster(dwell_layout, 'Dwell time (s)', dwell_getter, dwell_setter, 0.1, 0.1, 3.0)
   Q.CompositeUI.add_adjuster(scale_layout, 'Size of gaze controls', scale_getter, scale_setter, 0.1, 0.2, 2.5)
