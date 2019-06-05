@@ -328,12 +328,14 @@ window.Game =
   stageLevel: (number = 1) ->
     Q = @Q
 
+    start_bullets = if Game.settings.startWithGun.get() then 10 else 0
+
     Q.state.set
       enemiesCounter: 0
       lives: Number.parseInt(Game.settings.lives.get())
-      bullets: 0
+      bullets: start_bullets
       hasKey: false
-      hasGun: false
+      hasGun: Game.settings.startWithGun.get()
       currentLevel: number # for saving the progress
       canEnterDoor: false
 
