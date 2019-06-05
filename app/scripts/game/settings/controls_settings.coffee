@@ -1,27 +1,6 @@
 Q = Game.Q
 
 
-class GridContainer
-  constructor: (x, y, w, h, rows, cols) ->
-    @cells = []
-    cell_w = h/rows
-    cell_h = w/cols
-    for r in [0..rows-1]
-      row_container = []    
-      for c in [0..cols-1]
-        cell = stage.insert new Q.UI.Container
-          x: x + (c+0.5)*cell_w
-          y: y + (r+0.5)*cell_h
-          w: cell_w
-          h: cell_h        
-
-        row_container.push cell  
-
-      @cells.push row_container  
-
-  get_cell: (r, c) ->
-    return @cells[r][c]
-
 Q.UI.Container::subplot = (nrows, ncols, rowFrom, colFrom, rowTo, colTo, padding_fraction=0) ->
   cell_w = @p.w/ncols
   cell_h = @p.h/nrows
