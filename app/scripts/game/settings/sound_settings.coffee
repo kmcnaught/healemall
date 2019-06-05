@@ -11,7 +11,7 @@ Q.scene "sound_settings", (stage) ->
   fx_layout  = stage.insert mainSection.subplot(3,1, 1,0, padding)
   narration_layout  = stage.insert mainSection.subplot(3,1, 2,0, padding)    
 
-  add_audio_button = (layout, height, label, sheet) -> 
+  add_audio_button = (layout, height, label, sheet, callback, init_pressed=false) -> 
     audioButton = layout.insert new Q.UI.ToggleButton        
       type: Q.SPRITE_UI | Q.SPRITE_DEFAULT      
       do_toggle: true
@@ -42,17 +42,31 @@ Q.scene "sound_settings", (stage) ->
     # stateLabel.p.x = stateLabel.p.x + delta/4
     audioButton.p.x = audioButton.p.x + delta/2
 
-    callback = (e) ->
+    button_callback = () ->
       if audioButton.pressed
         stateLabel.p.color = yellow
         stateLabel.p.label = "ON"
       else
         stateLabel.p.color = gray
         stateLabel.p.label = "OFF"
+      callback(audioButton.pressed)
 
-    audioButton.on "click", callback      
+    audioButton.pressed = init_pressed 
+    button_callback()
+
+    audioButton.on "click", button_callback      
+
+
+  music_callback = (is_pressed) ->
+    Game.settings.musicEnabled.set(is_pressed)
+
+  soundfx_callback = (is_pressed) ->
+    Game.settings.soundFxEnabled.set(is_pressed)  
+
+  narrate_callback = (is_pressed) ->
+    Game.settings.narrationEnabled.set(is_pressed)  
 
   button_height = music_layout.p.h*0.75
-  add_audio_button music_layout,     button_height, "        Music:", "music"
-  add_audio_button fx_layout,        button_height, " Sound effects:", "soundfx"
-  add_audio_button narration_layout, button_height, "Game narration:", "narration"
+  add_audio_button music_layout,     button_height, "        Music:", "music", music_callback, Game.settings.musicEnabled.get()
+  add_audio_button fx_layout,        button_height, " Sound effects:", "soundfx", soundfx_callback, Game.settings.soundFxEnabled.get()
+  add_audio_button narration_layout, button_height, "Game narration:", "narration", narrate_callback, Game.settings.narrationEnabled.get()

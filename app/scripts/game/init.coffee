@@ -87,12 +87,12 @@ class Settings
     @dwellTime = new StorageItem("dwellTime", 1000)
     @narrationEnabled = new StorageItem("narrationEnabled", false)
     @useBuiltinDwell = new StorageItem("useBuiltinDwell", true)
-    @disableMusic = new StorageItem("disableMusic", false)
     @useKeyboardInstead = new StorageItem("useKeyboardInstead", false)
     @useOwnClickInstead = new StorageItem("useOwnClickInstead", false)
     @uiScale =  new StorageItem("uiScale", 1.0)
     @uiOpacity = new StorageItem("uiOpacity", 0.25)
-    @narrate =  new StorageItem("narrate", false)
+    @musicEnabled = new StorageItem("disableMusic", true)
+    @soundFxEnabled = new StorageItem("disableSoundFx", true)
 
 
 # main game object

@@ -19,7 +19,7 @@ Q.UI.InfoLabel = Q.UI.Text.extend "UI.InfoLabel",
     @p.disabled = false
 
   speak:  (phrase) ->
-    if Game.settings.narrate.get()
+    if Game.settings.narrationEnabled.get()
       responsiveVoice.speak(phrase, "UK English Male");
 
   changeLabel: (new_label) ->    
