@@ -3,7 +3,7 @@ Q = Game.Q
 Q.component "zombieAI",
   added: ->
     p = @entity.p
-    p.fullSpeed = 60
+    p.fullSpeed = 60*Game.settings.zombieSpeed.get()
 
     if p.startLeft
       p.vx = p.fullSpeed

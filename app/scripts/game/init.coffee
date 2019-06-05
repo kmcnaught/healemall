@@ -329,7 +329,7 @@ window.Game =
 
     Q.state.set
       enemiesCounter: 0
-      lives: 3
+      lives: Game.settings.lives.get()
       bullets: 0
       hasKey: false
       hasGun: false
