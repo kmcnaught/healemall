@@ -43,7 +43,10 @@ Q.CompositeUI =
       type: Q.SPRITE_UI | Q.SPRITE_DEFAULT
 
     button.on "click", (e) ->
-      Game.stageLevelSelectScreen()
+      if Game.currentScreen == "settings_menu"
+        Game.stageLevelSelectScreen()
+      else
+        Game.stageScreen("settings_menu")
 
     return [titleBar, mainSection, buttonBar]
 

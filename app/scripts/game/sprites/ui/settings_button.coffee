@@ -16,5 +16,5 @@ Q.UI.SettingsButton = Q.UI.Button.extend "UI.SettingsButton",
     @p.cy = @p.sheetH/2
 
     @on 'click', =>
-      Game.stageScreen("controls_settings")
+      Game.stageScreen("settings_menu")
 #      Game.stageScreen("settingsPlaceholder")
