@@ -47,7 +47,8 @@ Q.component "gun",
           Game.infoLabel.outOfBullets()
 
         # first fire, then update counter
-        @p.noOfBullets -= 1
+        if not Game.settings.unlimitedAmmo.get()
+          @p.noOfBullets -= 1
 
         if @p.noOfBullets >= 0
           Q.state.set "bullets", @p.noOfBullets
