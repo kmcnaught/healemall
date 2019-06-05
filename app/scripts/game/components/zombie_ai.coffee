@@ -99,6 +99,10 @@ Q.component "zombieAI",
         playAudio: true
         status: false
 
+      # If chasing is turned off, don't look for the player      
+      if !Game.settings.zombiesChase.get()
+        return
+
       if oldObj?.status == true
         @canSeeThePlayerObj.playAudio = false
 

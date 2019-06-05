@@ -96,7 +96,8 @@ class Settings
     @lives = new StorageItem("lives", 3)
     @zombieSpeed = new StorageItem("zombieSpeed", 1.0)
     @zombiesChase = new StorageItem("zombiesChase", true)
-
+    @unlimitedAmmo = new StorageItem("unlimitedAmmo", false)
+    @startWithGun = new StorageItem("startWithGun", false)
 
 # main game object
 window.Game =
