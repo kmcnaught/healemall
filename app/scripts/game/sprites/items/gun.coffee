@@ -18,14 +18,16 @@ Q.Sprite.extend "Gun",
 
   sensor: (obj) ->
     if obj.isA("Player")
-      Q.state.set "hasGun", true
-      obj.add("gun")
-      Game.infoLabel.gunFound()
+      if Q.state.get("hasGun")
+        Game.infoLabel.moreBullets()
+      else  
+        Q.state.set "hasGun", true
+        obj.add("gun")
+        Game.infoLabel.gunFound()
 
       # number of bullets depends of the gun
-      obj.p.noOfBullets = @p.bullets
-      Q.state.set "bullets", @p.bullets
-      Game.currentLevelData.bullets.available = @p.bullets
+      Q.state.inc "bullets", @p.bullets
+      Game.currentLevelData.bullets.available = Q.state.get("bullets")
 
       Q.AudioManager.addSoundFx Game.audio.collected
       @destroy()
