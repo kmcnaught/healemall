@@ -111,9 +111,14 @@ window.Game =
     Q.setup
       # width: 640
       # height: 320
+      width:   800 #// Set the default width to 800 pixels
+      height:  600 #// Set the default height to 600 pixels
+      scaleToFit: true #// Scale the game to fit the screen of the player's device
       maximize: true
-      upsampleWidth: 640
-      upsampleHeight: 320
+      # upsampleWidth: 640
+      # upsampleHeight: 320
+      # downsampleWidth: 1024, # Halve the pixel density if resolution
+      # downsampleHeight: 768  # is larger than or equal to 1024x768
     Q.controls().touch(Q.SPRITE_UI, [0,1,2,10])
 
     Q.enableSound()
