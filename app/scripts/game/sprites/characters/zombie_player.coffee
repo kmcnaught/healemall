@@ -60,7 +60,7 @@ Q.Sprite.extend "ZombiePlayer",
 
     # audio
     Q.AudioManager.remove Game.audio.playerBg
-    Q.AudioManager.add Game.audio.zombieMode,
+    Q.AudioManager.addMusic Game.audio.zombieMode,
       loop: true
 
   step: (dt) ->

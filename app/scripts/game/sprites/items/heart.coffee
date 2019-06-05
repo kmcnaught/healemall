@@ -20,7 +20,7 @@ Q.Sprite.extend "Heart",
       obj.updateLifePoints(1)
       Game.infoLabel.extraLifeFound()
 
-      Q.AudioManager.add Game.audio.collected
+      Q.AudioManager.addSoundFx Game.audio.collected
       @destroy()
 
       Game.currentLevelData.health.collected += 1

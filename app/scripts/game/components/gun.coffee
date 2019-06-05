@@ -37,7 +37,7 @@ Q.component "gun",
           else
             delta = 15
 
-          Q.AudioManager.add Game.audio.gunShot
+          Q.AudioManager.addSoundFx Game.audio.gunShot
 
           bullet = @stage.insert new Q.Bullet
             x: @p.x + delta

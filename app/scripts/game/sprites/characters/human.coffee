@@ -36,7 +36,7 @@ Q.Sprite.extend "Human",
     @play "intro"
 
     # audio
-    Q.AudioManager.add Game.audio.humanCreated
+    Q.AudioManager.addSoundFx Game.audio.humanCreated
 
     # events
     @on "sensor", @, "sensor"

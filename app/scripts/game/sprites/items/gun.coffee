@@ -27,7 +27,7 @@ Q.Sprite.extend "Gun",
       Q.state.set "bullets", @p.bullets
       Game.currentLevelData.bullets.available = @p.bullets
 
-      Q.AudioManager.add Game.audio.collected
+      Q.AudioManager.addSoundFx Game.audio.collected
       @destroy()
 
 

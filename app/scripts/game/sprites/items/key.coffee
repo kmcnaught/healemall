@@ -27,7 +27,7 @@ Q.Sprite.extend "Key",
       Q.state.set "hasKey", true
       Game.infoLabel.keyFound()
 
-      Q.AudioManager.add Game.audio.collected
+      Q.AudioManager.addSoundFx Game.audio.collected
       @destroy()
 
   # step: (dt) ->

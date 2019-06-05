@@ -66,7 +66,7 @@ Q.Sprite.extend "Player",
     @p.savedPosition.y = @p.y
 
     # audio
-    Q.AudioManager.add Game.audio.playerBg,
+    Q.AudioManager.addMusic Game.audio.playerBg,
       loop: true
 
     # events
@@ -170,7 +170,7 @@ Q.Sprite.extend "Player",
       @p.lifePoints -= 1
       @play("hit", 1)
 
-      Q.AudioManager.add Game.audio.playerHit
+      Q.AudioManager.addSoundFx Game.audio.playerHit
 
       if @p.lifePoints < 0
 

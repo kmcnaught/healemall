@@ -4,7 +4,15 @@ Q.AudioManager =
   collection: []
   muted: false
 
-  add: (audio, options) ->
+  addMusic: (audio, options) ->
+    if Game.settings.musicEnabled.get()
+      @_add(audio, options)
+
+  addSoundFx: (audio, options) ->
+    if Game.settings.soundFxEnabled.get()
+      @_add(audio, options)
+
+  _add: (audio, options) ->
     item =
       audio: audio
       options: options
