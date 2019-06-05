@@ -32,7 +32,7 @@ Q.AudioManager =
       if item.audio == audio
         return index
 
-    return false
+    return -1
 
   playAll: ->
     for item in @collection
