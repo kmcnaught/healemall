@@ -56,7 +56,7 @@ Q.CompositeUI =
     w = layout.p.w    
 
     gray = "#818793"
-    darkgray = "#363738"
+    darkgray = "#272828"
     yellow = "#f2da38"
 
     # Background panel to hold elements together visually    
@@ -64,6 +64,15 @@ Q.CompositeUI =
     panel = layout.insert new Q.UI.Container      
       fill: "#e3ecf933",      
       radius: 12,
+      w:10
+      h:10
+      type: Q.SPRITE_UI | Q.SPRITE_DEFAULT
+
+
+    # Title panel
+    title_panel = layout.insert new Q.UI.Container      
+      fill: "#e3ecf933",      
+      radius: 6,
       w:10
       h:10
       type: Q.SPRITE_UI | Q.SPRITE_DEFAULT
@@ -85,6 +94,9 @@ Q.CompositeUI =
       family: "Boogaloo"
       size: title_fontsize
 
+    label_width = 0
+    label_height = 0
+
     if label_array?
       create_label = (text) ->
         return layout.insert new Q.UI.Text
@@ -98,14 +110,17 @@ Q.CompositeUI =
       n = label_array.length 
       all_labels = []
       for line in label_array
-        all_labels.push create_label(line)
+        label = create_label(line)
+        label_width = Math.max(label_width, label.p.w)
+        label_height += label.p.h
+        all_labels.push label
       
       if n == 2
         all_labels[0].p.y -= all_labels[0].p.h/2
         all_labels[1].p.y += all_labels[1].p.h/2
       else if n == 3
         all_labels[0].p.y -= all_labels[0].p.h
-        all_labels[2].p.y += all_labels[2].p.h
+        all_labels[2].p.y += all_labels[2].p.h    
 
 
     x = 0
@@ -120,6 +135,11 @@ Q.CompositeUI =
     panel.p.h = cellsize
     panel.p.x = -panel.p.w/2 + 5
     panel.p.y = -panel.p.h/2 + label1.p.h/2 + 5
+    
+    title_panel.p.w = label_width*1.3
+    title_panel.p.h = label_height*1.3
+    title_panel.p.x = -title_panel.p.w/2 + 5
+    title_panel.p.y = -title_panel.p.h/2 + label1.p.h/2 + 5
     
 
     # Left hand: btn1
