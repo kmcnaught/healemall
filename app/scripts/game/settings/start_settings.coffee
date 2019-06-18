@@ -12,11 +12,9 @@ Q.scene "start_settings", (stage) ->
     h: Q.height
 
 
-
   buttonPosX = Q.width/12
   buttonPosY = Q.height/8
   marginButtonsY = Q.height/8
-
 
 
   padding = 0.1
@@ -37,6 +35,24 @@ Q.scene "start_settings", (stage) ->
     color: "#818793"
     family: "Boogaloo"
     size: 36
+
+  cachedMusicEnabled = Game.settings.musicEnabled.get()
+  cachedSfxEnabled = Game.settings.soundFxEnabled.get()
+
+  if !cachedSfxEnabled and !cachedMusicEnabled
+    audioButton.setMuted(true)
+    # clicking button will turn on both
+    cachedMusicEnabled = true
+    cachedSfxEnabled = true
+
+  audioButton.on 'click', =>    
+    audioButton.setMuted(!audioButton.p.isMuted)
+    if audioButton.p.isMuted
+      Game.settings.musicEnabled.set(false)
+      Game.settings.soundFxEnabled.set(false)
+    else
+      Game.settings.musicEnabled.set(cachedMusicEnabled)
+      Game.settings.soundFxEnabled.set(cachedSfxEnabled)
     
   cursorLabel = cursor_layout.insert new Q.UI.Text    
     label: "Show cursor?"

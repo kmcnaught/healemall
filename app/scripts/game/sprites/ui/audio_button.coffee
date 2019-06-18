@@ -8,38 +8,24 @@ Q.UI.AudioButton = Q.UI.Button.extend "UI.AudioButton",
       type: Q.SPRITE_UI | Q.SPRITE_DEFAULT
       keyActionName: "mute" # button that will trigger click event
       isSmall: true
+      isMuted: false
 
-    if @p.isSmall
-      if Game.isMuted
-        @p.sheet = "hud_audio_off_button_small"
-      else
-        @p.sheet = "hud_audio_on_button_small"
-    else
-      if Game.isMuted
-        @p.sheet = "hud_audio_off_button"
-      else
-        @p.sheet = "hud_audio_on_button"
-
+    @updateSheet()
     @size(true) # force resize 
 
-    @on 'click', =>
-      if !Game.isMuted
-        Q.AudioManager.mute()
-        if @p.isSmall
+  updateSheet: () -> 
+    if @p.isSmall
+        if @p.isMuted
           @p.sheet = "hud_audio_off_button_small"
         else
-          @p.sheet = "hud_audio_off_button"
-        Game.isMuted = true
-
-        Game.trackEvent("Audio Button", "clicked", "off")
-
-      else
-        Q.AudioManager.unmute()
-        if @p.isSmall
           @p.sheet = "hud_audio_on_button_small"
+      else
+        if @p.isMuted
+          @p.sheet = "hud_audio_off_button"
         else
-          @p.sheet = "hud_audio_on_button"          
-        Game.isMuted = false
+          @p.sheet = "hud_audio_on_button"
 
-        Game.trackEvent("Audio Button", "clicked", "on")
+  setMuted: (isMuted) ->
+    @p.isMuted = isMuted
+    @updateSheet()
 
