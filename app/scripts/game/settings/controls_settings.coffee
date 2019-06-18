@@ -75,7 +75,20 @@ Q.scene "controls_settings", (stage) ->
   Q.CompositeUI.add_adjuster(scale_layout, 'Size of gaze controls', scale_getter, scale_setter, 0.1, 0.2, 2.5)
   Q.CompositeUI.add_adjuster(opacity_layout, 'Opacity of gaze controls', opacity_getter, opacity_setter, 0.05, 0.05, 0.95)
 
-  btn1 = {
+  btn1 = {    
+    label: "Gaze/mouse/touch"
+    sheet: "gaze_touch_etc"
+    init_state: !Game.settings.useKeyboardInstead.get()
+    on_click: () ->
+      Game.settings.useKeyboardInstead.set(false)
+      scale_layout.p.hidden = false
+      opacity_layout.p.hidden = false
+      dwell_layout.p.hidden = Game.settings.useOwnClickInstead.get()
+      click_layout.p.hidden = false
+      previewButton.p.hidden = false
+      cursor_layout.p.hidden = false
+  }
+  btn2 = {
     label: "Keyboard"
     sheet: "keyboard_controls"
     init_state: Game.settings.useKeyboardInstead.get()
@@ -89,22 +102,18 @@ Q.scene "controls_settings", (stage) ->
       previewButton.p.hidden = true
       cursor_layout.p.hidden = true 
   }
-  btn2 = {    
-    label: "Gaze/mouse/touch"
-    sheet: "gaze_touch_etc"
-    init_state: !Game.settings.useKeyboardInstead.get()
-    on_click: () ->
-      Game.settings.useKeyboardInstead.set(false)
-      scale_layout.p.hidden = false
-      opacity_layout.p.hidden = false
-      dwell_layout.p.hidden = Game.settings.useOwnClickInstead.get()
-      click_layout.p.hidden = false
-      previewButton.p.hidden = false
-      cursor_layout.p.hidden = false
-  }
+  
   Q.CompositeUI.add_exclusive_toggle_buttons(input_layout, btn1, btn2, ["Input","method"])
 
-  btn1 = {
+  btn1 = {    
+    label: "Built in dwell"
+    sheet: "dwell_click"
+    init_state: !Game.settings.useOwnClickInstead.get()
+    on_click: () ->
+      Game.settings.useOwnClickInstead.set(false)
+      dwell_layout.p.hidden = false
+  }
+  btn2 = {
     label: "Own click"
     sheet: "own_click"
     init_state: Game.settings.useOwnClickInstead.get()
@@ -113,14 +122,7 @@ Q.scene "controls_settings", (stage) ->
       Game.settings.useOwnClickInstead.set(true)
       dwell_layout.p.hidden = true
   }
-  btn2 = {    
-    label: "Built in dwell"
-    sheet: "dwell_click"
-    init_state: !Game.settings.useOwnClickInstead.get()
-    on_click: () ->
-      Game.settings.useOwnClickInstead.set(false)
-      dwell_layout.p.hidden = false
-  }
+  
   Q.CompositeUI.add_exclusive_toggle_buttons(click_layout, btn1, btn2, ["Click", "method"])
 
   
