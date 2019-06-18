@@ -28,28 +28,22 @@ Q.scene "start_settings", (stage) ->
   # Sound
   audioButton = audio_layout.insert new Q.UI.AudioButton
     isSmall: false
-    # x: buttonPosX
-    # y: -buttonPosY
 
   cursorButton = cursor_layout.insert new Q.UI.CursorButton
     isSmall: false
-    # x: buttonPosX
-    # y: buttonPosY
-
+    
   audioLabel = audio_layout.insert new Q.UI.Text    
     label: "Play sounds/music?"
     color: "#818793"
     family: "Boogaloo"
     size: 36
-    # y: -buttonPosY
-
+    
   cursorLabel = cursor_layout.insert new Q.UI.Text    
     label: "Show cursor?"
     color: "#818793"
     family: "Boogaloo"
     size: 36
-    # y: buttonPosY
-
+    
   delta = audioLabel.p.w/2 + audioButton.p.w/2
 
   label_pad = cursorButton.p.w/4
