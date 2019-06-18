@@ -153,12 +153,7 @@ Q.scene "levelSelect", (stage) ->
     family: "Jolly Lodger"
     size: 60
 
-  # authors
   authors = stage.insert new Q.UI.Authors()
-
-  # audio button
-  audioButton = stage.insert new Q.UI.AudioButton
-    y: marginY/2
 
   cursorButton = stage.insert new Q.UI.CursorButton   
     y: marginY/2
@@ -181,7 +176,6 @@ Q.scene "levelSelect", (stage) ->
   aboutButton.on "click", (e) ->
     Game.stageScreen("about")    
 
-  aboutButton.p.x = marginX + aboutButton.p.w/2
-  audioButton.p.x = Q.width - marginX - audioButton.p.w/2
-  cursorButton.p.x = Q.width - marginX - audioButton.p.w - cursorButton.p.w
+  aboutButton.p.x = marginX + aboutButton.p.w/2  
+  cursorButton.p.x = Q.width - marginX - cursorButton.p.w/2
 
