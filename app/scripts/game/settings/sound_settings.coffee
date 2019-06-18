@@ -7,9 +7,10 @@ Q.scene "sound_settings", (stage) ->
 
   # layouts
   padding = 0.1
-  music_layout  = stage.insert mainSection.subplot(3,2, 0,0, padding)
-  fx_layout  = stage.insert mainSection.subplot(3,2, 1,0, padding)
-  narration_layout  = stage.insert mainSection.subplot(3,2, 2,0, padding)    
+  music_layout  = stage.insert mainSection.subplot(2,2, 0,0, padding)
+  fx_layout  = stage.insert mainSection.subplot(2,2, 1,0, padding)
+  narration_layout  = stage.insert mainSection.subplot(2,2, 0,1, padding)    
+  voice_layout = stage.insert mainSection.subplot(2,2, 1,1, padding)
 
   # Callbacks
   music_callback = (is_pressed) ->
@@ -20,11 +21,13 @@ Q.scene "sound_settings", (stage) ->
 
   narrate_callback = (is_pressed) ->
     Game.settings.narrationEnabled.set(is_pressed)  
+    voice_layout.p.hidden = !is_pressed
+
 
   # Checkboxes
   chk_music = Q.CompositeUI.add_checkbox(music_layout, "Music", music_callback)
   chk_sfx = Q.CompositeUI.add_checkbox(fx_layout, "Sound effects", soundfx_callback)
-  chk_narration = Q.CompositeUI.add_checkbox(narration_layout, "Narration", narrate_callback)
+  chk_narration = Q.CompositeUI.add_checkbox(narration_layout, "Game narration", narrate_callback)
 
   # Initial checkbox state
   chk_music.checked = Game.settings.musicEnabled.get()
@@ -42,8 +45,6 @@ Q.scene "sound_settings", (stage) ->
   chk_narration.p.x = leftmost_x
 
   # Narration voice
-  voice_layout = stage.insert mainSection.subplot(3,2,2,1, padding)
-
   btn1 = {    
     label: "Male"
     init_state: Game.settings.narrationVoice.get().indexOf("Female") < 0
@@ -64,3 +65,5 @@ Q.scene "sound_settings", (stage) ->
   }
   
   Q.CompositeUI.add_exclusive_toggle_buttons(voice_layout, btn1, btn2, "Narrator\nvoice")
+
+  voice_layout.p.hidden = !Game.settings.narrationEnabled.get()
