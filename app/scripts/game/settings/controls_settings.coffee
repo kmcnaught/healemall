@@ -111,8 +111,9 @@ Q.scene "controls_settings", (stage) ->
     label: "Gaze/mouse/touch"
     sheet: "gaze_touch_etc"
     init_state: !Game.settings.useKeyboardInstead.get()
-    on_click: () ->
-      Game.settings.useKeyboardInstead.set(false)
+    on_click: (is_initialising) ->
+      if not is_initialising
+        Game.settings.useKeyboardInstead.set(false)
       scale_layout.p.hidden = false
       opacity_layout.p.hidden = false
       dwell_layout.p.hidden = Game.settings.useOwnClickInstead.get()
@@ -125,8 +126,9 @@ Q.scene "controls_settings", (stage) ->
     sheet: "keyboard_controls"
     init_state: Game.settings.useKeyboardInstead.get()
     doDwell: false
-    on_click: () ->
-      Game.settings.useKeyboardInstead.set(true)
+    on_click: (is_initialising) ->
+      if not is_initialising
+        Game.settings.useKeyboardInstead.set(true)
       scale_layout.p.hidden = true
       opacity_layout.p.hidden = true
       dwell_layout.p.hidden = true
@@ -141,8 +143,9 @@ Q.scene "controls_settings", (stage) ->
     label: "Built in dwell"
     sheet: "dwell_click"
     init_state: !Game.settings.useOwnClickInstead.get()
-    on_click: () ->
-      Game.settings.useOwnClickInstead.set(false)
+    on_click: (is_initialising) ->
+      if not is_initialising
+        Game.settings.useOwnClickInstead.set(false)
       dwell_layout.p.hidden = false
   }
   btn2 = {
@@ -150,8 +153,9 @@ Q.scene "controls_settings", (stage) ->
     sheet: "own_click"
     init_state: Game.settings.useOwnClickInstead.get()
     doDwell: false
-    on_click: () ->
-      Game.settings.useOwnClickInstead.set(true)
+    on_click: (is_initialising) ->
+      if not is_initialising
+        Game.settings.useOwnClickInstead.set(true)
       dwell_layout.p.hidden = true
   }
   
