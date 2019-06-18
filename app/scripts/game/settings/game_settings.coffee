@@ -76,14 +76,6 @@ Q.scene "game_settings", (stage) ->
 
   presets = [
     {
-      name: "Default"
-      lives: 3
-      zombieSpeed: 1.0      
-      zombiesChase: true
-      unlimitedAmmo: false
-      startWithGun: false
-    },
-    {
       name: "Relaxed"
       lives: 100
       zombieSpeed: 0.5      
@@ -91,6 +83,14 @@ Q.scene "game_settings", (stage) ->
       unlimitedAmmo: true
       startWithGun: true
     },
+    {
+      name: "Default"
+      lives: 3
+      zombieSpeed: 1.0      
+      zombiesChase: true
+      unlimitedAmmo: false
+      startWithGun: false
+    },    
     {
       name: "Hardcore"
       lives: 0
