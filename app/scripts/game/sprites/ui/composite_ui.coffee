@@ -50,8 +50,11 @@ Q.CompositeUI =
 
     return [titleBar, mainSection, buttonBar]
 
-
   add_exclusive_toggle_buttons: (layout, btn1_opts, btn2_opts, label) ->
+    # callback method takes args (is_checked, is_initialising)
+    # When setting up the UI, is_initialising=True. Callbacks from 
+    # user actions have is_initialising=False
+    
     h = layout.p.h
     w = layout.p.w    
 
@@ -198,14 +201,19 @@ Q.CompositeUI =
 
       btn2_opts.on_click(e)
 
-    button1.on "click", callback1      
-    button2.on "click", callback2 
+    callback1_click = () ->
+      callback1(false)
+    callback2_click = () ->
+      callback2(false)
+
+    button1.on "click", callback1_click     
+    button2.on "click", callback2_click 
 
     # Initial state: equivalent to clicking one of them
     if btn1_opts.init_state
-      callback1()
+      callback1(true)
     else
-      callback2()
+      callback2(true)
 
   add_checkbox: (layout, label, callback) ->
     h = layout.p.h
