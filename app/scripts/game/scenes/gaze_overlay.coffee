@@ -111,7 +111,7 @@ Q.scene "gaze_overlay", (stage) ->
     type: Q.SPRITE_UI | Q.SPRITE_DEFAULT
     fill: "#c4da4a"
     radius: 10
-    fontColor: "#353b47"
+    fontColor: "#000000"
     font: "400 58px Jolly Lodger"
     label: "shoot"
     points: shoot_p
