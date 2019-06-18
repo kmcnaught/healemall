@@ -276,6 +276,8 @@ window.Game =
       gradient: "gradient-top.png"
       tutorial:
         dataAsset: "tutorial.tmx"
+      preview:
+        dataAsset: "preview.tmx"
       
     Game.achievements = new Achievements(Game.levels_array.length - 1)
 
@@ -440,6 +442,46 @@ window.Game =
 
       # for analytics
       Game.currentScreen = screen_name     
+
+  stagePreview: ->
+    Q = @Q
+
+    Q.state.set
+      enemiesCounter: 0
+      lives: 15
+      bullets: 100
+      hasKey: false
+      hasGun: true
+      currentLevel: 0 # for saving the progress
+      canEnterDoor: false
+
+    Q.clearStages()
+    Q.stageScene "preview",
+      sort: true
+
+    if not Game.settings.useKeyboardInstead.get()
+      Q.stageScene "gaze_overlay", 1,
+        sort: true
+
+    Q.scene "preview_back_button", (stage) ->
+
+      marginBottomButtons = Q.height * 0.1
+
+      pauseButton = stage.insert new Q.UI.PauseButton
+        x: marginBottomButtons
+        y: Q.height - marginBottomButtons    
+        isSmall: false
+
+      menuButton = stage.insert new Q.UI.MenuButton
+        x: Q.width - marginBottomButtons
+        y: Q.height - marginBottomButtons    
+        isSmall: false
+
+      menuButton.on "click", (e) ->
+        Q.stageScene("controls_settings")
+
+    Q.stageScene "preview_back_button", 2,
+      sort: true
 
   stageTutorial: ->
     Q = @Q

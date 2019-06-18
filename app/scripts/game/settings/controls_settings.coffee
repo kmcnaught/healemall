@@ -19,7 +19,7 @@ Q.scene "controls_settings", (stage) ->
     type: Q.SPRITE_UI | Q.SPRITE_DEFAULT
 
   previewButton.on "click", (e) ->
-    console.log('preview coming soon!')
+    Game.stagePreview()
 
 
   # cursor    
