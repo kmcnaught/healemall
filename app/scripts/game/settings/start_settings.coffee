@@ -8,42 +8,59 @@ Q.scene "start_settings", (stage) ->
   titleContainer = stage.insert new Q.UI.Container
     x: Q.width/2
     y: Q.height/2
+    w: Q.width
+    h: Q.height
+
 
 
   buttonPosX = Q.width/12
   buttonPosY = Q.height/8
   marginButtonsY = Q.height/8
 
+
+
+  padding = 0.1
+  audio_layout  = stage.insert titleContainer.subplot(4,2, 1,0, padding)
+  cursor_layout  = stage.insert titleContainer.subplot(4,2, 2,0, padding)
+  info_layout  = stage.insert titleContainer.subplot_multiple(4,2, 1,1, 2,1, padding)
+  
+
   # Sound
-
-  audioButton = titleContainer.insert new Q.UI.AudioButton
-    x: buttonPosX
-    y: -buttonPosY
+  audioButton = audio_layout.insert new Q.UI.AudioButton
     isSmall: false
+    # x: buttonPosX
+    # y: -buttonPosY
 
-  cursorButton = titleContainer.insert new Q.UI.CursorButton
-    x: buttonPosX
-    y: buttonPosY
+  cursorButton = cursor_layout.insert new Q.UI.CursorButton
     isSmall: false
+    # x: buttonPosX
+    # y: buttonPosY
 
-  audioLabel = titleContainer.insert new Q.UI.Text    
-    y: -buttonPosY
+  audioLabel = audio_layout.insert new Q.UI.Text    
     label: "Play sounds/music?"
     color: "#818793"
     family: "Boogaloo"
     size: 36
+    # y: -buttonPosY
 
-  cursorLabel = titleContainer.insert new Q.UI.Text    
-    y: buttonPosY
+  cursorLabel = cursor_layout.insert new Q.UI.Text    
     label: "Show cursor?"
     color: "#818793"
     family: "Boogaloo"
     size: 36
+    # y: buttonPosY
+
+  delta = audioLabel.p.w/2 + audioButton.p.w/2
 
   label_pad = cursorButton.p.w/4
-  cursorLabel.p.x = cursorButton.p.x - cursorButton.p.w/2 - cursorLabel.p.w/2 - label_pad
-  audioLabel.p.x = audioButton.p.x - audioButton.p.w/2 - audioLabel.p.w/2 - label_pad
+  delta += label_pad/2
 
+  cursorLabel.p.x -= delta/2
+  audioLabel.p.x -= delta/2
+
+  cursorButton.p.x += delta/2
+  audioButton.p.x += delta/2
+  
   title = titleContainer.insert new Q.UI.Text
     x: 0
     y: -(Q.height/2 - marginButtonsY)
@@ -75,6 +92,17 @@ Q.scene "start_settings", (stage) ->
   authors = stage.insert new Q.UI.Authors()
 
   stage.insert new Q.UI.CursorWarning
+
+
+  # Separator bar
+  stage.insert new Q.UI.Container
+      x: x
+      y: Q.height/2
+      w: 10
+      h: Q.height*0.65
+      fill: "#81879366",
+      radius: 8, 
+      type: Q.SPRITE_UI | Q.SPRITE_DEFAULT
 
 
   button.on "click", (e) ->
