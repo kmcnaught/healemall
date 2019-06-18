@@ -8,9 +8,14 @@ Q.scene "settings_menu", (stage) ->
   padding = 0.1
   controls_layout  = stage.insert mainSection.subplot(2,2, 0,0, padding)
   game_layout  = stage.insert mainSection.subplot(2,2, 0,1, padding)
-  sound_layout  = stage.insert mainSection.subplot(2,2, 1,0, padding)
+  sound_layout  = stage.insert mainSection.subplot(2,1, 1,0, padding)
   
-  controls_layout
+  controls_text = "Controls"
+  gameplay_text = "Gameplay"
+  sounds_text = "Sounds"
+
+  textsize = Q.ctx.measureText(gameplay_text)
+  button_width = textsize.width
 
   add_button = (layout, label, page) ->
     
@@ -18,7 +23,7 @@ Q.scene "settings_menu", (stage) ->
     fontsize = Math.floor(layout.h/5)      
 
     button = layout.insert new Q.UI.Button
-      w: buttonTextSize.width*1.3
+      w: button_width*1.3
       h: layout.p.h*.75
       fill: "#c4da4a"
       radius: 10
@@ -31,7 +36,7 @@ Q.scene "settings_menu", (stage) ->
       console.log(page) 
       Game.stageScreen(page)
       
-  add_button controls_layout, "Controls", "controls_settings"
-  add_button game_layout, "Gameplay", "game_settings"
-  add_button sound_layout, "Sounds", "sound_settings"
+  add_button controls_layout, controls_text, "controls_settings"
+  add_button game_layout, gameplay_text, "game_settings"
+  add_button sound_layout, sounds_text, "sound_settings"
 
