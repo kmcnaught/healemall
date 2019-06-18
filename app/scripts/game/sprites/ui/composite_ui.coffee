@@ -146,6 +146,27 @@ Q.CompositeUI =
     if btn2_opts.doDwell?
       button2.doDwell = btn2_opts.doDwell
 
+    # If icon missing, replace title with labels in centre
+    # (we don't move the existing label since z order is as bit fragile in quintus)
+    if not btn1_opts.sheet?
+      label1.p.hidden = true
+      label1 = layout.insert new Q.UI.Text      
+        x: label1.p.x
+        y: label1.p.y  + cellsize/2 + label1.p.h/2 
+        label: btn1_opts.label
+        color: "#f2da38"
+        family: "Boogaloo"
+        size: title_fontsize
+    if not btn2_opts.sheet?
+      label2.p.hidden = true
+      label2 = layout.insert new Q.UI.Text
+        x: label2.p.x  
+        y: label2.p.y + cellsize/2 + label2.p.h/2
+        label: btn2_opts.label
+        color: "#f2da38"
+        family: "Boogaloo"
+        size: title_fontsize
+
     # Rescale buttons to fit
     rescale = cellsize/Math.max(button1.p.h, button1.p.w)
     console.log('rescaling by %.3f', rescale)
