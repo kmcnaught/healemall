@@ -50,8 +50,8 @@ Q.CompositeUI =
 
     return [titleBar, mainSection, buttonBar]
 
-  add_exclusive_toggle_buttons: (layout, btn1_opts, btn2_opts, label_array) ->
 
+  add_exclusive_toggle_buttons: (layout, btn1_opts, btn2_opts, label) ->
     h = layout.p.h
     w = layout.p.w    
 
@@ -97,31 +97,13 @@ Q.CompositeUI =
     label_width = 0
     label_height = 0
 
-    if label_array?
-      create_label = (text) ->
-        return layout.insert new Q.UI.Text
-          label: text
-          y: label1.p.h/2
-          color: darkgray
-          family: "Jolly Lodger"
-          size: title_fontsize
-
-      # Label for control, goes in middle - may be split into 1-3 lines
-      n = label_array.length 
-      all_labels = []
-      for line in label_array
-        label = create_label(line)
-        label_width = Math.max(label_width, label.p.w)
-        label_height += label.p.h
-        all_labels.push label
-      
-      if n == 2
-        all_labels[0].p.y -= all_labels[0].p.h/2
-        all_labels[1].p.y += all_labels[1].p.h/2
-      else if n == 3
-        all_labels[0].p.y -= all_labels[0].p.h
-        all_labels[2].p.y += all_labels[2].p.h    
-
+    main_label = layout.insert new Q.UI.Text
+      label: label
+      y: label1.p.h/2
+      color: darkgray
+      family: "Jolly Lodger"
+      size: title_fontsize
+      align: "center"
 
     x = 0
     y = 0 

@@ -135,7 +135,7 @@ Q.scene "controls_settings", (stage) ->
       cursor_layout.p.hidden = true 
   }
   
-  Q.CompositeUI.add_exclusive_toggle_buttons(input_layout, btn1, btn2, ["Input","method"])
+  Q.CompositeUI.add_exclusive_toggle_buttons(input_layout, btn1, btn2, "Input\nmethod")
 
   btn1 = {    
     label: "Built in dwell"
@@ -155,6 +155,6 @@ Q.scene "controls_settings", (stage) ->
       dwell_layout.p.hidden = true
   }
   
-  Q.CompositeUI.add_exclusive_toggle_buttons(click_layout, btn1, btn2, ["Click", "method"])
+  Q.CompositeUI.add_exclusive_toggle_buttons(click_layout, btn1, btn2, "Click\nmethod")
 
   
