@@ -35,10 +35,42 @@ Q.scene "controls_settings", (stage) ->
     family: "Boogaloo"
     size: 36
 
+  cursorWarning1 = cursor_layout.insert new Q.UI.Text    
+    label: "Cursor is currently hidden;"
+    color: "#c4da4a"
+    w: 30
+    family: "Arial"
+    size: 12
+
+  cursorWarning2 = cursor_layout.insert new Q.UI.Text    
+    label: "to show cursor press 'C'"
+    color: "#c4da4a"
+    w: 30
+    family: "Arial"
+    size: 12
+
+  update_cursor_visibility = () ->
+    if Q.state.get("showCursor")
+      cursorWarning1.p.opacity = 0.0
+      cursorWarning2.p.opacity = 0.0
+    else
+      cursorWarning1.p.opacity = 1.0
+      cursorWarning2.p.opacity = 1.0
+
+  Q.state.on "change.showCursor", update_cursor_visibility
+
+  update_cursor_visibility()
+
+
   label_pad = cursorButton.p.w/4
   delta =  cursorButton.p.w/2 + cursorLabel.p.w/2 + label_pad
   cursorLabel.p.x = cursorLabel.p.x - delta/2
   cursorButton.p.x = cursorButton.p.x + delta/2
+  cursorWarning1.p.x = cursorWarning1.p.x - delta/2
+  cursorWarning2.p.x = cursorWarning2.p.x - delta/2
+  cursorWarning1.p.y += cursorLabel.p.h*0.65
+  cursorWarning2.p.y += cursorLabel.p.h*0.65 + cursorWarning1.p.h
+
 
   # Various adjusters
 
