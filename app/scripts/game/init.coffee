@@ -161,8 +161,19 @@ window.Game =
     Q.input.on("cursor", @, "toggleCursor")  
 
     responsiveVoice.setDefaultVoice(Game.settings.narrationVoice.get())
-    
+
+    # Turn on muting when tab not active   
+    document.addEventListener('visibilitychange', @onVisibilityChange, false);
+
     return
+
+  onVisibilityChange: () ->    
+    console.log(document.visibilityState)
+
+    if (document.visibilityState == "hidden") 
+      Q.AudioManager.mute();
+    else 
+      Q.AudioManager.unmute();
 
   setupGaze: (dwell_time) ->
     @Q.controls().untrackGaze()
