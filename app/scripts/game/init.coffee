@@ -98,6 +98,7 @@ class Settings
     @zombiesChase = new StorageItem("zombiesChase", true)
     @unlimitedAmmo = new StorageItem("unlimitedAmmo", false)
     @startWithGun = new StorageItem("startWithGun", false)
+    @narrationVoice = new StorageItem("narrationVoice", "UK English Male")
 
 # main game object
 window.Game =
@@ -159,6 +160,8 @@ window.Game =
     @setCursorState(Game.settings.showCursor.get(), false) # don't save since we might not have cookie acceptance yet
     Q.input.on("cursor", @, "toggleCursor")  
 
+    responsiveVoice.setDefaultVoice(Game.settings.narrationVoice.get())
+    
     return
 
   setupGaze: (dwell_time) ->

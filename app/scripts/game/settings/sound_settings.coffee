@@ -40,3 +40,25 @@ Q.scene "sound_settings", (stage) ->
   chk_music.p.x = leftmost_x
   chk_sfx.p.x = leftmost_x
   chk_narration.p.x = leftmost_x
+
+  # Narration voice
+  voice_layout = stage.insert mainSection.subplot(3,2,2,1, padding)
+
+  btn1 = {    
+    label: "Male"
+    init_state: Game.settings.narrationVoice.get().indexOf("Female") < 0
+    on_click: () ->
+      Game.settings.narrationVoice.set("UK English Male")
+      responsiveVoice.setDefaultVoice(Game.settings.narrationVoice.get())
+      responsiveVoice.speak("Using male voice")
+  }  
+  btn2 = {
+    label: "Female"
+    init_state: Game.settings.narrationVoice.get().indexOf("Female") > 0
+    on_click: () ->      
+      Game.settings.narrationVoice.set("UK English Female")
+      responsiveVoice.setDefaultVoice(Game.settings.narrationVoice.get())
+      responsiveVoice.speak("Using female voice")
+  }
+  
+  Q.CompositeUI.add_exclusive_toggle_buttons(voice_layout, btn1, btn2, "Narrator\nvoice")
