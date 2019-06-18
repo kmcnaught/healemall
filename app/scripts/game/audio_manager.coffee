@@ -20,7 +20,7 @@ Q.AudioManager =
     if options?.loop == true
       alreadyAdded = @find(audio)
 
-      if alreadyAdded == false
+      if alreadyAdded < 0
         @collection.push item
 
     if !@muted
