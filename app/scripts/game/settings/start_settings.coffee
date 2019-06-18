@@ -96,13 +96,43 @@ Q.scene "start_settings", (stage) ->
 
   # Separator bar
   stage.insert new Q.UI.Container
-      x: x
+      x: Q.width/2
       y: Q.height/2
       w: 10
-      h: Q.height*0.65
+      h: Q.height*0.5
       fill: "#81879366",
       radius: 8, 
       type: Q.SPRITE_UI | Q.SPRITE_DEFAULT
+
+  # More settings available...
+
+
+  description = "More options available in the Settings page, including:\n"  
+  description += "\n"
+  description += "- dwell/click settings\n" 
+  description += "- sizing of gaze controls\n" 
+  description += "- game difficulty\n"
+  description += "- narration\n"
+
+  desc = info_layout.insert new Q.UI.Text
+      x: 0
+      y: 0
+      align: 'center'
+      label: description
+      color: "#000000"
+      family: "Jolly Lodger"
+      size: 36
+
+  # panel
+  info_layout.insert new Q.UI.Container
+    x:0
+    y:0
+    w: desc.p.w*1.1
+    h: desc.p.h*1.1
+    z: desc.p.z - 1
+    fill: "#e3ecf933",
+    radius: 8, 
+    type: Q.SPRITE_UI | Q.SPRITE_DEFAULT
 
 
   button.on "click", (e) ->
