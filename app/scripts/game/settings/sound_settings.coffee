@@ -47,18 +47,20 @@ Q.scene "sound_settings", (stage) ->
   btn1 = {    
     label: "Male"
     init_state: Game.settings.narrationVoice.get().indexOf("Female") < 0
-    on_click: () ->
-      Game.settings.narrationVoice.set("UK English Male")
-      responsiveVoice.setDefaultVoice(Game.settings.narrationVoice.get())
-      responsiveVoice.speak("Using male voice")
+    on_click: (is_initialising) ->     
+      if not is_initialising
+        Game.settings.narrationVoice.set("UK English Male")
+        responsiveVoice.setDefaultVoice(Game.settings.narrationVoice.get())
+        responsiveVoice.speak("Using male voice")
   }  
   btn2 = {
     label: "Female"
     init_state: Game.settings.narrationVoice.get().indexOf("Female") > 0
-    on_click: () ->      
-      Game.settings.narrationVoice.set("UK English Female")
-      responsiveVoice.setDefaultVoice(Game.settings.narrationVoice.get())
-      responsiveVoice.speak("Using female voice")
+    on_click: (is_initialising) ->     
+      if not is_initialising
+        Game.settings.narrationVoice.set("UK English Female")
+        responsiveVoice.setDefaultVoice(Game.settings.narrationVoice.get())
+        responsiveVoice.speak("Using female voice")
   }
   
   Q.CompositeUI.add_exclusive_toggle_buttons(voice_layout, btn1, btn2, "Narrator\nvoice")
