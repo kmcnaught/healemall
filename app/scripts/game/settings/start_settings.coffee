@@ -20,8 +20,8 @@ Q.scene "start_settings", (stage) ->
 
 
   padding = 0.1
-  audio_layout  = stage.insert titleContainer.subplot(4,2, 1,0, padding)
-  cursor_layout  = stage.insert titleContainer.subplot(4,2, 2,0, padding)
+  cursor_layout  = stage.insert titleContainer.subplot(4,2, 1,0, padding)
+  audio_layout  = stage.insert titleContainer.subplot(4,2, 2,0, padding)
   info_layout  = stage.insert titleContainer.subplot_multiple(4,2, 1,1, 2,1, padding)
   
 
