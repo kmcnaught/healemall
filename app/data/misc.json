@@ -76,7 +76,7 @@
     "sy":54,
     "cols":1,
     "tilew":125,
-    "tileh":134,
+    "tileh":135,
     "frames":1
   },
   "hud_audio_off_button": {
@@ -84,7 +84,7 @@
     "sy":54,
     "cols":1,
     "tilew":125,
-    "tileh":133,
+    "tileh":134,
     "frames":1
   },
   "hud_pause_button": {
@@ -187,7 +187,7 @@
     "sx": 0,
     "sy": 1079,
     "cols":1,
-    "tilew":195,
+    "tilew":194,
     "tileh":232,
     "frames":1
   },
@@ -198,6 +198,13 @@
     "tilew":195,
     "tileh":232,
     "frames":1
+  },
+  "warning": {
+    "sx": 362,
+    "sy": 1111,
+    "cols":1,
+    "tilew":196,
+    "tileh":162,
+    "frames":1
   }
-
 }

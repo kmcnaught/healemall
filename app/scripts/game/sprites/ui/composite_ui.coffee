@@ -50,6 +50,50 @@ Q.CompositeUI =
 
     return [titleBar, mainSection, buttonBar]
 
+  add_cursor_warning: (cursor_layout, x, y) ->     
+
+    cursorWarning = cursor_layout.insert new Q.UI.Text    
+      label: "Cursor is currently hidden;\npress 'C' to show cursor"
+      color: "#c4da4a"
+      family: "Arial"
+      size: 12
+      x: x
+      y: y
+      
+    cursorIcon = cursor_layout.insert new Q.UI.WarningIcon
+      x: x
+      y: y
+
+    # Adjust scale of icon
+    rescale = cursorWarning.p.h/cursorIcon.p.h
+    cursorIcon.p.scale = rescale
+    cursorIcon.size()
+
+    # Shift both to sit alongside    
+    delta = cursorWarning.p.w/2 + cursorIcon.p.w*rescale*0.75
+
+    text_shift = 0.25
+    cursorWarning.p.x += delta*text_shift
+    cursorIcon.p.x -= delta*(1-text_shift)
+
+    # Align bottom of warning with bottom of text for balance (ish)
+    y_shift = cursorWarning.p.h*0.1
+    cursorIcon.p.y -= y_shift
+
+
+    update_warning_visibility = () ->
+      if Q.state.get("showCursor")
+        cursorWarning.p.opacity = 0.0
+        cursorIcon.p.opacity = 0.0
+      else
+        cursorWarning.p.opacity = 1.0
+        cursorIcon.p.opacity = 1.0
+
+    Q.state.on "change.showCursor", update_warning_visibility
+
+    update_warning_visibility()
+
+
   add_exclusive_toggle_buttons: (layout, btn1_opts, btn2_opts, label) ->
     # callback method takes args (is_checked, is_initialising)
     # When setting up the UI, is_initialising=True. Callbacks from 

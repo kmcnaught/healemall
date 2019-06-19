@@ -70,6 +70,9 @@ Q.scene "start_settings", (stage) ->
 
   cursorButton.p.x += delta/2
   audioButton.p.x += delta/2
+
+  Q.CompositeUI.add_cursor_warning(cursor_layout, -delta/2, cursorLabel.p.h)
+  
   
   title = titleContainer.insert new Q.UI.Text
     x: 0
@@ -100,8 +103,6 @@ Q.scene "start_settings", (stage) ->
 
   # authors
   authors = stage.insert new Q.UI.Authors()
-
-  stage.insert new Q.UI.CursorWarning
 
 
   # Separator bar
