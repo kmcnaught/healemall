@@ -108,7 +108,7 @@
     "sy": 323,
     "cols":1,
     "tilew":149,
-    "tileh":168,
+    "tileh":164,
     "frames":1
   },
   "gaze_touch_etc": {
@@ -200,7 +200,7 @@
     "frames":1
   },
   "warning": {
-    "sx": 362,
+    "sx": 392,
     "sy": 1111,
     "cols":1,
     "tilew":196,
