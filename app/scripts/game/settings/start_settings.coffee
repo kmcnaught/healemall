@@ -59,7 +59,8 @@ Q.scene "start_settings", (stage) ->
     color: "#818793"
     family: "Boogaloo"
     size: 36
-    
+
+  # Adjusting things to align
   delta = audioLabel.p.w/2 + audioButton.p.w/2
 
   label_pad = cursorButton.p.w/4
