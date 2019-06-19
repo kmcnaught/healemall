@@ -166,6 +166,8 @@ Q.scene "levelSelectMore", (stage) ->
     y: y 
     isSmall: false
 
+  menuButton.on 'click', =>
+    Game.stageLevelSelectScreen()
 
   # separator bars
   x_sep = marginX + columnWidth + gutterX/2
