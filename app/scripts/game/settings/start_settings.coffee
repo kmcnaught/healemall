@@ -81,7 +81,7 @@ Q.scene "start_settings", (stage) ->
     label: "Heal'em All"
     color: "#f2da38"
     family: "Jolly Lodger"
-    size: 90
+    size: 72
 
 
   # button

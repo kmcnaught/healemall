@@ -45,11 +45,10 @@ Q.scene "start", (stage) ->
     label: "Heal'em All"
     color: "#f2da38"
     family: "Jolly Lodger"
-    size: 90
+    size: 72
 
   # title.p.y = title.p.y - title.p.h/2 - y_pad
   title.size()
-
 
   # button
   label = "Continue"
