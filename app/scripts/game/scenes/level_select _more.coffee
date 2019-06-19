@@ -225,3 +225,4 @@ Q.scene "levelSelectMore", (stage) ->
   aboutButton.p.x = marginX + aboutButton.p.w/2
   cursorButton.p.x = Q.width - marginX - cursorButton.p.w/2
 
+  stage.insert new Q.UI.CursorWarning
