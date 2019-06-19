@@ -108,6 +108,8 @@ window.Game =
       development: true
       audioSupported: [ 'ogg', 'mp3' ]
 
+    # Q.debug = true
+    # Q.debugFill = true
     Game.settings = new Settings()
     Game.achievements = new Achievements()
 
