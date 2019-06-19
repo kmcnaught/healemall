@@ -86,6 +86,7 @@ Q.scene "controls_settings", (stage) ->
     on_click: (is_initialising) ->
       if not is_initialising
         Game.settings.useKeyboardInstead.set(false)
+        Game.setupGaze(Game.settings.dwellTime.get())
       scale_layout.p.hidden = false
       opacity_layout.p.hidden = false
       dwell_layout.p.hidden = Game.settings.useOwnClickInstead.get()
@@ -101,6 +102,7 @@ Q.scene "controls_settings", (stage) ->
     on_click: (is_initialising) ->
       if not is_initialising
         Game.settings.useKeyboardInstead.set(true)
+        Game.turnOffGaze()
       scale_layout.p.hidden = true
       opacity_layout.p.hidden = true
       dwell_layout.p.hidden = true
@@ -118,6 +120,7 @@ Q.scene "controls_settings", (stage) ->
     on_click: (is_initialising) ->
       if not is_initialising
         Game.settings.useOwnClickInstead.set(false)
+        Game.setupGaze(Game.settings.dwellTime.get())
       dwell_layout.p.hidden = false
   }
   btn2 = {
@@ -128,6 +131,7 @@ Q.scene "controls_settings", (stage) ->
     on_click: (is_initialising) ->
       if not is_initialising
         Game.settings.useOwnClickInstead.set(true)
+        Game.setupGaze(0)  # this turns off dwelling
       dwell_layout.p.hidden = true
   }
   

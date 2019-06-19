@@ -158,7 +158,11 @@ window.Game =
       Q._extend position, otherParams
 
     # Set up some things from settings
-    @setupGaze(Game.settings.dwellTime.get())
+    if Game.settings.useOwnClickInstead.get()
+      @setupGaze(0)
+    else   
+      @setupGaze(Game.settings.dwellTime.get())   
+    
     @setCursorState(Game.settings.showCursor.get(), false) # don't save since we might not have cookie acceptance yet
     Q.input.on("cursor", @, "toggleCursor")  
 

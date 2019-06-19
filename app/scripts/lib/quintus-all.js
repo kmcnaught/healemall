@@ -4803,7 +4803,7 @@ Quintus.Touch = function(Q) {
 
 
 Quintus.Gaze = function(Q) {
-  // Uses cursor (controlled by eye gaze tracker) for button interaction
+  // Uses cursor (controlled by eye gaze tracker) for button interaction  
   if(Q._isUndefined(Quintus.Sprites)) {
     throw "Quintus.Gaze requires Quintus.Sprites Module";
   }
@@ -4814,6 +4814,9 @@ Quintus.Gaze = function(Q) {
   Q.Evented.extend("GazeSystem",{
 
     init: function(dwellTime) {
+      // If dwellTime > 0, automatic dwelling will be used for button clicks
+      // If dwellTime == 0, no dwelling/clicking will occur, and user must provide
+      // their own click method
       var gazeSystem = this;
       this.lastCursorTime = 0;
 
@@ -4939,7 +4942,7 @@ Quintus.Gaze = function(Q) {
         gaze_target.obj.trigger('hover');
 
         // dwell-able objects get new dwell created/old dwell incremented
-        if (gaze_target.obj.doDwell) {   
+        if (gaze_target.obj.doDwell && this.dwellTime > 0) {   
 
           if (!(gaze_target.pid in this.objectDwelltimes)) {
             // if we weren't on this object last tick, dt could be large without
@@ -4974,11 +4977,11 @@ Quintus.Gaze = function(Q) {
             }        
           }
         }
-        // non-dwell buttons still respond to gaze, but just instantly
-        // they go straight to maximum
+        // non-dwell buttons still respond to gaze, but just highlighting a fixed amount
+        // This also occurs if builtin dwelling is turned off.
         else {  
-          this.objectDwelltimes[gaze_target.pid] = {dwell:1, obj:gaze_target.obj, active:true};
-          gaze_target.obj.trigger('dwellIncrement', 1.0);
+          this.objectDwelltimes[gaze_target.pid] = {dwell:0.5, obj:gaze_target.obj, active:true};
+          gaze_target.obj.trigger('dwellIncrement', 0.5);
         }
       }
       //e.preventDefault();
@@ -5339,13 +5342,7 @@ Quintus.UI = function(Q) {
 
       // dwell animation
       if (this.dwellProportion > 0) {
-        if (this.doDwell) {
-          this.drawDwell(ctx, this.dwellProportion);
-        }
-        else {
-          // if we're using gaze continuously, stil show feedback 
-          this.drawDwell(ctx, 0.5); 
-        }
+        this.drawDwell(ctx, this.dwellProportion);        
       }      
     },
 
