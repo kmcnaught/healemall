@@ -532,7 +532,7 @@ window.Game =
       sort: true
 
     # info speaking interferes with (more important) narration of tutorial instrucitons
-    if Game.settings.narrate.get()
+    if Game.settings.narrationEnabled.get()
       Game.infoLabel.disable()
     
     if not Game.settings.useKeyboardInstead.get()
