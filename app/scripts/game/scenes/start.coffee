@@ -66,14 +66,20 @@ Q.scene "start", (stage) ->
     keyActionName: "confirm"
     type: Q.SPRITE_UI | Q.SPRITE_DEFAULT
 
+
+  # Cursor warning if it's been left turned off
+  y_title_bottom = title.p.y + title.p.h/2
+  y_desc_top = desc.p.y - desc.p.h/2
+  y_cursor_warning = (y_title_bottom + y_desc_top)/2
+  Q.CompositeUI.add_cursor_warning(titleContainer, 0, y_cursor_warning)
+
+
   # button.p.y = button.p.y + button.p.h/2 + y_pad*2
 
   titleContainer.fit()
 
   # authors
   authors = stage.insert new Q.UI.Authors()
-
-  stage.insert new Q.UI.CursorWarning
 
 
   button.on "click", (e) ->
