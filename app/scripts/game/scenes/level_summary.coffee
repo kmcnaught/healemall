@@ -74,8 +74,7 @@ Q.scene "levelSummary", (stage) ->
 
   # button next
   currentLevel = Q.state.get("currentLevel")
-  nextLevelAvailable = (currentLevel < Game.levels_array.length - 1) and
-                       (currentLevel != 5)
+  nextLevelAvailable = (currentLevel < 5)
   # (we don't have a 'next' level between main levels and bonuses, need to figure out best
   # flow here...)
                       
