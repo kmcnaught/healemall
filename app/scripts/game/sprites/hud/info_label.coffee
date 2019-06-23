@@ -52,7 +52,10 @@ Q.UI.InfoLabel = Q.UI.Text.extend "UI.InfoLabel",
     @changeLabel "I need the key"
 
   doorOpen: ->
-    @changeLabel "Nice! Now I need to enter the door"
+    if Game.settings.useKeyboardInstead.get()
+      @changeLabel "Nice! Now I need to 'jump' into the door"
+    else
+      @changeLabel "Nice! Now I need to enter the door"
 
   gunFound: ->
     @changeLabel "I found the gun, I can shoot zombies"
