@@ -481,6 +481,18 @@ window.Game =
       currentLevel: 0 # for saving the progress
       canEnterDoor: false
 
+    Game.currentLevelData = # for level summary
+      zombies:
+        healed: 0
+        available: 0
+      health:
+        collected: 0
+        available: 0
+      bullets:
+        waisted: 0
+        available: 0
+      zombieModeFound: false
+
     Q.clearStages()
     Q.stageScene "preview",
       sort: true
