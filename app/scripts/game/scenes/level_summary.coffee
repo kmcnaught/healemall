@@ -84,7 +84,7 @@ Q.scene "levelSummary", (stage) ->
     buttonNext = stage.insert new Q.UI.Button
       y: Q.height - marginY
       w: Q.width/4
-      h: 70
+      h: 150
       fill: "#c4da4a"
       radius: 10
       fontColor: "#353b47"
@@ -103,7 +103,7 @@ Q.scene "levelSummary", (stage) ->
   buttonBack = stage.insert new Q.UI.Button
     y: Q.height - marginY
     w: Q.width/4
-    h: 70
+    h: 150
     fill: "#f2da38"
     radius: 10
     fontColor: "#353b47"
