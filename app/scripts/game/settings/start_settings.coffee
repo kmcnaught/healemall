@@ -118,6 +118,16 @@ Q.scene "start_settings", (stage) ->
 
   # More settings available...
 
+  # panel
+  panel = info_layout.insert new Q.UI.Container
+    x:0
+    y:0
+    w: 1
+    h: 1
+    fill: "#e3ecf933",
+    radius: 8, 
+    type: Q.SPRITE_UI | Q.SPRITE_DEFAULT
+
 
   description = "More options available in the Settings page, including:\n"  
   description += "\n"
@@ -131,21 +141,15 @@ Q.scene "start_settings", (stage) ->
       y: 0
       align: 'center'
       label: description
-      color: "#000000"
+      color: "#2d3032"
       family: "Jolly Lodger"
       size: 36
 
-  # panel
-  info_layout.insert new Q.UI.Container
-    x:0
-    y:0
-    w: desc.p.w*1.1
-    h: desc.p.h*1.1
-    z: desc.p.z - 1
-    fill: "#e3ecf933",
-    radius: 8, 
-    type: Q.SPRITE_UI | Q.SPRITE_DEFAULT
-
+  # resize panel
+  panel.p.w = desc.p.w*1.1
+  panel.p.h = desc.p.h*1.1
+  panel.p.x -= panel.p.w/2
+  panel.p.y -= panel.p.h/2
 
   button.on "click", (e) ->
     Game.stageLevelSelectScreen()
