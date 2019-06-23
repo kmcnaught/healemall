@@ -47,36 +47,83 @@ class Achievements
     for level in [0..total_levels]  
       @progress.push new StorageItem(@progressKey + ":" + level, 0)
 
+    # record when we've congratulated the user
+    @congratulatedMainLevels = new StorageItem("congratulatedMainLevels", false)
+    @congratulatedMainLevelsFullStars = new StorageItem("congratulatedMainLevelsFullStars", false)
+    @congratulatedAllLevels = new StorageItem("congratulatedAllLevels", false)
+    @congratulatedAllLevelsFullStars = new StorageItem("congratulatedAllLevelsFullStars", false)
+
   getProgressForLevel: (level) ->
     return @progress[level].get()
 
   hasCompletedMainLevels: ->      
     for level in [1..5]
-      prog = @progress[level]
+      prog = @progress[level].get()
       if prog == 0
         return false      
     return true
 
   hasCompletedMainLevelsFullStars: ->      
     for level in [1..5]
-      prog = @progress[level]
+      prog = @progress[level].get()
       if prog < 3
         return false
     return true
 
   hasCompletedAllLevels: ->      
     for level in [1..@total_levels]      
-      prog = @progress[level]
+      prog = @progress[level].get()
       if prog == 0
         return false
     return true
 
   hasCompletedAllLevelsFullStars: ->      
     for level in [1..@total_levels]      
-      prog = @progress[level]
+      prog = @progress[level].get()
       if prog < 3
         return false
     return true 
+
+  possiblyStageAchievementsScreen: ->
+    ## All levels, maximum score
+    if @hasCompletedAllLevelsFullStars() and not @congratulatedAllLevelsFullStars.get()
+      Game.stageAchievementScreen("""
+        Amazing!\n
+        You have healed every single zombie in the game.\nTop score!
+        """)
+      @congratulatedAllLevelsFullStars.set(true)
+      @congratulatedAllLevelsStars.set(true) # subset of the above
+      return true
+    ## All levels complete, any score
+    else if @hasCompletedAllLevels() and not @congratulatedAllLevels.get()
+      Game.stageAchievementScreen("""
+        Hurrah!\n
+        You have completed ALL the levels, including the bonus levels.\n
+        Well done!
+        """)
+      @congratulatedAllLevelsStars.set(true) 
+      return true
+    # Main (5) levels, maximum score
+    else if @hasCompletedMainLevelsFullStars() and not @congratulatedMainLevelsFullStars.get()
+      Game.stageAchievementScreen("""
+        Brilliant!\n
+        You have achieved a perfect score on all the main levels. Well done!\n
+        If you've enjoyed it, keep playing to \nrack up more points in the bonus levels.
+        """)
+      @congratulatedMainLevelsFullStars.set(true) 
+      @congratulatedMainLevels.set(true) # subset of above
+      return true
+    # Main (5) levels complete, any score
+    else if @hasCompletedMainLevels() and not @congratulatedMainLevels.get()
+      Game.stageAchievementScreen( """
+        Hooray!\n
+        You have completed the main game. Well done!\n
+        If you've enjoyed it, check out the extra levels, \nor play again to try to heal every single zombie
+        """)
+      @congratulatedMainLevels.set(true)
+      return true
+    else
+      return false
 
 
 class Settings
@@ -349,6 +396,14 @@ window.Game =
 
     # document.body.appendChild( stats.domElement )
 
+  stageAchievementScreen: (msg) ->
+    Q.clearStages()
+
+    Q.scene "achievement", (stage) ->
+      Q.CompositeUI.setup_achievements_page(stage, msg)
+
+    Q.stageScene("achievement")
+
   stageLevel: (number = 1) ->
     Q = @Q
 
@@ -433,6 +488,7 @@ window.Game =
     @Q.input.disableTouchControls()
 
     @Q.clearStages()
+
     @Q.stageScene "levelSummary", Game.currentLevelData
 
     # for analytics
