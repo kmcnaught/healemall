@@ -19,22 +19,29 @@ Q.scene "restartOptions", (stage) ->
 
   # audio
   Q.AudioManager.stopAll()
+  
 
+  font = "400 48px Jolly Lodger"
+  Q.ctx.font = font
+
+  buttonWidth = 1.1*Q.ctx.measureText("Back to all levels").width
+  buttonWidth = Math.max(buttonWidth, Q.width/5)
+  buttonHeight = Math.min(Q.height/3, Q.width/5)
+  
 
   # button next
   buttonNext = stage.insert new Q.UI.Button
     y: Q.height/2
-    w: Q.width/4
+    w: buttonWidth
     h: buttonHeight
     fill: "#c4da4a"
     radius: 10
     fontColor: "#353b47"
-    font: "400 58px Jolly Lodger"
+    font: font
     label: "Restart level"
     keyActionName: "confirm"
     type: Q.SPRITE_UI | Q.SPRITE_DEFAULT
 
-  buttonNext.p.x = Q.width/2 + buttonNext.p.w/2 + 40
 
   buttonNext.on "click", (e) ->
     Game.stageLevel(Q.state.get("currentLevel"))
@@ -42,16 +49,36 @@ Q.scene "restartOptions", (stage) ->
   # button back
   buttonBack = stage.insert new Q.UI.Button
     y: Q.height/2
-    w: Q.width/4
+    w: buttonWidth
     h: buttonHeight
     fill: "#f2da38"
     radius: 10
     fontColor: "#353b47"
-    font: "400 58px Jolly Lodger"
-    label: "Main menu"
+    font: font 
+    label: "Back to all levels"
     type: Q.SPRITE_UI | Q.SPRITE_DEFAULT
 
-  buttonBack.p.x = Q.width/2 - buttonBack.p.w/2 - 40
 
   buttonBack.on "click", (e) ->
     Game.stageLevelSelectScreen()
+
+  # resume
+  buttonResume = stage.insert new Q.UI.Button
+    y: Q.height/2
+    w: buttonWidth
+    h: buttonHeight
+    fill: "#f2da38"
+    radius: 10
+    fontColor: "#353b47"
+    font: font
+    label: "Resume game"
+    type: Q.SPRITE_UI | Q.SPRITE_DEFAULT
+
+  buttonResume.on "click", (e) ->
+    console.log('not yet implemented!')
+
+
+  # layout
+  buttonNext.p.x = Q.width*0.2
+  buttonBack.p.x = Q.width*(1.0-0.2)
+  buttonResume.p.x = Q.width/2
