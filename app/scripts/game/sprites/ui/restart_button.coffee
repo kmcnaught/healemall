@@ -16,7 +16,3 @@ Q.UI.MenuButton = Q.UI.Button.extend "UI.MenuButton",
       @p.sheet = "hud_back_button"
 
     @size(true) # force resize 
-
-    @on 'click', =>
-      Game.stageScreen("restartOptions")
-      Game.trackEvent("Restart Button", "clicked")

@@ -83,6 +83,6 @@ Q.scene "hud", (stage) ->
     isSmall: false
 
   menuButton.on "click", (e) ->
-    Q.stageScene("restartOptions")
+    Game.stageLevelSelectScreen()
 
  

@@ -149,6 +149,8 @@ window.Game =
     @initStats()
     @initUnloadEvent()
 
+    @Q.state.set "currentLevel", 0
+
     # helpers
     Q.tilePos = (col, row, otherParams = {}) ->
       position =
@@ -407,18 +409,22 @@ window.Game =
     if number <= 5 and number >= Game.achievements.availableLevel.get()      
       Game.achievements.availableLevel.set(number + 1)
 
-
   stageLevelSelectScreen: ->
     @Q.input.disableTouchControls()
+
+    # We'll pick screen according to current level
+    curr_level = Q.state.get("currentLevel")
 
     # reset current level state
     @Q.state.set "currentLevel", 0
 
     @Q.clearStages()
-    @Q.stageScene "levelSelect"
+    if curr_level <=5
+      @Q.stageScene "levelSelect"
+    else
+      Game.moreLevelsPage = Math.floor((curr_level-6)/4)
+      @Q.stageScene "levelSelectMore"
 
-    console.log(Q.width)
-    console.log(Q.height)
 
     # for analytics
     Game.currentScreen = "levelSelect"
@@ -498,7 +504,7 @@ window.Game =
         isSmall: false
 
       menuButton.on "click", (e) ->
-        Q.stageScene("controls_settings")
+        Game.stageScreen("controls_settings")
 
     Q.stageScene "preview_back_button", 2,
       sort: true
