@@ -70,13 +70,16 @@ Q.scene "levelSelectMore", (stage) ->
           size: fontsize  
 
     else if item == 3 # next button
+      max_pages = Math.ceil(Game.levels_array.length - 6)/4 
+      enabled = Game.moreLevelsPage + 1 < max_pages        
+      
       arrow = container.insert new Q.UI.ArrowButton
         x: 0
         y: 0
         w: w
         h: h
         page: Game.moreLevelsPage+1
-        enabled: Game.moreLevelsPage > 0        
+        enabled: enabled
 
         fontsize = 32
 

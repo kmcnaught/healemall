@@ -18,5 +18,9 @@ Q.UI.ArrowButton = Q.UI.Button.extend "UI.ArrowButton",
     @p.cx = @p.sheetW/2
     @p.cy = @p.sheetH/2
 
+    if not @p.enabled
+      @p.opacity = 0.4
+
     @on 'click', =>
-      Game.stageMoreLevels(@p.page)
+      if @p.enabled
+        Game.stageMoreLevels(@p.page)
