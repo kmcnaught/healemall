@@ -10,10 +10,7 @@
   <tile id="1" terrain="0,0,0,0"/>
   <tile id="2" terrain="0,,0,"/>
   <tile id="3" terrain="0,,,"/>
- </tileset>
- <tileset firstgid="17" name="Background" tilewidth="70" tileheight="70" tilecount="841" columns="29">
-  <image source="../images/bg.gif" width="2048" height="2048"/>
- </tileset>
+ </tileset> 
  <objectgroup color="#ffff00" id="1" name="items">
   <object id="14" name="gun" x="5815.33" y="966.667" width="68.6667" height="74"/>
   <object id="16" name="health" x="6426.85" y="777.333" width="94" height="68.6667"/>

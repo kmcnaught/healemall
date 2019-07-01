@@ -11,9 +11,6 @@
   <tile id="2" terrain="0,,0,"/>
   <tile id="3" terrain="0,,,"/>
  </tileset>
- <tileset firstgid="17" name="Background" tilewidth="70" tileheight="70" tilecount="0" columns="0">
-  <image source="zombie-background.jpg" width="7000" height="3220"/>
- </tileset>
  <objectgroup color="#ffff00" id="1" name="items"/>
  <objectgroup color="#00aa00" id="2" name="player">
   <object id="13" name="player" type="player" x="4886.55" y="2117.09" width="70" height="106.667"/>
