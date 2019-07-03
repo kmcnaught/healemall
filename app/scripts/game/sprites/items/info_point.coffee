@@ -22,6 +22,6 @@ Q.Sprite.extend "InfoPoint",
     if not @already_spoken
       if obj.isA("Player") or obj.isA("ZombiePlayer") 
         if Game.settings.narrationEnabled.get() and @p.label
-          responsiveVoice.speak(@p.label, "UK English Male");
+          responsiveVoice.speak(@p.label);
           @already_spoken = true
 
