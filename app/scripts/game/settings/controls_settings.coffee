@@ -8,9 +8,9 @@ Q.scene "controls_settings", (stage) ->
   # preview button
   preview_layout = stage.insert buttonBar.subplot(1,2, 0,0)
 
-  label = "Preview\ncontrols"  
+  label = "Try out\ncontrols"  
   previewButton = preview_layout.insert new Q.UI.Button    
-    h: 50
+    h: 80    
     fill: "#c4da4a"
     radius: 10
     fontColor: "#353b47"
