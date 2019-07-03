@@ -77,6 +77,15 @@ Q.scene "start", (stage) ->
   y_cursor_warning = (y_title_bottom + y_desc_top)/2
   Q.CompositeUI.add_cursor_warning(titleContainer, 0, y_cursor_warning)
 
+  # 
+  gaze_message = "[This is an eye gaze accessible website, controlled using a cursor]"
+  title = titleContainer.insert new Q.UI.Text
+    x: 0
+    y: button.p.y - button.p.h
+    label: gaze_message
+    color: "#c4da4a"
+    family: "Jolly Lodger"
+    size: 28
 
   # button.p.y = button.p.y + button.p.h/2 + y_pad*2
 
