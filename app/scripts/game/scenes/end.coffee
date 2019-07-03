@@ -21,7 +21,7 @@ Q.scene "end", (stage) ->
   stage.insert new Q.UI.Text
     x: Q.width/2
     y: Q.height/2
-    label: "You did it! \n\n You have completed the main game. \n Hurrah! \n\n Don't forget to check out the Extra levels for more zombie fun!"
+    label: "You did it! \n\n You have completed all the main levels. \n Hurrah! \n\n Don't forget to check out the Extra levels for more zombie fun!"
     color: "#c4da4a"
     family: "Boogaloo"
     size: 36

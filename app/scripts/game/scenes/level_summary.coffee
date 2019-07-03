@@ -125,13 +125,7 @@ Q.scene "levelSummary", (stage) ->
   stars = performance["stars"]
   msg = performance["message"]
 
-
-  # save only if better than previous
-  level = Q.state.get("currentLevel")
-  previousStars = Game.achievements.progress[level].get()
-  if previousStars < stars
-    Game.achievements.progress[level].set(stars)
-
+  Game.achievements.update(Q.state.get("currentLevel"), stars)
 
   # insert stars on the screen
   starsContainer = stage.insert new Q.UI.Container

@@ -84,7 +84,6 @@ class Achievements
         return false
     return true 
 
-
   evaluatePerformance: (score) ->
     stars = 0
     message = "" 
@@ -100,6 +99,12 @@ class Achievements
       message = "Perfect!"
 
     return {"stars": stars, "message": message}
+
+  update: (level, stars) ->
+     # save if better than previous
+    previousStars = @progress[level].get()
+    if stars > previousStars
+      @progress[level].set(stars)
 
   possiblyStageAchievementsScreen: ->
     ## All levels, maximum score
@@ -134,8 +139,8 @@ class Achievements
     else if @hasCompletedMainLevels() and not @congratulatedMainLevels.get()
       Game.stageAchievementScreen( """
         Hooray!\n
-        You have completed the main game. Well done!\n
-        If you've enjoyed it, check out the extra levels, \nor play again to try to heal every single zombie
+        You have completed all the main levels. Well done!\n
+        If you've enjoyed it, check out the bonus levels, \nor play again to try to heal every single zombie
         """)
       @congratulatedMainLevels.set(true)
       return true
@@ -506,7 +511,15 @@ window.Game =
 
     @Q.clearStages()
 
-    @Q.stageScene "levelSummary", Game.currentLevelData
+    # Update score for any new achievements
+    score = Game.currentLevelData.zombies.healed/ Game.currentLevelData.zombies.available
+    performance = Game.achievements.evaluatePerformance(score)    
+    Game.achievements.update(Q.state.get("currentLevel"), performance["stars"])
+
+    new_achievement = Game.achievements.possiblyStageAchievementsScreen()
+
+    if not new_achievement
+      @Q.stageScene "levelSummary", Game.currentLevelData
 
     # for analytics
     Game.currentScreen = "levelSummary for level" + @Q.state.get("currentLevel")
