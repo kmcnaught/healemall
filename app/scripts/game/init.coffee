@@ -524,17 +524,6 @@ window.Game =
     # for analytics
     Game.currentScreen = "levelSummary for level" + @Q.state.get("currentLevel")
 
-  stageEndScreen: ->
-    @Q.input.disableTouchControls()
-    @Q.clearStages()
-    @Q.stageScene "end"
-
-    # for analytics
-    Game.currentScreen = "end"
-
-    # track events
-    Game.trackEvent("End Screen", "displayed")
-
   stageScreen: (screen_name) ->
     @Q.clearStages()
     @Q.stageScene screen_name
