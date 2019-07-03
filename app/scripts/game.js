@@ -2719,7 +2719,7 @@
   Q = Game.Q;
 
   Q.scene("start", function(stage) {
-    var authors, button, buttonTextSize, desc, description, label, marginButtonsY, panel, title, titleContainer, y_cursor_warning, y_desc_top, y_pad, y_title_bottom;
+    var authors, button, buttonTextSize, desc, description, gaze_message, label, marginButtonsY, panel, title, titleContainer, y_cursor_warning, y_desc_top, y_pad, y_title_bottom;
     // add title
     y_pad = Q.height / 20;
     titleContainer = stage.insert(new Q.UI.Container({
@@ -2788,6 +2788,16 @@
     y_desc_top = desc.p.y - desc.p.h / 2;
     y_cursor_warning = (y_title_bottom + y_desc_top) / 2;
     Q.CompositeUI.add_cursor_warning(titleContainer, 0, y_cursor_warning);
+    
+    gaze_message = "[This is an eye gaze accessible website, controlled using a cursor]";
+    title = titleContainer.insert(new Q.UI.Text({
+      x: 0,
+      y: button.p.y - button.p.h,
+      label: gaze_message,
+      color: "#c4da4a",
+      family: "Jolly Lodger",
+      size: 28
+    }));
     // button.p.y = button.p.y + button.p.h/2 + y_pad*2
     titleContainer.fit();
     // authors
@@ -3640,7 +3650,7 @@
     title = titleContainer.insert(new Q.UI.Text({
       x: 0,
       y: -(Q.height / 2 - marginButtonsY),
-      label: "Heal'em All",
+      label: "Options",
       color: "#f2da38",
       family: "Jolly Lodger",
       size: 72
@@ -3686,7 +3696,7 @@
       radius: 8,
       type: Q.SPRITE_UI | Q.SPRITE_DEFAULT
     }));
-    description = "More options available in the Settings page, including:\n";
+    description = "More options available in the \nSettings page, including:\n";
     description += "\n";
     description += "- dwell/click settings\n";
     description += "- sizing of gaze controls\n";
