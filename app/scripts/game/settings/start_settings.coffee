@@ -78,7 +78,7 @@ Q.scene "start_settings", (stage) ->
   title = titleContainer.insert new Q.UI.Text
     x: 0
     y: -(Q.height/2 - marginButtonsY)
-    label: "Heal'em All"
+    label: "Options"
     color: "#f2da38"
     family: "Jolly Lodger"
     size: 72
@@ -129,7 +129,7 @@ Q.scene "start_settings", (stage) ->
     type: Q.SPRITE_UI | Q.SPRITE_DEFAULT
 
 
-  description = "More options available in the Settings page, including:\n"  
+  description = "More options available in the \nSettings page, including:\n"  
   description += "\n"
   description += "- dwell/click settings\n" 
   description += "- sizing of gaze controls\n" 
