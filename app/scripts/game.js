@@ -2018,7 +2018,7 @@
         }, fontsize = 32));
         container.insert(new Q.UI.Text({
           x: 10,
-          y: -arrow.p.h / 6,
+          y: -arrow.p.h / 7,
           label: "Previous",
           color: "#404444",
           family: "Jolly Lodger",
@@ -2037,7 +2037,7 @@
         }, fontsize = 32));
         container.insert(new Q.UI.Text({
           x: -10,
-          y: -arrow.p.h / 6,
+          y: -arrow.p.h / 7,
           label: "Next",
           color: "#404444",
           family: "Jolly Lodger",
