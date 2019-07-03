@@ -120,18 +120,11 @@ Q.scene "levelSummary", (stage) ->
  
   # count stars
   score = stage.options.zombies.healed/stage.options.zombies.available
-  stars = 0
-  performance = "" 
 
-  if score <= 0.5
-    stars = 1
-    performance = "Okay"
-  else if score > 0.5 && score < 0.9
-    stars = 2
-    performance = "Good"
-  else
-    stars = 3
-    performance = "Perfect!"
+  performance = Game.achievements.evaluatePerformance(score)
+  stars = performance["stars"]
+  msg = performance["message"]
+
 
   # save only if better than previous
   level = Q.state.get("currentLevel")
@@ -161,7 +154,7 @@ Q.scene "levelSummary", (stage) ->
   stage.insert new Q.UI.Text
       x: starsContainer.p.x
       y: starsContainer.p.y + scoreImg.p.h*0.6
-      label: "Score: " + performance
+      label: "Score: " + msg
       color: "#ffffff"
       family: "Boogaloo"
       size: 36

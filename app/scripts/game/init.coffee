@@ -84,6 +84,23 @@ class Achievements
         return false
     return true 
 
+
+  evaluatePerformance: (score) ->
+    stars = 0
+    message = "" 
+
+    if score <= 0.5
+      stars = 1
+      message = "Okay"
+    else if score > 0.5 && score < 0.9
+      stars = 2
+      message = "Good"
+    else
+      stars = 3
+      message = "Perfect!"
+
+    return {"stars": stars, "message": message}
+
   possiblyStageAchievementsScreen: ->
     ## All levels, maximum score
     if @hasCompletedAllLevelsFullStars() and not @congratulatedAllLevelsFullStars.get()
