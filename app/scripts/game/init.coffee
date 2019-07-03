@@ -420,11 +420,7 @@ window.Game =
 
   stageAchievementScreen: (msg) ->
     Q.clearStages()
-
-    Q.scene "achievement", (stage) ->
-      Q.CompositeUI.setup_achievements_page(stage, msg)
-
-    Q.stageScene("achievement")
+    Q.stageScene "achievement_unlocked",  {"message": msg}
 
   stageLevel: (number = 1) ->
     Q = @Q
