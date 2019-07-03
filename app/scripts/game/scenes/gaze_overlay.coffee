@@ -62,9 +62,15 @@ Q.scene "gaze_overlay", (stage) ->
   y_upper = y_lower - (3+scale)*Game.assets.map.tileSize 
 
   camera_offset = -0.4*Game.assets.map.tileSize
-  x_left = Q.width/2 + camera_offset - (width + margin*2)
-  x_right = Q.width/2 + camera_offset + (width + margin*2)
+
+  # For small buttons, we want layout to be square
+  x_left = Q.width/2 + camera_offset - (y_lower - y_upper)/2
+  x_right = Q.width/2 + camera_offset + (y_lower - y_upper)/2
   x_centre = Q.width/2 + camera_offset
+ 
+  # ... but for larger buttons, this will result in unnecessary overlap
+  x_left = Math.min(Q.width/2 + camera_offset - (width + margin*2), x_left)
+  x_right = Math.max(Q.width/2 + camera_offset + (width + margin*2))
  
   # we want direction+jump arrows to be left-aligned, not centre-aligned
   jump_xoffset = w/30
