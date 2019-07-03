@@ -153,6 +153,10 @@ Q.scene "levelSummary", (stage) ->
       family: "Boogaloo"
       size: 36
 
+  # Narrate score
+  if Game.settings.narrationEnabled.get()      
+      responsiveVoice.speak("Well done! Your score is ... " + msg);
+
   # track events
   Game.trackEvent("levelSummary:" + Q.state.get("currentLevel"), "score", score)
   Game.trackEvent("levelSummary:" + Q.state.get("currentLevel"), "stars", stars)

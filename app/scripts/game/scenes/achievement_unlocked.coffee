@@ -43,5 +43,9 @@ Q.scene "achievement_unlocked", (stage) ->
     keyActionName: "confirm"
     type: Q.SPRITE_UI | Q.SPRITE_DEFAULT
 
+  # Narrate score
+  if Game.settings.narrationEnabled.get()      
+      responsiveVoice.speak(message);
+
   button.on "click", (e) ->
     Game.stageLevelSelectScreen()
