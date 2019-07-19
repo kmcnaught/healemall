@@ -4829,6 +4829,28 @@ Quintus.Gaze = function(Q) {
 
       this.objectDwelltimes = {};
       this.dwellTime = dwellTime;
+      this.lastEvent = null;
+    },    
+
+    poke: function() {
+      if (this.lastEvent) {
+        
+        // we want to update event timestamp, but it's readonly, so we have to copy the properties into a generic object first
+        e = this.lastEvent
+        updatedEvent = {}
+        updatedEvent.timeStamp = performance.now(); 
+        updatedEvent.clientX = e.clientX
+        updatedEvent.clientY = e.clientY
+        updatedEvent.layerX = e.layerX
+        updatedEvent.layerY = e.layerY
+        updatedEvent.offsetX = e.offsetX
+        updatedEvent.offsetY = e.offsetY
+        updatedEvent.pageX = e.pageX
+        updatedEvent.pageY = e.pageY
+        updatedEvent.identifier = e.identifier
+        
+        this.cursor(updatedEvent);
+      }
     },
 
     destroy: function() {     
@@ -4878,6 +4900,7 @@ Quintus.Gaze = function(Q) {
 
     // handle mouse move events for gaze control
     cursor: function(e) {
+      this.lastEvent = e;
 
       // Measure time since last input
       var timestamp = e.timeStamp // millisecs

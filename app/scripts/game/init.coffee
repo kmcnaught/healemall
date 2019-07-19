@@ -242,7 +242,14 @@ window.Game =
     # Turn on muting when tab not active   
     document.addEventListener('visibilitychange', @onVisibilityChange, false);
 
+    # Force mouse events even when cursor static
+    setInterval(@onCursorTick, 100)
+
     return
+
+  onCursorTick: () ->
+    if Q.gazeInput
+      Q.gazeInput.poke();
 
   onVisibilityChange: () ->    
     console.log(document.visibilityState)
