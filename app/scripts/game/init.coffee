@@ -15,6 +15,10 @@ class StorageItem
     else
       return localStorage.getItem(@key) || @default_val
 
+  setDefault: (default_val) ->
+    # Set a new default - this *won't* override a user-saved setting
+    @default_val = default_val
+
   set: (s) ->    
     localStorage.setItem(@key, s)     
 
@@ -282,7 +286,30 @@ window.Game =
     # Force mouse events even when cursor static
     setInterval(@onCursorTick, 100)
 
-    return
+    # Any ?var=value params in the url to override settings defaults
+    @processUrlParams()
+
+    return  
+
+  processUrlParams: () ->
+      
+    try
+      searchParams = new URLSearchParams(window.location.search)
+      
+      if searchParams.has('uiScale')
+        uiScale = Number.parseFloat(searchParams.get('uiScale'))
+        if not isNaN(uiScale)
+          if uiScale < 0.1
+            uiScale = 0.1
+          if uiScale > 2.5
+            uiScale = 2.5
+          Game.settings.uiScale.setDefault(uiScale)
+        else
+          console.log("Cannot parse value for uiScale: " + uiScale)
+
+    catch e
+      console.log("Error parsing search params, loading defaults instead")
+
 
   onCursorTick: () ->
     if Q.gazeInput
