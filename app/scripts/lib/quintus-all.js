@@ -4997,6 +4997,11 @@ Quintus.Gaze = function(Q) {
 
               this.objectDwelltimes[gaze_target.pid].dwell = 0; 
               gaze_target.obj.trigger('dwellIncrement', 0);
+
+              // Once we've performed an action, we don't want cursor to be 
+              // recycled until actual user action (mouse move)
+              this.lastEvent = null;
+              delete this.objectDwelltimes[gaze_target.pid]
             }        
           }
         }
