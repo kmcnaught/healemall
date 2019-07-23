@@ -73,33 +73,8 @@ Q.scene "game_settings", (stage) ->
     w: presets_layout.p.w
     h: presets_layout.p.h
     # type: Q.SPRITE_UI | Q.SPRITE_DEFAULT
-
-  presets = [
-    {
-      name: "Relaxed"
-      lives: 100
-      zombieSpeed: 0.5      
-      zombiesChase: false
-      unlimitedAmmo: true
-      startWithGun: true
-    },
-    {
-      name: "Default"
-      lives: 3
-      zombieSpeed: 1.0      
-      zombiesChase: true
-      unlimitedAmmo: false
-      startWithGun: false
-    },    
-    {
-      name: "Hardcore"
-      lives: 0
-      zombieSpeed: 1.0
-      zombiesChase: true
-      unlimitedAmmo: false
-      startWithGun: false
-    }
-  ]
+ 
+  presets = Game.presets
   n_presets = presets.length
 
   preset_label_layout = stage.insert presets_layout.subplot(1,n_presets+1,0,0)

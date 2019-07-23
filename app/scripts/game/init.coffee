@@ -286,6 +286,34 @@ window.Game =
     # Force mouse events even when cursor static
     setInterval(@onCursorTick, 100)
 
+    # Game mode presets
+    Game.presets = [
+      {
+        name: "Relaxed"
+        lives: 100
+        zombieSpeed: 0.5      
+        zombiesChase: false
+        unlimitedAmmo: true
+        startWithGun: true
+      },
+      {
+        name: "Default"
+        lives: 3
+        zombieSpeed: 1.0      
+        zombiesChase: true
+        unlimitedAmmo: false
+        startWithGun: false
+      },    
+      {
+        name: "Hardcore"
+        lives: 0
+        zombieSpeed: 1.0
+        zombiesChase: true
+        unlimitedAmmo: false
+        startWithGun: false
+    }
+    ]
+
     # Any ?var=value params in the url to override settings defaults
     @processUrlParams()
 
@@ -306,6 +334,20 @@ window.Game =
           Game.settings.uiScale.setDefault(uiScale)
         else
           console.log("Cannot parse value for uiScale: " + uiScale)
+
+      if searchParams.has('gamemode')
+        gamemode = searchParams.get('gamemode')
+        preset_names = Game.presets.map (p) => p.name.toLowerCase();
+        if gamemode.toLowerCase() in preset_names
+          preset = (p for p in Game.presets when p.name.toLowerCase() == gamemode)[0]
+
+          Game.settings.lives.setDefault(preset.lives)    
+          Game.settings.zombieSpeed.setDefault(preset.zombieSpeed)    
+          Game.settings.zombiesChase.setDefault(preset.zombiesChase)
+          Game.settings.unlimitedAmmo.setDefault(preset.unlimitedAmmo)          
+          Game.settings.startWithGun.setDefault(preset.startWithGun)
+        else
+          console.log("Cannot parse value for gamemode: " + gamemode)          
 
     catch e
       console.log("Error parsing search params, loading defaults instead")
