@@ -373,7 +373,25 @@ window.Game =
 
 
   processUrlParams: () ->  
+
+    # Get URL params, if supported by browser
+    try
+      searchParams = new URLSearchParams(window.location.search)
+      if not searchParams?
+        return
+    catch 
+      # will get here if URLSearchParams not supported by browser
+      console.log("Error parsing search params, loading defaults instead")
+      return 
+
+    # First look for "force" param, this will determine whether we override user inputs     
+    override = false
+    if searchParams.has("force") 
+      force = searchParams.get("force")      
+      if validate_bool(force)
+        override = true
       
+    # Define generic process function for each parameter
     processParam = (val, key) ->
       console.log("URL Param #{key}: #{val}")
       try         
@@ -384,17 +402,27 @@ window.Game =
           if gamemode.toLowerCase() in preset_names
             preset = (p for p in Game.presets when p.name.toLowerCase() == gamemode)[0]
 
-            Game.settings.lives.setDefault(preset.lives)    
-            Game.settings.zombieSpeed.setDefault(preset.zombieSpeed)    
-            Game.settings.zombiesChase.setDefault(preset.zombiesChase)
-            Game.settings.unlimitedAmmo.setDefault(preset.unlimitedAmmo)          
-            Game.settings.startWithGun.setDefault(preset.startWithGun)
+            if override
+              Game.settings.lives.set(preset.lives)    
+              Game.settings.zombieSpeed.set(preset.zombieSpeed)    
+              Game.settings.zombiesChase.set(preset.zombiesChase)
+              Game.settings.unlimitedAmmo.set(preset.unlimitedAmmo)          
+              Game.settings.startWithGun.set(preset.startWithGun)
+            else
+              Game.settings.lives.setDefault(preset.lives)    
+              Game.settings.zombieSpeed.setDefault(preset.zombieSpeed)    
+              Game.settings.zombiesChase.setDefault(preset.zombiesChase)
+              Game.settings.unlimitedAmmo.setDefault(preset.unlimitedAmmo)          
+              Game.settings.startWithGun.setDefault(preset.startWithGun)
           else
             console.log("Cannot parse game mode: " + value)      
         else 
           # default behaviour: assign value to game setting of this name.
           if Game.settings[key]?
-            Game.settings[key].setDefault(val)
+            if override
+              Game.settings[key].set(val)
+            else
+              Game.settings[key].setDefault(val)
           else
             console.log("Cannot find setting: " + key)      
       catch 
