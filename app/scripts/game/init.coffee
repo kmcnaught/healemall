@@ -1,10 +1,53 @@
 
+# Validation methods for settings
+validate_bool = (val) ->
+  
+  if (typeof(val) == "string")
+    val = val.toLowerCase()
+    if (val == false.toString())
+      return false
+    else if (val == true.toString())
+      return true
+    else
+      num = Number(val)
+      if num == 0
+        return false
+      else if num == 1
+        return true
+      else
+        console.log('Cannot parse string "' + val + '"as boolean')
+        #throw 'Cannot parse string "' + val + '"as boolean'
+  else 
+    return Boolean(val)
+
+
+validate_num_lims = (val, minVal=null, maxVal=null) ->
+  num = Number(val)
+  if isNaN(num)
+    console.log('Cannot parse "' + val + '"as number')
+    #throw 'Cannot parse "' + val + '"as number'
+  else
+    if minVal?
+      num = Math.max(minVal, num)
+    if maxVal?
+      num = Math.min(maxVal, num)
+    return num
+
+
+validate_num = (val) ->
+  return validate_num_lims(val, null, null)
+
+validate_noop = (val) ->
+  return val
+
+
 class StorageItem
   # Something store-able in local storage, with a default
-  constructor: (key, default_val) ->
+  constructor: (key, default_val, validator) ->
     @key = @getKey(key)
     @default_val = default_val
     @is_boolean = (typeof default_val == "boolean")  
+    @validator = validator
 
   getKey: (key) ->
     return "zombieGame:" + key
@@ -20,8 +63,9 @@ class StorageItem
     @default_val = default_val
 
   set: (s) ->    
-    if @get() != s
-      localStorage.setItem(@key, s)     
+    s_v = @validator(s)
+    if s_v? and @get() != s_v
+        localStorage.setItem(@key, s_v)     
 
   boolValueOrDefault: (key, defaultVal) ->
       stringVal = localStorage.getItem(key)
@@ -42,7 +86,7 @@ class Achievements
   # Also encapsulates any composite achievements, like getting full marks.
 
   constructor: (total_levels) ->
-    @availableLevel = new StorageItem("availableLevel", 1)        
+    @availableLevel = new StorageItem("availableLevel", 1, validate_num)       
     @total_levels = total_levels
 
     # progress is stored individually per-level
@@ -50,13 +94,13 @@ class Achievements
     
     @progress = []
     for level in [0..total_levels]  
-      @progress.push new StorageItem(@progressKey + ":" + level, 0)
+      @progress.push new StorageItem(@progressKey + ":" + level, 0, validate_num)
 
     # record when we've congratulated the user
-    @congratulatedMainLevels = new StorageItem("congratulatedMainLevels", false)
-    @congratulatedMainLevelsFullStars = new StorageItem("congratulatedMainLevelsFullStars", false)
-    @congratulatedAllLevels = new StorageItem("congratulatedAllLevels", false)
-    @congratulatedAllLevelsFullStars = new StorageItem("congratulatedAllLevelsFullStars", false)
+    @congratulatedMainLevels = new StorageItem("congratulatedMainLevels", false, validate_num)
+    @congratulatedMainLevelsFullStars = new StorageItem("congratulatedMainLevelsFullStars", false, validate_num)
+    @congratulatedAllLevels = new StorageItem("congratulatedAllLevels", false, validate_num)
+    @congratulatedAllLevelsFullStars = new StorageItem("congratulatedAllLevelsFullStars", false, validate_num)
 
   getProgressForLevel: (level) ->
     return @progress[level].get()
@@ -156,23 +200,23 @@ class Achievements
 class Settings
   
   constructor: () ->
-    @cookiesAccepted = new StorageItem("cookiesAccepted", false)
-    @showCursor = new StorageItem("showCursor", true)
-    @dwellTime = new StorageItem("dwellTime", 1000)
-    @narrationEnabled = new StorageItem("narrationEnabled", false)
-    @useBuiltinDwell = new StorageItem("useBuiltinDwell", true)
-    @useKeyboardInstead = new StorageItem("useKeyboardInstead", false)
-    @useOwnClickInstead = new StorageItem("useOwnClickInstead", false)
-    @uiScale =  new StorageItem("uiScale", 1.0)
-    @uiOpacity = new StorageItem("uiOpacity", 0.25)
-    @musicEnabled = new StorageItem("enableMusic", true)
-    @soundFxEnabled = new StorageItem("enableSoundFx", true)
-    @lives = new StorageItem("lives", 3)
-    @zombieSpeed = new StorageItem("zombieSpeed", 1.0)
-    @zombiesChase = new StorageItem("zombiesChase", true)
-    @unlimitedAmmo = new StorageItem("unlimitedAmmo", false)
-    @startWithGun = new StorageItem("startWithGun", false)
-    @narrationVoice = new StorageItem("narrationVoice", "UK English Male")
+    @cookiesAccepted = new StorageItem("cookiesAccepted", false, validate_bool)
+    @showCursor = new StorageItem("showCursor", true, validate_bool)
+    @dwellTime = new StorageItem("dwellTime", 1000, (val) -> validate_num_lims(val, minVal=0.1))
+    @narrationEnabled = new StorageItem("narrationEnabled", false, validate_bool)
+    @useBuiltinDwell = new StorageItem("useBuiltinDwell", true, validate_bool)
+    @useKeyboardInstead = new StorageItem("useKeyboardInstead", false, validate_bool)
+    @useOwnClickInstead = new StorageItem("useOwnClickInstead", false, validate_bool)
+    @uiScale =  new StorageItem("uiScale", 1.0, (val) -> validate_num_lims(val, minVal=0.05, maxVal = 2.5))
+    @uiOpacity = new StorageItem("uiOpacity", 0.25, (val) -> validate_num_lims(val, minVal=0.05, maxVal = 1.0))
+    @musicEnabled = new StorageItem("enableMusic", true, validate_bool)
+    @soundFxEnabled = new StorageItem("enableSoundFx", true, validate_bool)
+    @lives = new StorageItem("lives", 3, (val) -> validate_num_lims(val, minVal=0))
+    @zombieSpeed = new StorageItem("zombieSpeed", 1.0, (val) -> validate_num_lims(val, minVal=0.05, maxVal = 2.0))
+    @zombiesChase = new StorageItem("zombiesChase", true, validate_bool)
+    @unlimitedAmmo = new StorageItem("unlimitedAmmo", false, validate_bool)
+    @startWithGun = new StorageItem("startWithGun", false, validate_bool)
+    @narrationVoice = new StorageItem("narrationVoice", "UK English Male", validate_noop)
 
 
 
