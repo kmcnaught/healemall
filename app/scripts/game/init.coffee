@@ -59,8 +59,12 @@ class StorageItem
       return localStorage.getItem(@key) || @default_val
 
   setDefault: (default_val) ->
-    # Set a new default - this *won't* override a user-saved setting
-    @default_val = default_val
+    default_val_v = @validator(default_val)
+    if default_val_v?
+      # Set a new default - this *won't* override a user-saved setting
+      @default_val = default_val_v
+    else
+      console.log("Error setting default val: #{default_val}")
 
   set: (s) ->    
     s_v = @validator(s)
@@ -364,37 +368,44 @@ window.Game =
 
     return  
 
-  processUrlParams: () ->
+  # processBasicParam: (param, param_name) ->
+
+
+
+  processUrlParams: () ->  
       
-    try
+    processParam = (val, key) ->
+      console.log("URL Param #{key}: #{val}")
+      try         
+        # special case for gamemode, which preloads several settings
+        if key == "gamemode"
+          gamemode = val
+          preset_names = Game.presets.map (p) => p.name.toLowerCase();
+          if gamemode.toLowerCase() in preset_names
+            preset = (p for p in Game.presets when p.name.toLowerCase() == gamemode)[0]
+
+            Game.settings.lives.setDefault(preset.lives)    
+            Game.settings.zombieSpeed.setDefault(preset.zombieSpeed)    
+            Game.settings.zombiesChase.setDefault(preset.zombiesChase)
+            Game.settings.unlimitedAmmo.setDefault(preset.unlimitedAmmo)          
+            Game.settings.startWithGun.setDefault(preset.startWithGun)
+          else
+            console.log("Cannot parse game mode: " + value)      
+        else 
+          # default behaviour: assign value to game setting of this name.
+          if Game.settings[key]?
+            Game.settings[key].setDefault(val)
+          else
+            console.log("Cannot find setting: " + key)      
+      catch 
+        console.log("Cannot parse value in URL for " + key)  
+    
+    # Process URL params one by one        
+    try      
       searchParams = new URLSearchParams(window.location.search)
-      
-      if searchParams.has('uiScale')
-        uiScale = Number.parseFloat(searchParams.get('uiScale'))
-        if not isNaN(uiScale)
-          if uiScale < 0.1
-            uiScale = 0.1
-          if uiScale > 2.5
-            uiScale = 2.5
-          Game.settings.uiScale.setDefault(uiScale)
-        else
-          console.log("Cannot parse value for uiScale: " + uiScale)
-
-      if searchParams.has('gamemode')
-        gamemode = searchParams.get('gamemode')
-        preset_names = Game.presets.map (p) => p.name.toLowerCase();
-        if gamemode.toLowerCase() in preset_names
-          preset = (p for p in Game.presets when p.name.toLowerCase() == gamemode)[0]
-
-          Game.settings.lives.setDefault(preset.lives)    
-          Game.settings.zombieSpeed.setDefault(preset.zombieSpeed)    
-          Game.settings.zombiesChase.setDefault(preset.zombiesChase)
-          Game.settings.unlimitedAmmo.setDefault(preset.unlimitedAmmo)          
-          Game.settings.startWithGun.setDefault(preset.startWithGun)
-        else
-          console.log("Cannot parse value for gamemode: " + gamemode)          
-
+      searchParams.forEach(processParam)      
     catch e
+      # will get here if URLSearchParams not supported by browser
       console.log("Error parsing search params, loading defaults instead")
 
 
