@@ -4991,7 +4991,7 @@ Quintus.Gaze = function(Q) {
           if (!(gaze_target.pid in this.objectDwelltimes)) {
             // if we weren't on this object last tick, dt could be large without
             // implying we were here for a long time
-            var init_dt = 100; 
+            var init_dt = 10; 
             this.objectDwelltimes[gaze_target.pid] = {dwell:init_dt, obj:gaze_target.obj, active:true};
           }
           else {
