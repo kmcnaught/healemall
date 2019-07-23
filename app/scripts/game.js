@@ -263,6 +263,12 @@
       responsiveVoice.setDefaultVoice(Game.settings.narrationVoice.get());
       // Turn on muting when tab not active   
       document.addEventListener('visibilitychange', this.onVisibilityChange, false);
+      setInterval(this.onCursorTick, 100);
+    },
+    onCursorTick: function() {
+      if (Q.gazeInput) {
+        return Q.gazeInput.poke();
+      }
     },
     onVisibilityChange: function() {
       console.log(document.visibilityState);
