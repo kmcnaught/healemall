@@ -20,7 +20,8 @@ class StorageItem
     @default_val = default_val
 
   set: (s) ->    
-    localStorage.setItem(@key, s)     
+    if @get() != s
+      localStorage.setItem(@key, s)     
 
   boolValueOrDefault: (key, defaultVal) ->
       stringVal = localStorage.getItem(key)
