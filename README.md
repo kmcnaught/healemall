@@ -23,22 +23,24 @@ Our protagonist also doesn't die, but "changes" to zombie. You have even oportun
 
 ![Heal'em All. Promo.](https://dl.dropboxusercontent.com/u/8751332/promo2.png)
 
-## Open source
+## Open source acknowledgements 
 
 Great thanks to authors of these projects!
 
--   [Quintus JavaScript game engine](http://html5quintus.com/)
--   [grunt.js](http://gruntjs.com/)
+-   [Quintus JavaScript game engine](http://html5quintus.com/) is used under the MIT license
+-   [grunt.js](http://gruntjs.com/) is used under the MIT license
 
 Audio downloaded from [OpenGameArt](http://opengameart.org/)
 
-## Copyright
+## Licensing
 
-This game is open source, but that doesn't mean you can just copy it and use it as your own.
-You can reuse some code parts, take a look how we solved some problems etc.
+### Code
 
-**It is forbiden to use this game for profit.**
-
-All rights reserved for graphic design. You are not allowed to use graphic from this game in your own projects.
-
+All source code is distributed under the [GPLv3 license](LICENSE).  
 Copyright (c) 2013 Krzysztof Urbas (@krzysu) and Paweł Madeja (@pawelmadeja).
+
+## Assets
+
+All art assets (files in ``app/images/``) are distributed under the [Creative Commons Attribution 4.0 International](http://creativecommons.org/licenses/by/4.0/) license.  
+Artist: Paweł Madeja
+
