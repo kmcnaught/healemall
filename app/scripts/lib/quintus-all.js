@@ -4857,6 +4857,20 @@ Quintus.Gaze = function(Q) {
       Q.el.removeEventListener('mousemove',this.boundCursor);        
     },
 
+    copyEvent: function(e) {
+      eventCopy = {}
+      eventCopy.clientX = e.clientX
+      eventCopy.clientY = e.clientY
+      eventCopy.layerX = e.layerX
+      eventCopy.layerY = e.layerY
+      eventCopy.offsetX = e.offsetX
+      eventCopy.offsetY = e.offsetY
+      eventCopy.pageX = e.pageX
+      eventCopy.pageY = e.pageY
+      eventCopy.identifier = e.identifier
+      return eventCopy
+    },
+
     // TODO: this is duplicated from touchsystem
     normalizeTouch: function(touch,stage) {
       var canvasPosX = touch.offsetX,
@@ -4899,11 +4913,17 @@ Quintus.Gaze = function(Q) {
     },
 
     // handle mouse move events for gaze control
-    cursor: function(e) {
-      this.lastEvent = e;
+    cursor: function(e, pokeEvent=false) {      
 
+      if (pokeEvent) {        
+        var timestamp = performance.now(); 
+      }
+      else {
+        var timestamp = e.timeStamp // millisecs
+        this.lastEvent = this.copyEvent(e);
+      }
+      
       // Measure time since last input
-      var timestamp = e.timeStamp // millisecs
       dt = 0
       if (this.lastCursorTime > 0) {
         dt = timestamp - this.lastCursorTime;      
