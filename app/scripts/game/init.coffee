@@ -58,6 +58,9 @@ class StorageItem
     else
       return localStorage.getItem(@key) || @default_val
 
+  isSaved: () ->
+    return !(localStorage.getItem(@key) is null)
+
   setDefault: (default_val) ->
     default_val_v = @validator(default_val)
     if default_val_v?
@@ -66,9 +69,9 @@ class StorageItem
     else
       console.log("Error setting default val: #{default_val}")
 
-  set: (s) ->    
+  set: (s, force_save=false) ->    
     s_v = @validator(s)
-    if s_v? and @get() != s_v
+    if s_v? and (force_save or @get() != s_v)
         localStorage.setItem(@key, s_v)     
 
   boolValueOrDefault: (key, defaultVal) ->
@@ -220,7 +223,9 @@ class Settings
     @zombiesChase = new StorageItem("zombiesChase", true, validate_bool)
     @unlimitedAmmo = new StorageItem("unlimitedAmmo", false, validate_bool)
     @startWithGun = new StorageItem("startWithGun", false, validate_bool)
-    @narrationVoice = new StorageItem("narrationVoice", "UK English Male", validate_noop)
+    @narrationVoice = new StorageItem("narrationVoice", "UK English Male", validate_noop) 
+    # randomly picked first time, saved after cookie acceptance
+    @femaleDoctor = new StorageItem("femaleDoctor", (Boolean)(Math.floor(Math.random() * 2)), validate_bool) 
 
 
 
@@ -436,6 +441,14 @@ window.Game =
       # will get here if URLSearchParams not supported by browser
       console.log("Error parsing search params, loading defaults instead")
 
+  onCookieAcceptance: () ->
+    # Any setup we aren't able to do until we know cookies are accepted
+
+    # Save the gender for doctor character
+    # (We randomly picked its default upon initialisation)
+    if not Game.settings.femaleDoctor.isSaved()    
+      Game.settings.femaleDoctor.set(Game.settings.femaleDoctor.get(), true)    
+    
 
   onCursorTick: () ->
     if Q.gazeInput
@@ -538,18 +551,24 @@ window.Game =
 
     # all assets, only file names
     @assets =
-      characters:
+      characters_f:
         dataAsset: "characters.json"
-        sheet: "characters.png"
+        sheet: "characters_f.png"
+      characters_m:
+        dataAsset: "characters.json"
+        sheet: "characters_m.png"
       controls:
         dataAsset: "controls.json"
         sheet: "controls.png"
       items:
         dataAsset: "items.json"
         sheet: "items.png"
-      hud:
+      hud_f:
         dataAsset: "hud.json"
-        sheet: "hud.png"
+        sheet: "hud_f.png"
+      hud_m:
+        dataAsset: "hud.json"
+        sheet: "hud_m.png"        
       others:
         dataAsset: "others.json"
         sheet: "others.png"
@@ -615,6 +634,7 @@ window.Game =
 
     # document.body.appendChild( stats.domElement )
 
+  
   stageAchievementScreen: (msg) ->
     Q.clearStages()
     Q.stageScene "achievement_unlocked",  {"message": msg}

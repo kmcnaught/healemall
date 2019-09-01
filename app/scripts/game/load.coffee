@@ -7,13 +7,18 @@ Q.load Game.assets.all,
       tileW: Game.assets.map.tileSize
       tileH: Game.assets.map.tileSize
 
-    Q.compileSheets Game.assets.characters.sheet, Game.assets.characters.dataAsset
     Q.compileSheets Game.assets.items.sheet, Game.assets.items.dataAsset
-    Q.compileSheets Game.assets.hud.sheet, Game.assets.hud.dataAsset
     Q.compileSheets Game.assets.misc.sheet, Game.assets.misc.dataAsset
     Q.compileSheets Game.assets.others.sheet, Game.assets.others.dataAsset
     Q.compileSheets Game.assets.bullet.sheet, Game.assets.bullet.dataAsset
     Q.compileSheets Game.assets.controls.sheet, Game.assets.controls.dataAsset
+    
+    if Game.settings.femaleDoctor.get()
+      Q.compileSheets Game.assets.hud_f.sheet, Game.assets.hud_f.dataAsset
+      Q.compileSheets Game.assets.characters_f.sheet, Game.assets.characters_f.dataAsset
+    else
+      Q.compileSheets Game.assets.hud_m.sheet, Game.assets.hud_m.dataAsset    
+      Q.compileSheets Game.assets.characters_m.sheet, Game.assets.characters_m.dataAsset    
 
     # first stage
     if (Game.settings.cookiesAccepted.get())    

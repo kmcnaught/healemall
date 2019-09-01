@@ -2,6 +2,9 @@ Q = Game.Q
 
 Q.scene "start", (stage) ->
 
+  # We only get here if cookies have been accepted; do any setup we need to now. 
+  Game.onCookieAcceptance()
+
   # add title
   y_pad = Q.height/20
 
