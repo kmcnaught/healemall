@@ -237,7 +237,19 @@ window.Game =
     @setCursorState(Game.settings.showCursor.get(), false) # don't save since we might not have cookie acceptance yet
     Q.input.on("cursor", @, "toggleCursor")  
 
-    responsiveVoice.setDefaultVoice(Game.settings.narrationVoice.get())
+    # Narration setup: 
+    if not responsiveVoice?
+      # Either hasn't loaded yet, or it failed to load (e.g. network issues)
+      # Replace with no-op object to avoid errors elsewhere
+      window.responsiveVoice = 
+        setDefaultVoice: (x) -> console.log("Responsive voice currently unavailable")
+        speak: (x) -> console.log("Responsive voice currently unavailable")
+        voiceSupport: () -> return false
+      
+    # Responsive voice never loads immediately, so set it up after a delay
+    updateVoice = () ->
+        responsiveVoice.setDefaultVoice(Game.settings.narrationVoice.get())    
+    setTimeout(updateVoice, 1000)      
 
     # Turn on muting when tab not active   
     document.addEventListener('visibilitychange', @onVisibilityChange, false);
