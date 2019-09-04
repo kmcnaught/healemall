@@ -199,7 +199,7 @@
   // main game object
   window.Game = {
     init: function() {
-      var Q;
+      var Q, updateVoice;
       // engine instance
       this.Q = Q = Quintus({
         development: true,
@@ -260,7 +260,30 @@
       }
       this.setCursorState(Game.settings.showCursor.get(), false); // don't save since we might not have cookie acceptance yet
       Q.input.on("cursor", this, "toggleCursor");
-      responsiveVoice.setDefaultVoice(Game.settings.narrationVoice.get());
+      
+      // Narration setup: 
+      if (typeof responsiveVoice === "undefined" || responsiveVoice === null) {
+        // Either hasn't loaded yet, or it failed to load (e.g. network issues)
+        // Replace with no-op object to avoid errors elsewhere
+        window.responsiveVoice = {
+          setDefaultVoice: function(x) {
+            return console.log("Responsive voice currently unavailable");
+          },
+          speak: function(x) {
+            return console.log("Responsive voice currently unavailable");
+          },
+          voiceSupport: function() {
+            return false;
+          }
+        };
+      }
+      
+      // Responsive voice never loads immediately, so set it up after a delay
+      updateVoice = function() {
+        return responsiveVoice.setDefaultVoice(Game.settings.narrationVoice.get());
+      };
+      setTimeout(updateVoice, 1000);
+      
       // Turn on muting when tab not active   
       document.addEventListener('visibilitychange', this.onVisibilityChange, false);
       setInterval(this.onCursorTick, 100);
@@ -3524,7 +3547,7 @@
   Q = Game.Q;
 
   Q.scene("sound_settings", function(stage) {
-    var btn1, btn2, buttonBar, chk_music, chk_narration, chk_sfx, fx_layout, leftmost_x, mainSection, music_callback, music_layout, narrate_callback, narration_layout, padding, soundfx_callback, titleBar, voice_layout;
+    var btn1, btn2, buttonBar, chk_music, chk_narration, chk_sfx, error_text, fx_layout, leftmost_x, mainSection, music_callback, music_layout, narrate_callback, narration_error_layout, narration_layout, padding, soundfx_callback, titleBar, voice_layout;
     // settings page structure
     [titleBar, mainSection, buttonBar] = Q.CompositeUI.setup_settings_page(stage, "Sounds");
     // layouts
@@ -3532,6 +3555,7 @@
     music_layout = stage.insert(mainSection.subplot(2, 2, 0, 0, padding));
     fx_layout = stage.insert(mainSection.subplot(2, 2, 1, 0, padding));
     narration_layout = stage.insert(mainSection.subplot(2, 2, 0, 1, padding));
+    narration_error_layout = stage.insert(mainSection.subplot(1, 2, 0, 1, padding));
     voice_layout = stage.insert(mainSection.subplot(2, 2, 1, 1, padding));
     // Callbacks
     music_callback = function(is_pressed) {
@@ -3542,7 +3566,8 @@
     };
     narrate_callback = function(is_pressed) {
       Game.settings.narrationEnabled.set(is_pressed);
-      return voice_layout.p.hidden = !is_pressed;
+      voice_layout.p.hidden = !is_pressed || !responsiveVoice.voiceSupport();
+      return error_text.p.hidden = !is_pressed || responsiveVoice.voiceSupport();
     };
     // Checkboxes
     chk_music = Q.CompositeUI.add_checkbox(music_layout, "Music", music_callback);
@@ -3560,6 +3585,12 @@
     chk_music.p.x = leftmost_x;
     chk_sfx.p.x = leftmost_x;
     chk_narration.p.x = leftmost_x;
+    error_text = narration_error_layout.insert(new Q.UI.Text({
+      label: "There was an error loading responsiveVoice; narration will not work.",
+      color: "#D64E31",
+      family: "Boogaloo",
+      size: 24
+    }));
     // Narration voice
     btn1 = {
       label: "Male",
@@ -3584,7 +3615,8 @@
       }
     };
     Q.CompositeUI.add_exclusive_toggle_buttons(voice_layout, btn1, btn2, "Narrator\nvoice");
-    return voice_layout.p.hidden = !Game.settings.narrationEnabled.get();
+    voice_layout.p.hidden = !Game.settings.narrationEnabled.get() || !responsiveVoice.voiceSupport();
+    return error_text.p.hidden = !Game.settings.narrationEnabled.get() || responsiveVoice.voiceSupport();
   });
 
   Q = Game.Q;
