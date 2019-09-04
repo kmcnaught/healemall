@@ -10,6 +10,7 @@ Q.scene "sound_settings", (stage) ->
   music_layout  = stage.insert mainSection.subplot(2,2, 0,0, padding)
   fx_layout  = stage.insert mainSection.subplot(2,2, 1,0, padding)
   narration_layout  = stage.insert mainSection.subplot(2,2, 0,1, padding)    
+  narration_error_layout  = stage.insert mainSection.subplot(1,2, 0,1, padding)    
   voice_layout = stage.insert mainSection.subplot(2,2, 1,1, padding)
 
   # Callbacks
@@ -21,7 +22,8 @@ Q.scene "sound_settings", (stage) ->
 
   narrate_callback = (is_pressed) ->
     Game.settings.narrationEnabled.set(is_pressed)  
-    voice_layout.p.hidden = !is_pressed
+    voice_layout.p.hidden = !is_pressed or !responsiveVoice.voiceSupport()
+    error_text.p.hidden = !is_pressed or responsiveVoice.voiceSupport()
 
 
   # Checkboxes
@@ -43,6 +45,12 @@ Q.scene "sound_settings", (stage) ->
   chk_music.p.x = leftmost_x
   chk_sfx.p.x = leftmost_x
   chk_narration.p.x = leftmost_x
+
+  error_text = narration_error_layout.insert new Q.UI.Text              
+      label: "There was an error loading responsiveVoice; narration will not work."
+      color: "#D64E31"
+      family: "Boogaloo"
+      size: 24
 
   # Narration voice
   btn1 = {    
@@ -66,4 +74,6 @@ Q.scene "sound_settings", (stage) ->
   
   Q.CompositeUI.add_exclusive_toggle_buttons(voice_layout, btn1, btn2, "Narrator\nvoice")
 
-  voice_layout.p.hidden = !Game.settings.narrationEnabled.get()
+  voice_layout.p.hidden = !Game.settings.narrationEnabled.get() or !responsiveVoice.voiceSupport()
+  error_text.p.hidden = !Game.settings.narrationEnabled.get() or responsiveVoice.voiceSupport()
+  
