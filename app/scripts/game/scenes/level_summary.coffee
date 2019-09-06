@@ -26,7 +26,7 @@ Q.scene "levelSummary", (stage) ->
     label: "Well done!"
     color: "#f2da38"
     family: "Jolly Lodger"
-    size: 100
+    size: Styles.fontsize14
 
   # add level summary
   summaryContainer = stage.insert new Q.UI.Container
@@ -42,7 +42,7 @@ Q.scene "levelSummary", (stage) ->
       label: "Health collected: " + stage.options.health.collected + "/" + stage.options.health.available
       color: "#c4da4a"
       family: "Boogaloo"
-      size: 36
+      size: Styles.fontsize5
 
   if stage.options.zombies
     summaryContainer.insert new Q.UI.Text
@@ -51,7 +51,7 @@ Q.scene "levelSummary", (stage) ->
       label: "Zombies healed: " + stage.options.zombies.healed + "/" + stage.options.zombies.available
       color: "#c4da4a"
       family: "Boogaloo"
-      size: 36
+      size: Styles.fontsize5
 
   if stage.options.bullets
     summaryContainer.insert new Q.UI.Text
@@ -60,7 +60,7 @@ Q.scene "levelSummary", (stage) ->
       label: "Bullets wasted: " + stage.options.bullets.waisted + "/" + stage.options.bullets.available
       color: "#c4da4a"
       family: "Boogaloo"
-      size: 36
+      size: Styles.fontsize5
 
   if stage.options.zombieModeFound?
     summaryContainer.insert new Q.UI.Text
@@ -69,7 +69,7 @@ Q.scene "levelSummary", (stage) ->
       label: "Zombie Mode: " + if stage.options.zombieModeFound then "done" else "not found"
       color: "#c4da4a"
       family: "Boogaloo"
-      size: 36
+      size: Styles.fontsize5
 
 
   # button next
@@ -151,7 +151,7 @@ Q.scene "levelSummary", (stage) ->
       label: "Score: " + msg
       color: "#ffffff"
       family: "Boogaloo"
-      size: 36
+      size: Styles.fontsize5
 
   # Narrate score
   if Game.settings.narrationEnabled.get()      

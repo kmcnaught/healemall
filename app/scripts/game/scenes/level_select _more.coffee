@@ -59,7 +59,7 @@ Q.scene "levelSelectMore", (stage) ->
         flip: "x"
         page: Game.moreLevelsPage-1
         enabled: enabled  
-        fontsize = 32
+        fontsize = Styles.fontsize4
 
       container.insert new Q.UI.Text
           x: 10
@@ -81,7 +81,7 @@ Q.scene "levelSelectMore", (stage) ->
         page: Game.moreLevelsPage+1
         enabled: enabled
 
-        fontsize = 32
+        fontsize = Styles.fontsize4
 
       container.insert new Q.UI.Text
           x: -10
@@ -121,7 +121,7 @@ Q.scene "levelSelectMore", (stage) ->
         level_name = Game.levels_array[level].name
 
         if level_name
-          fontsize = 28
+          fontsize = Styles.fontsize3
           
           Q.ctx.font = "400 " + fontsize + "px Jolly Lodger"
           name_width = Q.ctx.measureText(level_name).width
@@ -203,7 +203,7 @@ Q.scene "levelSelectMore", (stage) ->
     label: "Bonus levels!"
     color: "#f2da38"
     family: "Jolly Lodger"
-    size: 60
+    size: Styles.fontsize9
 
   authors = stage.insert new Q.UI.Authors()
 

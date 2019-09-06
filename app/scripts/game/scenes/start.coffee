@@ -35,7 +35,7 @@ Q.scene "start", (stage) ->
       label: description
       color: "#2d3032"
       family: "Jolly Lodger"
-      size: 36
+      size: Styles.fontsize5
 
   # resize panel
   panel.p.w = desc.p.w*1.1
@@ -49,7 +49,7 @@ Q.scene "start", (stage) ->
     label: "Heal'em All"
     color: "#f2da38"
     family: "Jolly Lodger"
-    size: 72
+    size: Styles.fontsize11
 
   # title.p.y = title.p.y - title.p.h/2 - y_pad
   title.size()
@@ -85,7 +85,7 @@ Q.scene "start", (stage) ->
     label: gaze_message
     color: "#c4da4a"
     family: "Jolly Lodger"
-    size: 28
+    size: Styles.fontsize3
 
   # button.p.y = button.p.y + button.p.h/2 + y_pad*2
 

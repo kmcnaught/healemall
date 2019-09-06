@@ -27,7 +27,7 @@ Q.scene "tutorialSummary", (stage) ->
     label: "Well done!"
     color: "#f2da38"
     family: "Jolly Lodger"
-    size: 100
+    size: Styles.fontsize14
 
   msgLabel = "You have successfully completed the tutorial\n"
   if stage.options.zombies
@@ -41,7 +41,7 @@ Q.scene "tutorialSummary", (stage) ->
     label: msgLabel
     color: "#c4da4a"
     family: "Boogaloo"
-    size: 36
+    size: Styles.fontsize5
     align: "center"
 
   # start main game:

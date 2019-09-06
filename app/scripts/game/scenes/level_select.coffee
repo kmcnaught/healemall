@@ -75,7 +75,7 @@ Q.scene "levelSelect", (stage) ->
           label: "Tutorial"
           color: "#404444"
           family: "Jolly Lodger"
-          size: 32
+          size: Styles.fontsize4
 
     # add progress stars
     level = item
@@ -137,7 +137,7 @@ Q.scene "levelSelect", (stage) ->
       label: "Settings"
       color: "#404444"
       family: "Jolly Lodger"
-      size: 32
+      size: Styles.fontsize4
 
   container.insert new Q.Sprite
     x: 2
@@ -151,7 +151,7 @@ Q.scene "levelSelect", (stage) ->
     label: "Everything begins here!"
     color: "#f2da38"
     family: "Jolly Lodger"
-    size: 60
+    size: Styles.fontsize9
 
   authors = stage.insert new Q.UI.Authors()
 

@@ -17,7 +17,7 @@ Q.scene "achievement_unlocked", (stage) ->
     label: "Achievement Unlocked!"
     color: "#f2da38"
     family: "Jolly Lodger"
-    size: 100
+    size: Styles.fontsize14
 
   # message
   stage.insert new Q.UI.Text
@@ -26,7 +26,7 @@ Q.scene "achievement_unlocked", (stage) ->
     label: message
     color: "#c4da4a"
     family: "Boogaloo"
-    size: 36
+    size: Styles.fontsize5
     align: "center"
 
   # button

@@ -20,7 +20,7 @@ Q.scene "cookies", (stage) ->
     label: "Cookies"
     color: "#f2da38"
     family: "Jolly Lodger"
-    size: 70
+    size: Styles.fontsize11
 
   description = "This site uses cookies and local data storage\n"
   description += "to save your game progress and preferences\n"
@@ -33,7 +33,7 @@ Q.scene "cookies", (stage) ->
       label: description
       color: "#9ca2ae"
       family: "Jolly Lodger"
-      size: 36
+      size: Styles.fontsize5
   
   label = "Accept"
 

@@ -55,7 +55,7 @@ Q.CompositeUI =
       label: "Cursor is currently hidden;\npress 'C' to show cursor"
       color: "#c4da4a"
       family: "Arial"
-      size: 12
+      size: Styles.fontsize0
       x: x
       y: y
       

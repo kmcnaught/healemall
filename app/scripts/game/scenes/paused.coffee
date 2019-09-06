@@ -16,7 +16,7 @@ Q.scene "paused", (stage) ->
     label: "Paused"
     color: "#f2da38"
     family: "Jolly Lodger"
-    size: 100
+    size: Styles.fontsize14
 
   # Un-pause button 
   # (We can't reuse a pause button from another stage because we want only this one stage

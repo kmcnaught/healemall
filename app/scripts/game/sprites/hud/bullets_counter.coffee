@@ -6,7 +6,7 @@ Q.UI.BulletsCounter = Q.UI.Text.extend "UI.BulletsCounter",
       x: 0
       y: 0
       label: Q.state.get("bullets") + ""
-      size: 34
+      size: Styles.fontsize5
       color: "#f2da38"
       family: "Boogaloo"
 

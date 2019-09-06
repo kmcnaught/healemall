@@ -6,7 +6,7 @@ Q.UI.Authors = Q.UI.Text.extend "UI.Authors",
       label: "Created by @krzysu and @pawelmadeja, extended and adapted for eye gaze by @SpecialEffect"
       color: "#c4da4a"
       family: "Boogaloo"
-      size: 22
+      size: Styles.fontsize1
 
     @p.x = Q.width/2
     @p.y = Q.height - @p.h/2

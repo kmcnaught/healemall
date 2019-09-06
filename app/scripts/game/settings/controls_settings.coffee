@@ -33,7 +33,7 @@ Q.scene "controls_settings", (stage) ->
     label: "Show cursor?"
     color: "#818793"
     family: "Boogaloo"
-    size: 36
+    size: Styles.fontsize5
     align: "center"
 
 

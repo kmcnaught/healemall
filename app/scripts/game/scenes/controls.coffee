@@ -28,7 +28,7 @@ Q.scene "controls", (stage) ->
     label: "How to heal’em"
     color: "#f2da38"
     family: "Jolly Lodger"
-    size: 60
+    size: Styles.fontsize9
 
   # add cells, 2x2
   x_pad = -50 # to account for images on right of centralised text
@@ -68,7 +68,7 @@ Q.scene "controls", (stage) ->
     label: "Explore the graveyard"
     color: "#9ca2ae"
     family: "Boogaloo"
-    size: 30
+    size: Styles.fontsize4
 
   cell1.insert new Q.UI.Text
     x: step1text.p.x - step1text.p.w/2 - numberpad
@@ -76,7 +76,7 @@ Q.scene "controls", (stage) ->
     label: "1."
     color: "#f2da38"
     family: "Boogaloo"
-    size: 44
+    size: Styles.fontsize7
 
   cell1.insert new Q.Sprite
     x: step1text.p.x + step1text.p.w/2 + 160 
@@ -90,7 +90,7 @@ Q.scene "controls", (stage) ->
     label: "Find Healing Gun"
     color: "#9ca2ae"
     family: "Boogaloo"
-    size: 30
+    size: Styles.fontsize4
 
   cell2.insert new Q.UI.Text
     x: step2text.p.x - step2text.p.w/2 - numberpad 
@@ -98,7 +98,7 @@ Q.scene "controls", (stage) ->
     label: "2."
     color: "#f2da38"
     family: "Boogaloo"
-    size: 44
+    size: Styles.fontsize7
   
   sprite = cell2.insert new Q.Sprite
     x: step2text.p.x + step2text.p.w/2 + 120 
@@ -113,7 +113,7 @@ Q.scene "controls", (stage) ->
     label: "Shoot the zombies!"
     color: "#9ca2ae"
     family: "Boogaloo"
-    size: 30
+    size: Styles.fontsize4
 
   cell3.insert new Q.UI.Text
     x: step3text.p.x - step3text.p.w/2 - numberpad 
@@ -121,7 +121,7 @@ Q.scene "controls", (stage) ->
     label: "3."
     color: "#f2da38"
     family: "Boogaloo"
-    size: 44
+    size: Styles.fontsize7
 
   cell3.insert new Q.Sprite
     x: step3text.p.x + step3text.p.w/2 + 100 
@@ -134,7 +134,7 @@ Q.scene "controls", (stage) ->
     label: "Find the exit"
     color: "#9ca2ae"
     family: "Boogaloo"
-    size: 30
+    size: Styles.fontsize4
 
   cell4.insert new Q.UI.Text
     x: step4text.p.x - step4text.p.w/2 - numberpad 
@@ -142,7 +142,7 @@ Q.scene "controls", (stage) ->
     label: "4."
     color: "#f2da38"
     family: "Boogaloo"
-    size: 44
+    size: Styles.fontsize7
 
   cell4.insert new Q.Sprite
     x: step4text.p.x + step4text.p.w/2 + 120 

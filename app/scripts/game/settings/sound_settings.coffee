@@ -50,7 +50,7 @@ Q.scene "sound_settings", (stage) ->
       label: "There was an error loading responsiveVoice; narration will not work."
       color: "#D64E31"
       family: "Boogaloo"
-      size: 24
+      size: Styles.fontsize2
 
   # Narration voice
   btn1 = {    

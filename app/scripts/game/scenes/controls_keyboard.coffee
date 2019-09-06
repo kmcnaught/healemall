@@ -27,7 +27,7 @@ Q.scene "controls_keyboard", (stage) ->
     label: "How to heal’em in three steps"
     color: "#f2da38"
     family: "Jolly Lodger"
-    size: 60
+    size: Styles.fontsize9
 
   # add 3 columns
   column1Container = stage.insert new Q.UI.Container
@@ -49,7 +49,7 @@ Q.scene "controls_keyboard", (stage) ->
     label: "1st"
     color: "#ec655d"
     family: "Boogaloo"
-    size: 26
+    size: Styles.fontsize2
 
   step1text2 = column1Container.insert new Q.UI.Text
     x: 0
@@ -57,7 +57,7 @@ Q.scene "controls_keyboard", (stage) ->
     label: "Move with arrows"
     color: "#9ca2ae"
     family: "Boogaloo"
-    size: 30
+    size: Styles.fontsize4
 
   column1Container.insert new Q.Sprite
     x: 0
@@ -71,7 +71,7 @@ Q.scene "controls_keyboard", (stage) ->
     label: "2nd"
     color: "#ec655d"
     family: "Boogaloo"
-    size: 26
+    size: Styles.fontsize2
 
   column2Container.insert new Q.UI.Text
     x: 0
@@ -79,7 +79,7 @@ Q.scene "controls_keyboard", (stage) ->
     label: "Find Healing Gun"
     color: "#9ca2ae"
     family: "Boogaloo"
-    size: 30
+    size: Styles.fontsize4
 
   column2Container.insert new Q.Sprite
     x: 0
@@ -93,7 +93,7 @@ Q.scene "controls_keyboard", (stage) ->
     label: "3rd"
     color: "#ec655d"
     family: "Boogaloo"
-    size: 26
+    size: Styles.fontsize2
 
   column3Container.insert new Q.UI.Text
     x: 0
@@ -101,7 +101,7 @@ Q.scene "controls_keyboard", (stage) ->
     label: "Use your Gun!"
     color: "#9ca2ae"
     family: "Boogaloo"
-    size: 30
+    size: Styles.fontsize4
 
   column3Container.insert new Q.Sprite
     x: 0

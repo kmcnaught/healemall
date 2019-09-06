@@ -38,21 +38,21 @@ Q.scene "start_controls", (stage) ->
     label: "Choose your controls:"
     color: gray
     family: "Boogaloo"
-    size: 36
+    size: Styles.fontsize5
 
   gazeText = titleContainer.insert new Q.UI.Text    
     x: gazeButton.p.x
     y: gazeButton.p.y + buttonLabelOffset
     label: "Gaze / mouse / touch"
     family: "Boogaloo"
-    size: 36
+    size: Styles.fontsize5
 
   keyboardText = titleContainer.insert new Q.UI.Text    
     x: keyboardButton.p.x
     y: gazeButton.p.y + buttonLabelOffset
     label: "Keyboard"
     family: "Boogaloo"
-    size: 36
+    size: Styles.fontsize5
 
   
 
@@ -84,7 +84,7 @@ Q.scene "start_controls", (stage) ->
   #   label: "Show cursor?"
   #   color: "#818793"
   #   family: "Boogaloo"
-  #   size: 36
+  #   size: Styles.fontsize5
 
   # label_pad = gazeButton.p.w/4
   # cursorLabel.p.x = gazeButton.p.x - gazeButton.p.w/2 - cursorLabel.p.w/2 - label_pad
@@ -96,7 +96,7 @@ Q.scene "start_controls", (stage) ->
     label: "Heal'em All"
     color: yellow
     family: "Jolly Lodger"
-    size: 90
+    size: Styles.fontsize13
 
 
   # button

@@ -169,6 +169,31 @@ class Settings
     @startWithGun = new StorageItem("startWithGun", false)
     @narrationVoice = new StorageItem("narrationVoice", "UK English Male")
 
+
+
+# Global styles
+window.Styles = 
+  fontsize0: 12
+  # the reset are major third scale, rounded (we don't use all of them)
+  fontsize1: 22
+  fontsize2: 25
+  fontsize3: 28
+  fontsize4: 31
+  fontsize5: 35
+  fontsize6: 40
+  fontsize7: 45
+  fontsize8: 50
+  fontsize9: 56
+  fontsize10: 64
+  fontsize11: 71
+  fontsize12: 80
+  fontsize13: 90
+  fontsize14: 100
+
+
+
+
+
 # main game object
 window.Game =
   init: ->

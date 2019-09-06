@@ -7,7 +7,7 @@ Q.UI.CursorWarning = Q.UI.Text.extend "UI.CursorWarning",
       color: "#c4da4a"
       family: "Boogaloo"
       family: "Arial"
-      size: 12
+      size: Styles.fontsize0
 
     @p.x = Q.width/2
     @p.y = @p.h*.75

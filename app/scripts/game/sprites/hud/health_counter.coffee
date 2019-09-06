@@ -6,7 +6,7 @@ Q.UI.HealthCounter = Q.UI.Text.extend "UI.HealthCounter",
       x: 0
       y: 0
       label: Q.state.get("lives") + ""
-      size: 34
+      size: Styles.fontsize5
       color: "#ec655d"
       family: "Boogaloo"
 

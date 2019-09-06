@@ -7,7 +7,7 @@ Q.UI.InfoLabel = Q.UI.Text.extend "UI.InfoLabel",
       y: 0
       label: ""
       color: "#222221"
-      size: 24
+      size: Styles.fontsize2
       family: "Boogaloo"
       pendingLabel: ""
       disabled: false

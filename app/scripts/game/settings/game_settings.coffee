@@ -107,7 +107,7 @@ Q.scene "game_settings", (stage) ->
       label: "Presets:"
       color: "#363738"
       family: "Boogaloo"
-      size: 36
+      size: Styles.fontsize5
 
   for i in [0..n_presets-1]
   # for label in preset_names

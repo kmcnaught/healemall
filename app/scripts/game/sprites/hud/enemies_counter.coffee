@@ -6,7 +6,7 @@ Q.UI.EnemiesCounter = Q.UI.Text.extend "UI.EnemiesCounter",
       x: 0
       y: 0
       label: Q.state.get("enemiesCounter") + ""
-      size: 34
+      size: Styles.fontsize5
       color: "#c4da4a"
       family: "Boogaloo"
 

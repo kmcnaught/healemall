@@ -15,7 +15,7 @@ Q.scene "gameOver", (stage) ->
     label: "Game Over"
     color: "#f2da38"
     family: "Jolly Lodger"
-    size: 100
+    size: Styles.fontsize14
 
   # Split up rest of space equally
   offset_y = title.p.y/2 + title.p.h/2
@@ -29,7 +29,7 @@ Q.scene "gameOver", (stage) ->
     label: "Oh no, you died!\nLooks like the zombies won't be healed today..."
     color: "#c4da4a"
     family: "Boogaloo"
-    size: 36
+    size: Styles.fontsize5
     align: "center"
 
 

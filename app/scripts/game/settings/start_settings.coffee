@@ -34,7 +34,7 @@ Q.scene "start_settings", (stage) ->
     label: "Play sounds/music?"
     color: "#818793"
     family: "Boogaloo"
-    size: 36
+    size: Styles.fontsize5
 
   cachedMusicEnabled = Game.settings.musicEnabled.get()
   cachedSfxEnabled = Game.settings.soundFxEnabled.get()
@@ -58,7 +58,7 @@ Q.scene "start_settings", (stage) ->
     label: "Show cursor?"
     color: "#818793"
     family: "Boogaloo"
-    size: 36
+    size: Styles.fontsize5
 
   # Adjusting things to align
   delta = audioLabel.p.w/2 + audioButton.p.w/2
@@ -81,7 +81,7 @@ Q.scene "start_settings", (stage) ->
     label: "Options"
     color: "#f2da38"
     family: "Jolly Lodger"
-    size: 72
+    size: Styles.fontsize11
 
 
   # button
@@ -143,7 +143,7 @@ Q.scene "start_settings", (stage) ->
       label: description
       color: "#2d3032"
       family: "Jolly Lodger"
-      size: 36
+      size: Styles.fontsize5
 
   # resize panel
   panel.p.w = desc.p.w*1.1
