@@ -1,44 +1,43 @@
 ![Heal'em All. Promo.](https://dl.dropboxusercontent.com/u/8751332/promo.png)
 
-## Heal'em All. There's a cure for zombies.
 
-Imagine, what if the cure exists? What if zombies plague can be stoped?
-Explore old, abandoned graveyard, heal as many zombies as you can, and find your way out.
-But be careful not to become one of them!
+## Heal'em All: An eye gaze platform game
 
-We present you our first HTML5 game. Play it anywhere and anyhow you want.
-We also support latest mobile devices!
+Back in 2013, Kris Urbas and Paweł Madeja made a lovely little platform game which was one of the winners of that year's Github Game Off game jam. Here at SpecialEffect in 2019 we discovered the game and wanted to give it a new lease of life and share it with an under-served audience - disabled gamers who use eye gaze to access a computer. We reached out to Kris and Paweł, who kindly agreed we could take their code and modify it for our users.
 
-## How we use game jam "change" theme?
+## The game
 
-In our game zombies plague can be stoped, so you don't kill them, but heal them and "change" back to humans.
-Turned humans need to be protected, as they can "change" back to zombies after being beaten.
+In the game you are a pioneering doctor who has discovered a cure for the zombie plague. You must explore an old, abandoned graveyard, heal as many zombies as you can, and find your way out safely. You can play the game using eye gaze, mouse or touch control. 
 
-Our protagonist also doesn't die, but "changes" to zombie. You have even oportunity to play him in zombie form.
+You control the player by looking at arrows on the screen. You can dwell or click on 'jump' arrows to automatically jump in either direction. These gaze controls are adjustable if you want them to be larger or smaller. There are also several settings you can change to adjust the game to your preferences, including easier game modes.
 
-## Team
+## Eye tracker support
 
+The game runs in a web browser (Chrome and Firefox have been tested), and uses the cursor as input. Any eye tracker that you can use to control the cursor will be compatible. If you don't like seeing the cursor jump around while you're controlling it with your eyes, you can hide it within the game. 
+
+## Acknowledgements 
+
+Thanks to Kris and Paweł for creating the original game!
 -   [Kris Urbas](https://twitter.com/krzysu) - programming, story
-- 	[Pawel Madeja](https://twitter.com/pawelmadeja) - graphics
+-   [Pawel Madeja](https://twitter.com/pawelmadeja) - graphics
 
-![Heal'em All. Promo.](https://dl.dropboxusercontent.com/u/8751332/promo2.png)
-
-## Open source
-
-Great thanks to authors of these projects!
-
--   [Quintus JavaScript game engine](http://html5quintus.com/)
--   [grunt.js](http://gruntjs.com/)
+Thanks to authors of these open source licenses which are used in the game
+-   [Quintus JavaScript game engine](http://html5quintus.com/) is used under the MIT license
+-   [grunt.js](http://gruntjs.com/) is used under the MIT license
 
 Audio downloaded from [OpenGameArt](http://opengameart.org/)
 
-## Copyright
+## Licensing
 
-This game is open source, but that doesn't mean you can just copy it and use it as your own.
-You can reuse some code parts, take a look how we solved some problems etc.
+### Code
 
-**It is forbiden to use this game for profit.**
+All source code is distributed under the [GPLv3 license](LICENSE).  
+Original copyright (c) 2013 Krzysztof Urbas (@krzysu) and Paweł Madeja (@pawelmadeja). 
+Modifications (c) 2019 Kirsty McNaught 
 
-All rights reserved for graphic design. You are not allowed to use graphic from this game in your own projects.
+## Assets
 
-Copyright (c) 2013 Krzysztof Urbas (@krzysu) and Paweł Madeja (@pawelmadeja).
+All art assets (files in ``app/images/``) are distributed under the [Creative Commons Attribution 4.0 International](http://creativecommons.org/licenses/by/4.0/) license.  
+Original artist: Paweł Madeja
+Some modifications / additions: Kirsty McNaught
+
