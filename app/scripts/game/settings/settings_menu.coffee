@@ -62,4 +62,5 @@ Q.scene "settings_menu", (stage) ->
 
   button.on "click", (e) =>
     console.log("Reset!!") 
+    Game.stageScreen("confirm_reset")
     
