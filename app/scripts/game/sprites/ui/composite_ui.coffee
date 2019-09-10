@@ -27,7 +27,7 @@ Q.CompositeUI =
       size: titleBar.p.h*0.8
 
     # back button
-    backLayout = stage.insert buttonBar.subplot(1,2,0,1)
+    backLayout = buttonBar#stage.insert buttonBar.subplot(1,2,0,1)
     label = "Back"
     buttonTextSize = Q.ctx.measureText(label)
     button = backLayout.insert new Q.UI.Button
