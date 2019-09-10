@@ -6,9 +6,10 @@ Q.scene "settings_menu", (stage) ->
   [titleBar, mainSection, buttonBar] = Q.CompositeUI.setup_settings_page(stage, "Settings")
 
   padding = 0.1
-  controls_layout  = stage.insert mainSection.subplot(1,3, 0,0, padding)
-  game_layout  = stage.insert mainSection.subplot(1,3, 0,1, padding)
-  sound_layout  = stage.insert mainSection.subplot(1,3, 0,2, padding)
+  controls_layout  = stage.insert mainSection.subplot(2,2, 0,0, padding)
+  game_layout  = stage.insert mainSection.subplot(2,2, 0,1, padding)
+  sound_layout  = stage.insert mainSection.subplot(2,2, 1,0, padding)
+  reset_layout  = stage.insert mainSection.subplot(2,2, 1,1, padding)
   
   controls_text = "Controls"
   gameplay_text = "Gameplay"
@@ -24,7 +25,7 @@ Q.scene "settings_menu", (stage) ->
 
     button = layout.insert new Q.UI.Button
       w: button_width*1.3
-      h: layout.p.h*.5
+      h: layout.p.h*.75
       fill: "#c4da4a"
       radius: 10
       fontColor: "#353b47"
