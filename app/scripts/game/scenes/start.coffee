@@ -28,6 +28,7 @@ Q.scene "start", (stage) ->
   description += "and find your way out.\n\n" 
   description += "But be careful not to become one of them!"
 
+  desc_fontsize = Math.max(Styles.fontsize3, Q.height/20)
   desc = titleContainer.insert new Q.UI.Text
       x: 0
       y: 0
@@ -35,7 +36,7 @@ Q.scene "start", (stage) ->
       label: description
       color: "#2d3032"
       family: "Jolly Lodger"
-      size: Styles.fontsize5
+      size: desc_fontsize
 
   # resize panel
   panel.p.w = desc.p.w*1.1
@@ -78,14 +79,17 @@ Q.scene "start", (stage) ->
   Q.CompositeUI.add_cursor_warning(titleContainer, 0, y_cursor_warning)
 
   # 
-  gaze_message = "[This is an eye gaze accessible website, controlled using a cursor]"
+  gaze_message = "[This is an eye gaze accessible website, controlled using a cursor or touch]"
+  msg_fontsize = Math.min(Styles.fontsize2, Q.height/30)
   title = titleContainer.insert new Q.UI.Text
     x: 0
     y: button.p.y - button.p.h
     label: gaze_message
     color: "#c4da4a"
     family: "Jolly Lodger"
-    size: Styles.fontsize3
+    size: msg_fontsize
+
+  title.p.y = button.p.y - button.p.h*.5 - title.p.h*0.5
 
   # button.p.y = button.p.y + button.p.h/2 + y_pad*2
 
