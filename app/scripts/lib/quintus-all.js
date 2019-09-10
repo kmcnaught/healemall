@@ -4753,7 +4753,8 @@ Quintus.Touch = function(Q) {
           active.obj.trigger('drag', active);
         }
       }
-      e.preventDefault();
+      // Don't prevent default: drag is used on ios to hide url bar
+      //e.preventDefault();
     },
 
     touchEnd: function(e) {
