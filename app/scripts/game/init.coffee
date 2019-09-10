@@ -387,14 +387,7 @@ window.Game =
     catch 
       # will get here if URLSearchParams not supported by browser
       console.log("Error parsing search params, loading defaults instead")
-      return 
-
-    # First look for "force" param, this will determine whether we override user inputs     
-    override = false
-    if searchParams.has("force") 
-      force = searchParams.get("force")      
-      if validate_bool(force)
-        override = true
+      return     
       
     # Define generic process function for each parameter
     processParam = (val, key) ->
@@ -406,25 +399,17 @@ window.Game =
           preset_names = Game.presets.map (p) => p.name.toLowerCase();
           if gamemode.toLowerCase() in preset_names
             preset = (p for p in Game.presets when p.name.toLowerCase() == gamemode)[0]
-
-            if override
-              Game.settings.lives.set(preset.lives)    
-              Game.settings.zombieSpeed.set(preset.zombieSpeed)    
-              Game.settings.zombiesChase.set(preset.zombiesChase)
-              Game.settings.unlimitedAmmo.set(preset.unlimitedAmmo)          
-              Game.settings.startWithGun.set(preset.startWithGun)
-            else
-              Game.settings.lives.setDefault(preset.lives)    
-              Game.settings.zombieSpeed.setDefault(preset.zombieSpeed)    
-              Game.settings.zombiesChase.setDefault(preset.zombiesChase)
-              Game.settings.unlimitedAmmo.setDefault(preset.unlimitedAmmo)          
-              Game.settings.startWithGun.setDefault(preset.startWithGun)
+          
+            Game.settings.lives.setDefault(preset.lives)    
+            Game.settings.zombieSpeed.setDefault(preset.zombieSpeed)    
+            Game.settings.zombiesChase.setDefault(preset.zombiesChase)
+            Game.settings.unlimitedAmmo.setDefault(preset.unlimitedAmmo)          
+            Game.settings.startWithGun.setDefault(preset.startWithGun)
           else
             console.log("Cannot parse game mode: " + value)      
         else 
           # default behaviour: assign value to game setting of this name.
           if Game.settings[key]?
-            if override
               Game.settings[key].set(val)
             else
               Game.settings[key].setDefault(val)
