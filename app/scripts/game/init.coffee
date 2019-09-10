@@ -46,6 +46,7 @@ class StorageItem
   constructor: (key, default_val, validator) ->
     @key = @getKey(key)
     @default_val = default_val
+    @staged_val = undefined # stage changes if not able to commit (need user permission)
     @is_boolean = (typeof default_val == "boolean")  
     @validator = validator
 
@@ -56,7 +57,7 @@ class StorageItem
     if @is_boolean
       return @boolValueOrDefault(@key, @default_val)
     else
-      return localStorage.getItem(@key) || @default_val
+      return @staged_val || localStorage.getItem(@key) || @default_val
 
   isSaved: () ->
     return !(localStorage.getItem(@key) is null)
@@ -73,6 +74,15 @@ class StorageItem
     s_v = @validator(s)
     if s_v? and (force_save or @get() != s_v)
         localStorage.setItem(@key, s_v)     
+
+  set_staged: (s) ->
+    s_v = @validator(s)
+    if s_v?
+      @staged_val = s_v
+
+  commit_staged_change: () ->
+    if @staged_val? 
+      @set(@staged_val, true)
 
   boolValueOrDefault: (key, defaultVal) ->
       stringVal = localStorage.getItem(key)
@@ -224,9 +234,8 @@ class Settings
     @unlimitedAmmo = new StorageItem("unlimitedAmmo", false, validate_bool)
     @startWithGun = new StorageItem("startWithGun", false, validate_bool)
     @narrationVoice = new StorageItem("narrationVoice", "UK English Male", validate_noop) 
-    # randomly picked first time, saved after cookie acceptance
+    # will be randomly picked first time, saved after cookie acceptance
     @femaleDoctor = new StorageItem("femaleDoctor", (Boolean)(Math.floor(Math.random() * 2)), validate_bool) 
-
 
 
 # Global styles
@@ -369,7 +378,7 @@ window.Game =
     ]
 
     # Any ?var=value params in the url to override settings defaults
-    @processUrlParams()
+    @processUrlParams()    
 
     return  
 
@@ -377,7 +386,7 @@ window.Game =
 
 
 
-  processUrlParams: () ->  
+  processUrlParams: () ->    
 
     # Get URL params, if supported by browser
     try
@@ -408,11 +417,10 @@ window.Game =
           else
             console.log("Cannot parse game mode: " + value)      
         else 
-          # default behaviour: assign value to game setting of this name.
-          if Game.settings[key]?
-              Game.settings[key].set(val)
-            else
-              Game.settings[key].setDefault(val)
+          # assign value to game setting's default 
+          # we'll commit when we know we have cookie acceptance
+          if Game.settings[key]? and not Game.settings[key].isSaved()
+            Game.settings[key].set_staged(val)
           else
             console.log("Cannot find setting: " + key)      
       catch 
@@ -428,12 +436,18 @@ window.Game =
 
   onCookieAcceptance: () ->
     # Any setup we aren't able to do until we know cookies are accepted
+    # If we want to set game settings earlier, we need to cache values in 
+    # their 'default' and then commit changes now
 
     # Save the gender for doctor character
     # (We randomly picked its default upon initialisation)
     if not Game.settings.femaleDoctor.isSaved()    
       Game.settings.femaleDoctor.set(Game.settings.femaleDoctor.get(), true)    
     
+    # Save any params staged, e.g. by URL parsing
+    for param of Game.settings
+      Game.settings[param].commit_staged_change()
+
 
   onCursorTick: () ->
     if Q.gazeInput
