@@ -220,7 +220,6 @@ Q.scene "levelSelectMore", (stage) ->
     fontColor: "#404444"
     font: "400 32px Jolly Lodger"
     z: 100
-    keyActionName: "confirm"
     type: Q.SPRITE_UI | Q.SPRITE_DEFAULT
 
     

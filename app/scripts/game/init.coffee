@@ -122,6 +122,13 @@ class Achievements
     @congratulatedAllLevels = new StorageItem("congratulatedAllLevels", false, validate_num)
     @congratulatedAllLevelsFullStars = new StorageItem("congratulatedAllLevelsFullStars", false, validate_num)
 
+  getNextUncompletedLevel: () ->
+    for level in [0..@total_levels]
+      prog = @progress[level].get()
+      if prog == 0
+        return level
+    return level # if all complete, returns (N+1) 
+
   getProgressForLevel: (level) ->
     return @progress[level].get()
 

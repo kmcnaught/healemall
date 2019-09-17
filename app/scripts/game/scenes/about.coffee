@@ -67,7 +67,7 @@ Q.scene "about", (stage) ->
     fontColor: "#353b47"
     font: "400 58px Jolly Lodger"
     label: label
-    keyActionName: "confirm"
+    keyActionName: "escape"
     type: Q.SPRITE_UI | Q.SPRITE_DEFAULT
 
   button.p.y = button.p.y + button.p.h/2 + y_pad*2
