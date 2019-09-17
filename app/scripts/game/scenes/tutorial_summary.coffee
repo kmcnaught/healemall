@@ -30,8 +30,7 @@ Q.scene "tutorialSummary", (stage) ->
     size: Styles.fontsize14
 
   msgLabel = "You have successfully completed the tutorial\n"
-  if stage.options.zombies
-    msgLabel += "Zombies healed: " + stage.options.zombies.healed + "/" + stage.options.zombies.available + "\n"
+  
   msgLabel += "Are you feeling ready to play for real?"
 
   # message
@@ -72,7 +71,6 @@ Q.scene "tutorialSummary", (stage) ->
     fontColor: "#353b47"
     font: "400 58px Jolly Lodger"
     label: "Try again"
-    keyActionName: "confirm"
     type: Q.SPRITE_UI | Q.SPRITE_DEFAULT
 
   buttonNext.p.x = Q.width/2 + buttonNext.p.w/2 + 40
@@ -117,25 +115,7 @@ Q.scene "tutorialSummary", (stage) ->
   previousStars = Game.achievements.progress[level].get()
   if previousStars < stars
     Game.achievements.progress[level].set(stars)
-
-  # insert stars on the screen
-  starsContainer = stage.insert new Q.UI.Container
-    x: summaryContainer.p.x + gutterX + columnWidth
-    y: Q.height/2
-
-  x = -80 - 20 # width of LevelScoreImg - margin between stars
-
-  for index in [1..3]
-    empty = if stars >= index then false else true
-
-    scoreImg = starsContainer.insert new Q.UI.LevelScoreImg
-      x: x
-      y: -lineHeight/2
-      empty: empty
-
-    x += scoreImg.p.w + 20
-
-
+  
   # track events
   Game.trackEvent("levelSummary:" + Q.state.get("currentLevel"), "score", score)
   Game.trackEvent("levelSummary:" + Q.state.get("currentLevel"), "stars", stars)

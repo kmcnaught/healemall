@@ -40,5 +40,9 @@ Q.Sprite.extend "Door",
         if Q.state.get("currentLevel") > 0
           Game.stageEndLevelScreen()
         else
-          Game.stageScreen("tutorialSummary")
+          Q.clearStages()
+          Q.stageScene "tutorialSummary", Game.currentLevelData
+          Game.currentScreen = "tutorialSummary"
+
+          
 
