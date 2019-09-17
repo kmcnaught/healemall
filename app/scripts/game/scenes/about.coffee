@@ -18,7 +18,7 @@ Q.scene "about", (stage) ->
   description += "eye gaze audience in 2019. \n"
   description += "\n"
   description += "The game uses the Quintus game engine under the MIT license, \n"
-  description += "and audio from https://opengameart.org/\n"
+  description += "and audio from https://opengameart.org/"
 
   # TODO link to https://raw.githubusercontent.com/cykod/Quintus/master/MIT-LICENSE.txt
   # probably a link to github where we can more easily detail things / give links
