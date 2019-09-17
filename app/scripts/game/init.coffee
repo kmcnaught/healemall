@@ -80,6 +80,9 @@ class StorageItem
     if s_v?
       @staged_val = s_v
 
+  reset: () ->
+    localStorage.removeItem(@key)
+
   commit_staged_change: () ->
     if @staged_val? 
       @set(@staged_val, true)
@@ -632,6 +635,23 @@ window.Game =
     # stats.domElement.style.top = '140px'
 
     # document.body.appendChild( stats.domElement )
+
+  getUserSettings: ->
+    # Get list of settings that user has saved,
+    # i.e. not including functional stuff like level progress
+    settings_to_ignore = ["cookiesAccepted",]
+    user_settings = []
+    for setting of Game.settings    
+      if Game.settings[setting].isSaved() and not (setting in settings_to_ignore)
+        user_settings.push setting
+
+    return user_settings        
+
+  resetAllSettings: ->     
+    user_settings = @getUserSettings()
+    for setting in user_settings
+      console.log('Clearing saved setting for '+ setting)
+      Game.settings[setting].reset()    
 
   
   stageAchievementScreen: (msg) ->

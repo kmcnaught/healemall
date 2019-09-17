@@ -44,17 +44,16 @@ Q.scene "confirm_reset", (stage) ->
     size: Styles.fontsize6
     align: "center"
 
-
-  # sub-message, with word wrap
-  settings_to_ignore = ["cookiesAccepted",]
-
-  msgLabel = "This will affect: " 
-  msgOrigLength = msgLabel.length
-  msgMaxLength = 80
-  msgLines = 1
-  for setting of Game.settings    
-    if Game.settings[setting].isSaved() and not (setting in settings_to_ignore)
-      # Append to list, respecting word wrap
+  # sub-message, with word wrap, tells users what they'll lose
+  # (if nothing, then don't display this, but let them continue with the no-op)
+  user_settings = Game.getUserSettings()
+  if (user_settings.length > 0)
+    msgLabel = "This will affect: " 
+    msgOrigLength = msgLabel.length
+    msgMaxLength = 80
+    msgLines = 1
+    for setting in user_settings
+      # Append to message, respecting word wrap
       if msgLabel.length > msgOrigLength
         msgLabel += ", "
       if msgLabel.length > msgMaxLength*msgLines
@@ -62,15 +61,15 @@ Q.scene "confirm_reset", (stage) ->
         msgLines++
       msgLabel += setting 
 
-  # message
-  msg = stage.insert new Q.UI.Text
-    x: Q.width/2
-    y: Q.height/2
-    label: msgLabel
-    color: "#c4da4a"
-    family: "Boogaloo"
-    size: Styles.fontsize4
-    align: "center"
+    # message
+    msg = stage.insert new Q.UI.Text
+      x: Q.width/2
+      y: Q.height/2
+      label: msgLabel
+      color: "#c4da4a"
+      family: "Boogaloo"
+      size: Styles.fontsize4
+      align: "center"
 
 
   buttonCancel = stage.insert new Q.UI.Button
@@ -104,8 +103,7 @@ Q.scene "confirm_reset", (stage) ->
   buttonReset.p.x = Q.width/2 - buttonReset.p.w/2 - 40
 
   buttonReset.on "click", (e) ->
-    Game.stageLevelSelectScreen()
-    for setting of Game.settings
-      console.log(setting)
+    Game.resetAllSettings()
+    Game.stageScreen("settings_menu")
 
 
