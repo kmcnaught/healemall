@@ -350,7 +350,7 @@ window.Game =
     document.addEventListener('visibilitychange', @onVisibilityChange, false);
 
     # Force mouse events even when cursor static
-    setInterval(@onCursorTick, 100)
+    setInterval(@onCursorTick, 20)
 
     # Game mode presets
     Game.presets = [
