@@ -241,7 +241,7 @@ class Settings
 # Global styles
 window.Styles = 
   fontsize0: 12
-  # the reset are major third scale, rounded (we don't use all of them)
+  # the rest are major third scale, rounded (we don't use all of them)
   fontsize1: 22
   fontsize2: 25
   fontsize3: 28
