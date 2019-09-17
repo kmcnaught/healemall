@@ -28,6 +28,9 @@ Q.UI.ArrowDwellButton = Q.UI.PolygonButton.extend "UI.ArrowDwellButton",
 
       @on "touch", (e) => 
         Q.inputs[@p.hover_action]=1
+        if (e.touch instanceof Touch)
+          Game.infoLabel.touch_advice()
+          
 
       @on "touchEnd", (e) => 
         Q.inputs[@p.hover_action]=0

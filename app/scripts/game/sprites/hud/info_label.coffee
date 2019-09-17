@@ -47,6 +47,7 @@ Q.UI.InfoLabel = Q.UI.Text.extend "UI.InfoLabel",
   touch_advice: ->
     if not @haveWarnedTouch
       @changeLabel "If you're using touch, you'll need to hold down the arrow to walk"
+      @haveWarnedTouch = true
 
   tutorial: ->
     @changeLabel "If you can complete this tutorial you're ready to save some zombies"

@@ -4723,6 +4723,8 @@ Quintus.Touch = function(Q) {
               stage: stage
             };
             this.touchedObjects[obj.p.id] = true;
+            // pass on information about type of event            
+            this.activeTouches[touch.identifier].touch = touch;
             obj.trigger('touch', this.activeTouches[touch.identifier]);
             break;
           }
