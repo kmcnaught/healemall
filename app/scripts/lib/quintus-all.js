@@ -4850,7 +4850,7 @@ Quintus.Gaze = function(Q) {
         updatedEvent.pageY = e.pageY
         updatedEvent.identifier = e.identifier
         
-        this.cursor(updatedEvent);
+        this.cursor(updatedEvent, true);
       }
     },
 
@@ -4958,8 +4958,10 @@ Quintus.Gaze = function(Q) {
 
       // Reset all the actions bound to controls
       // (they might be turned back on by hover events)
-      for (var key in Q.inputs) {
-        Q.inputs[key] = false;
+      if (!pokeEvent) {        
+        for (var key in Q.inputs) {
+          Q.inputs[key] = false;
+        }
       } 
 
       // Decrement all other dwells in progress
