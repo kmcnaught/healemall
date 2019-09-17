@@ -11,6 +11,7 @@ Q.UI.InfoLabel = Q.UI.Text.extend "UI.InfoLabel",
       family: "Boogaloo"
       pendingLabel: ""
       disabled: false
+      haveWarnedTouch: false
 
   disable: () ->
     @p.disabled = true
@@ -41,6 +42,11 @@ Q.UI.InfoLabel = Q.UI.Text.extend "UI.InfoLabel",
     @p.container.p.x = @p.offsetLeft + @p.w/2 + 10
     @p.container.fit(5, 10)
     Q._generatePoints(@)
+
+
+  touch_advice: ->
+    if not @haveWarnedTouch
+      @changeLabel "If you're using touch, you'll need to hold down the arrow to walk"
 
   tutorial: ->
     @changeLabel "If you can complete this tutorial you're ready to save some zombies"
