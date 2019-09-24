@@ -419,11 +419,11 @@ window.Game =
           if gamemode.toLowerCase() in preset_names
             preset = (p for p in Game.presets when p.name.toLowerCase() == gamemode)[0]
           
-            Game.settings.lives.setDefault(preset.lives)    
-            Game.settings.zombieSpeed.setDefault(preset.zombieSpeed)    
-            Game.settings.zombiesChase.setDefault(preset.zombiesChase)
-            Game.settings.unlimitedAmmo.setDefault(preset.unlimitedAmmo)          
-            Game.settings.startWithGun.setDefault(preset.startWithGun)
+            Game.settings.lives.set_staged(preset.lives)    
+            Game.settings.zombieSpeed.set_staged(preset.zombieSpeed)    
+            Game.settings.zombiesChase.set_staged(preset.zombiesChase)
+            Game.settings.unlimitedAmmo.set_staged(preset.unlimitedAmmo)          
+            Game.settings.startWithGun.set_staged(preset.startWithGun)
           else
             console.log("Cannot parse game mode: " + value)      
         else 
