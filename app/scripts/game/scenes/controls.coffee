@@ -154,7 +154,7 @@ Q.scene "controls", (stage) ->
     x: Q.width/2
     y: Q.height - marginY
     w: Q.width/2
-    h: 70
+    h: 120
     fill: "#c4da4a"
     radius: 10
     fontColor: "#353b47"
