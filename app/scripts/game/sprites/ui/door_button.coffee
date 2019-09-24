@@ -23,8 +23,8 @@ Q.UI.DoorButton = Q.UI.Button.extend "UI.DoorButton",
       Q.inputs['enter']=1
       Q.input.trigger('enter');
 
-    @on "release", (e) ->
-      Q.inputs['enter']=0
+    # @on "release", (e) ->
+    #   Q.inputs['enter']=0
 
     onChangeHidden = (ctx) => () =>
       ctx.p.hidden = !Q.state.get("canEnterDoor");

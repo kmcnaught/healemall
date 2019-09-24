@@ -34,6 +34,8 @@ Q.Sprite.extend "Door",
         # enter the door
         obj.destroy()
 
+        Q.inputs['enter'] = 0
+
         # get game statistics
         Game.currentLevelData.zombies.healed = if @stage.lists.Human? then @stage.lists.Human.length else 0
 
