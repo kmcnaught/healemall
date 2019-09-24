@@ -5373,7 +5373,7 @@ Quintus.UI = function(Q) {
                    radius: width/2+1 
                  }
 
-      ctx.fillStyle = "#ff3b4753"; // HACK!
+      ctx.fillStyle = "#ff110053"; // HACK!
       Q.UI.roundRect(ctx,rect);
       this.addShadow(ctx);
       ctx.fill();
