@@ -410,30 +410,47 @@ window.Game =
       # will get here if URLSearchParams not supported by browser
       console.log("Error parsing search params, loading defaults instead")
       return     
-      
+    
+    # First look for "force" param, this will determine whether we override saved user settings
+    override = false
+    if searchParams.has("force") 
+      force = searchParams.get("force")      
+      if validate_bool(force)
+        override = true  
+  
     # Define generic process function for each parameter
     processParam = (val, key) ->
       console.log("URL Param #{key}: #{val}")
       try         
-        # special case for gamemode, which preloads several settings
-        if key == "gamemode"
+        if key == "force"
+          # noop, already dealt with
+        else if key == "gamemode"
+          # special case for gamemode, which preloads several settings        
           gamemode = val
           preset_names = Game.presets.map (p) => p.name.toLowerCase();
           if gamemode.toLowerCase() in preset_names
             preset = (p for p in Game.presets when p.name.toLowerCase() == gamemode)[0]
-          
-            Game.settings.lives.set_staged(preset.lives)    
-            Game.settings.zombieSpeed.set_staged(preset.zombieSpeed)    
-            Game.settings.zombiesChase.set_staged(preset.zombiesChase)
-            Game.settings.unlimitedAmmo.set_staged(preset.unlimitedAmmo)          
-            Game.settings.startWithGun.set_staged(preset.startWithGun)
+            
+            gamemode_already_set = Game.settings.lives.isSaved() or 
+                                   Game.settings.zombieSpeed.isSaved() or
+                                   Game.settings.zombiesChase.isSaved() or
+                                   Game.settings.unlimitedAmmo.isSaved() or
+                                   Game.settings.startWithGun.isSaved()
+            if gamemode_already_set and not override
+              console.log("Some game mode settings already saved, ignoring gamemode="+val)
+            else
+              Game.settings.lives.set_staged(preset.lives)    
+              Game.settings.zombieSpeed.set_staged(preset.zombieSpeed)    
+              Game.settings.zombiesChase.set_staged(preset.zombiesChase)
+              Game.settings.unlimitedAmmo.set_staged(preset.unlimitedAmmo)          
+              Game.settings.startWithGun.set_staged(preset.startWithGun)
           else
             console.log("Cannot parse game mode: " + value)      
         else 
           # stage the change, unless user has already set this
           # we'll commit when we know we have cookie acceptance
           if Game.settings[key]? 
-            if Game.settings[key].isSaved()
+            if Game.settings[key].isSaved() and not override
               console.log("Setting [" + key + "] is already set to "+Game.settings[key].get()+". Ignoring URL param ("+value+")");
             else
               Game.settings[key].set_staged(val)            
