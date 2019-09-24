@@ -390,6 +390,9 @@ window.Game =
     # Any ?var=value params in the url to override settings defaults
     @processUrlParams()    
 
+    # Replace url params, so history/bookmarking doesn't include them
+    window.history.replaceState(null, null, window.location.pathname);
+
     return  
 
   # processBasicParam: (param, param_name) ->
