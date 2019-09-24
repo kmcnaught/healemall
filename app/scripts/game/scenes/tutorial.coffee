@@ -19,9 +19,14 @@ Q.scene "tutorial", (stage) ->
   objects = Q.LevelParser.parse_objects(data_asset, ignore_objects)
   Q.LevelParser.load_objects(stage, objects, bullets_per_gun)
 
+  # overall adjustments
+  yFudge = 1.75
+  xFudge = 10
+
+
   # Add zombie manually
   enemies = [
-    ["Zombie", Q.tilePos(72, 14, canFallOff: false)]
+    ["Zombie", Q.tilePos(xFudge+72, 14, canFallOff: false)]
   ]
   stage.loadAssets(enemies)
 
@@ -30,8 +35,6 @@ Q.scene "tutorial", (stage) ->
   Game.currentLevelData.zombies.available = stage.lists.Zombie.length
 
   # Add help texts
-  yFudge = 1.75
-  xFudge = 10
 
   texts = [
     Q.tilePos(xFudge+38, 8+yFudge, {label: "Look at the left and right arrows below to walk"}),
