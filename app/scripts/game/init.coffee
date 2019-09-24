@@ -118,10 +118,10 @@ class Achievements
       @progress.push new StorageItem(@progressKey + ":" + level, 0, validate_num)
 
     # record when we've congratulated the user
-    @congratulatedMainLevels = new StorageItem("congratulatedMainLevels", false, validate_num)
-    @congratulatedMainLevelsFullStars = new StorageItem("congratulatedMainLevelsFullStars", false, validate_num)
-    @congratulatedAllLevels = new StorageItem("congratulatedAllLevels", false, validate_num)
-    @congratulatedAllLevelsFullStars = new StorageItem("congratulatedAllLevelsFullStars", false, validate_num)
+    @congratulatedMainLevels = new StorageItem("congratulatedMainLevels", false, validate_bool)
+    @congratulatedMainLevelsFullStars = new StorageItem("congratulatedMainLevelsFullStars", false, validate_bool)
+    @congratulatedAllLevels = new StorageItem("congratulatedAllLevels", false, validate_bool)
+    @congratulatedAllLevelsFullStars = new StorageItem("congratulatedAllLevelsFullStars", false, validate_bool)
 
   getNextUncompletedLevel: () ->
     for level in [0..@total_levels]
