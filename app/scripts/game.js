@@ -3394,7 +3394,7 @@
   Q = Game.Q;
 
   Q.scene("tutorial", function(stage) {
-    var background, bullets_per_gun, clone, combined_label, combined_prop, component, data_asset, enemies, helptext, ignore_objects, j, l, len, len1, objects, text_props, texts, typeIsArray, yFudge;
+    var background, bullets_per_gun, clone, combined_label, combined_prop, component, data_asset, enemies, helptext, ignore_objects, j, l, len, len1, objects, text_props, texts, typeIsArray, xFudge, yFudge;
     data_asset = Game.assets.tutorial.dataAsset;
     bullets_per_gun = 20;
     // main map with collision
@@ -3425,61 +3425,62 @@
     Game.currentLevelData.zombies.available = stage.lists.Zombie.length;
     // Add help texts
     yFudge = 1.75;
+    xFudge = 10;
     texts = [
-      Q.tilePos(38,
+      Q.tilePos(xFudge + 38,
       8 + yFudge,
       {
         label: "Look at the left and right arrows below to walk"
       }),
-      Q.tilePos(46,
+      Q.tilePos(xFudge + 46,
       11 + yFudge,
       {
         label: "The longer you look, the faster you'll walk"
       }),
-      Q.tilePos(54,
+      Q.tilePos(xFudge + 54,
       11 + yFudge,
       {
         label: "Dwell on a jump button to jump sideways"
       }),
-      Q.tilePos(64.5,
+      Q.tilePos(xFudge + 64.5,
       9 + yFudge,
       {
         label: "Try jumping over the gap"
       }),
-      Q.tilePos(73 - 1.5,
+      Q.tilePos(xFudge + 73 - 1.5,
       9 + yFudge,
       {
         label: "Watch out for zombies!"
       }),
-      Q.tilePos(77,
+      Q.tilePos(xFudge + 77,
       11 + yFudge,
       {
         label: "Try to get past without being bitten"
       }),
       [
-        Q.tilePos(83,
+        Q.tilePos(xFudge + 83,
         10.5 + yFudge,
         {
           label: "Collect the healing gun,"
         }),
-        Q.tilePos(83,
+        Q.tilePos(xFudge + 83,
         11 + yFudge,
         {
           label: "and fire at the zombie"
         })
       ],
-      Q.tilePos(88,
+      Q.tilePos(xFudge + 88,
       9 + yFudge,
       {
         label: "Health packs give you an extra life -->"
       }),
       [
-        Q.tilePos(92,
+        Q.tilePos(xFudge + 92,
         13 + yFudge,
         {
           label: "To complete the level,"
         }),
-        Q.tilePos(92,
+        Q.tilePos(xFudge + 92,
         13.5 + yFudge,
         {
           label: "find the key and exit"
