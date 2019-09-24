@@ -150,10 +150,10 @@
         this.progress.push(new StorageItem(this.progressKey + ":" + level, 0, validate_num));
       }
       // record when we've congratulated the user
-      this.congratulatedMainLevels = new StorageItem("congratulatedMainLevels", false, validate_num);
-      this.congratulatedMainLevelsFullStars = new StorageItem("congratulatedMainLevelsFullStars", false, validate_num);
-      this.congratulatedAllLevels = new StorageItem("congratulatedAllLevels", false, validate_num);
-      this.congratulatedAllLevelsFullStars = new StorageItem("congratulatedAllLevelsFullStars", false, validate_num);
+      this.congratulatedMainLevels = new StorageItem("congratulatedMainLevels", false, validate_bool);
+      this.congratulatedMainLevelsFullStars = new StorageItem("congratulatedMainLevelsFullStars", false, validate_bool);
+      this.congratulatedAllLevels = new StorageItem("congratulatedAllLevels", false, validate_bool);
+      this.congratulatedAllLevelsFullStars = new StorageItem("congratulatedAllLevelsFullStars", false, validate_bool);
     }
 
     getNextUncompletedLevel() {
@@ -5336,6 +5336,7 @@
         } else if (this.p.opened && (Q.inputs['up'] || Q.inputs['action'] || Q.inputs['enter'])) {
           // enter the door
           obj.destroy();
+          Q.inputs['enter'] = 0;
           // get game statistics
           Game.currentLevelData.zombies.healed = this.stage.lists.Human != null ? this.stage.lists.Human.length : 0;
           if (Q.state.get("currentLevel") > 0) {
@@ -6037,9 +6038,6 @@
       this.on("click", function(e) {
         Q.inputs['enter'] = 1;
         return Q.input.trigger('enter');
-      });
-      this.on("release", function(e) {
-        return Q.inputs['enter'] = 0;
       });
       onChangeHidden = (ctx) => {
         return () => {
