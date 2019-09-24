@@ -427,10 +427,13 @@ window.Game =
           else
             console.log("Cannot parse game mode: " + value)      
         else 
-          # assign value to game setting's default 
+          # stage the change, unless user has already set this
           # we'll commit when we know we have cookie acceptance
-          if Game.settings[key]? and not Game.settings[key].isSaved()
-            Game.settings[key].set_staged(val)
+          if Game.settings[key]? 
+            if Game.settings[key].isSaved()
+              console.log("Setting [" + key + "] is already set to "+Game.settings[key].get()+". Ignoring URL param ("+value+")");
+            else
+              Game.settings[key].set_staged(val)            
           else
             console.log("Cannot find setting: " + key)      
       catch 
