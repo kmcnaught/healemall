@@ -86,6 +86,7 @@ class StorageItem
   commit_staged_change: () ->
     if @staged_val? 
       @set(@staged_val, true)
+      @staged_val = undefined
 
   boolValueOrDefault: (key, defaultVal) ->
       stringVal = localStorage.getItem(key)
