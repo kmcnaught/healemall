@@ -1,4 +1,4 @@
-![Heal'em All. Promo.](https://dl.dropboxusercontent.com/u/8751332/promo.png)
+![Heal 'em all screenshot](ScreenshotCrop.PNG)
 
 
 ## Heal'em All: An eye gaze platform game
@@ -9,11 +9,19 @@ Back in 2013, Kris Urbas and Paweł Madeja made a lovely little platform game wh
 
 In the game you are a pioneering doctor who has discovered a cure for the zombie plague. You must explore an old, abandoned graveyard, heal as many zombies as you can, and find your way out safely. You can play the game using eye gaze, mouse or touch control. 
 
-You control the player by looking at arrows on the screen. You can dwell or click on 'jump' arrows to automatically jump in either direction. These gaze controls are adjustable if you want them to be larger or smaller. There are also several settings you can change to adjust the game to your preferences, including easier game modes.
+You control the player by looking at arrows on the screen. You can dwell or click on 'jump' arrows to automatically jump in either direction. These gaze controls are adjustable if you need them to be larger or smaller. There are also several settings you can change to adjust the game to your preferences, including easier game modes.
 
 ## Eye tracker support
 
 The game runs in a web browser (Chrome and Firefox have been tested), and uses the cursor as input. Any eye tracker that you can use to control the cursor will be compatible. If you don't like seeing the cursor jump around while you're controlling it with your eyes, you can hide it within the game. 
+
+## Game options
+
+Accessibility is often about providing a range of options so players with various needs can adjust the game to their requirements. In heal-em-all, we have added settings to support
+- different difficulty levels (basic presets, or custom control over different options)
+- different input methods (keyboard, touch, gaze - and different gaze options)
+- music, sound effects
+- game narration is available
 
 ## Acknowledgements 
 
