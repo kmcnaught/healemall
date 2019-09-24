@@ -1,4 +1,4 @@
-<p style="text-align:center;"><img src="ScreenshotCrop.PNG" alt="Heal 'em all screenshot" width="200"/></p>
+<p style="text-align:center;"><img src="ScreenshotCrop.PNG" alt="Heal 'em all screenshot" width="400"/></p>
 
 ## Heal'em All: An eye gaze platform game
 
