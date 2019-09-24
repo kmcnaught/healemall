@@ -1,5 +1,4 @@
-![Heal 'em all screenshot](ScreenshotCrop.PNG)
-
+<p style="text-align:center;"><img src="ScreenshotCrop.PNG" alt="Heal 'em all screenshot" width="200"/></p>
 
 ## Heal'em All: An eye gaze platform game
 
@@ -13,7 +12,7 @@ You control the player by looking at arrows on the screen. You can dwell or clic
 
 ## Eye tracker support
 
-The game runs in a web browser (Chrome and Firefox have been tested), and uses the cursor as input. Any eye tracker that you can use to control the cursor will be compatible. If you don't like seeing the cursor jump around while you're controlling it with your eyes, you can hide it within the game. 
+The game runs in a web browser (tested primarily with Chrome), and uses the cursor as input. Any eye tracker that you can use to directly control the cursor will be compatible. If you don't like seeing the cursor jump around while you're controlling it with your eyes, you can hide it within the game. This way it won't feel like you're using direct pointer control.
 
 ## Game options
 
