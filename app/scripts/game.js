@@ -1911,7 +1911,7 @@
       x: Q.width / 2,
       y: Q.height - marginY,
       w: Q.width / 2,
-      h: 70,
+      h: 120,
       fill: "#c4da4a",
       radius: 10,
       fontColor: "#353b47",
@@ -3408,11 +3408,14 @@
     ignore_objects = ["Zombie"];
     objects = Q.LevelParser.parse_objects(data_asset, ignore_objects);
     Q.LevelParser.load_objects(stage, objects, bullets_per_gun);
+    // overall adjustments
+    yFudge = 1.75;
+    xFudge = 10;
     // Add zombie manually
     enemies = [
       [
         "Zombie",
-        Q.tilePos(72,
+        Q.tilePos(xFudge + 72,
         14,
         {
           canFallOff: false
@@ -3424,8 +3427,6 @@
     Game.currentLevelData.health.available = stage.lists.Heart.length;
     Game.currentLevelData.zombies.available = stage.lists.Zombie.length;
     // Add help texts
-    yFudge = 1.75;
-    xFudge = 10;
     texts = [
       Q.tilePos(xFudge + 38,
       8 + yFudge,
