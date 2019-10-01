@@ -58,14 +58,14 @@
 
         <div id="banner">
             <div id="banner-content">
-                WARNING: You are using an unsupported browser. We recommend using Chrome or Firefox instead. 
+                WARNING: You are using an unsupported browser. We recommend using Chrome instead. 
             </div>
             <div id="sample_text" onClick="hideBrowserWarning()"><strong>Dismiss warning</strong></div>
         </div>
 
         <script>
             var userAgent = navigator.userAgent
-            if (!(userAgent.search("MSIE") >= 0 || userAgent.search("Edge") >= 0 || userAgent.search("Trident") >= 0)) {
+            if (!(userAgent.search("MSIE") >= 0 || userAgent.search("Edge") >= 0 ||  userAgent.search("Firefox") >= 0  || userAgent.search("Trident") >= 0)) {
               hideBrowserWarning()
             }
         </script>
