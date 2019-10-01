@@ -678,6 +678,21 @@
           dataAsset: "trickyJumpsMore.tmx",
           bullets: 20,
           name: "More Tricky Jumps"
+        },
+        level13: {
+          dataAsset: "notEnoughBullets.tmx",
+          bullets: 2,
+          name: "Ammo"
+        },
+        level14: {
+          dataAsset: "something.tmx",
+          bullets: 5,
+          name: "Untitled"
+        },
+        level15: {
+          dataAsset: "ghostly_platforms.tmx",
+          bullets: 5,
+          name: "Ghostly Platforms"
         }
       };
       
