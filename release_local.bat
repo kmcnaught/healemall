@@ -1,5 +1,5 @@
 
 workon web;
-rm -r dist\;
+rm -r dist/;
 pyinstaller --noupx --onedir --onefile app/httpserver.py;
 cp -r app/* dist/;
