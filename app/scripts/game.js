@@ -672,7 +672,7 @@
         level11: {
           dataAsset: "tooManyZombies.tmx",
           bullets: 20,
-          name: "Too Many Zombies"
+          name: "Surrounded"
         },
         level12: {
           dataAsset: "trickyJumpsMore.tmx",
@@ -682,17 +682,17 @@
         level13: {
           dataAsset: "notEnoughBullets.tmx",
           bullets: 2,
-          name: "Ammo"
+          name: "Ammo Ascent"
         },
         level14: {
           dataAsset: "something.tmx",
           bullets: 5,
-          name: "Untitled"
+          name: "Healing Bridge"
         },
         level15: {
           dataAsset: "ghostly_platforms.tmx",
           bullets: 5,
-          name: "Ghostly Platforms"
+          name: "A Ghostly Gauntlet"
         }
       };
       
