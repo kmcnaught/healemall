@@ -1,8 +1,11 @@
 node_modules
 dist
-.tmp
-.sass-cache
+build
 app/bower_components
-**svg
-app/scripts/game.js
 package-lock.json
+.sass-cache
+.tmp
+**svg
+**xcf
+app/images/gun_shape.ps
+app/images/gun_shape.xaml
