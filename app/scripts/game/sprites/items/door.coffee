@@ -15,6 +15,23 @@ Q.Sprite.extend "Door",
 
     # events
     @on "sensor", @, "sensor"
+    Q.input.on("enter", @, "enterDoor")
+
+  enterDoor: () ->
+    # enter the door
+    #obj.destroy()
+
+    Q.inputs['enter'] = 0
+
+    # get game statistics
+    Game.currentLevelData.zombies.healed = if @stage.lists.Human? then @stage.lists.Human.length else 0
+
+    if Q.state.get("currentLevel") > 0
+      Game.stageEndLevelScreen()
+    else
+      Q.clearStages()
+      Q.stageScene "tutorialSummary", Game.currentLevelData
+      Game.currentScreen = "tutorialSummary"
 
   sensor: (obj) ->
     if obj.isA("Player") or obj.isA("ZombiePlayer") 
@@ -29,22 +46,6 @@ Q.Sprite.extend "Door",
 
       else if !@p.opened
         Game.infoLabel.keyNeeded()
-
-      else if @p.opened and (Q.inputs['up'] or Q.inputs['action'] or Q.inputs['enter'])
-        # enter the door
-        obj.destroy()
-
-        Q.inputs['enter'] = 0
-
-        # get game statistics
-        Game.currentLevelData.zombies.healed = if @stage.lists.Human? then @stage.lists.Human.length else 0
-
-        if Q.state.get("currentLevel") > 0
-          Game.stageEndLevelScreen()
-        else
-          Q.clearStages()
-          Q.stageScene "tutorialSummary", Game.currentLevelData
-          Game.currentScreen = "tutorialSummary"
 
           
 
