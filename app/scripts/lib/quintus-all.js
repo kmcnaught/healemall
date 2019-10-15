@@ -3099,9 +3099,9 @@ Quintus.Input = function(Q) {
       this.entity.on("bump.bottom",this,"land");
 
       p.isjumping = false;
+      p.isjumpingsideways = false;
       p.direction ='right';
-
-      this.isjumpingsideways = false;
+      
       this.pendingJumpLeft = false;
       this.pendingJumpRight = false;
 
@@ -3128,10 +3128,10 @@ Quintus.Input = function(Q) {
       // when a jump completes
       var p = this.entity.p;
       p.isjumping = false;      
+      p.isjumpingsideways = false;
 
       Q.inputs['left'] = 0
-      Q.inputs['right'] = 0
-      this.isjumpingsideways = false;
+      Q.inputs['right'] = 0      
 
       this.entity.off("bump.bottom",this,"landedjump");
     },
@@ -3174,7 +3174,7 @@ Quintus.Input = function(Q) {
         speedFraction *= 0.5; // ??
       }
 
-      if (this.isjumpingsideways) {
+      if (p.isjumpingsideways) {
         if (p.direction == 'right') {
           p.vx = p.maxSpeed;
         }
@@ -3204,7 +3204,7 @@ Quintus.Input = function(Q) {
         if (Q.inputs['jumpleft'] || Q.inputs['jumpright']||
             this.pendingJumpLeft || this.pendingJumpRight) {
           this.entity.on("bump.bottom",this,"landedjump");
-          this.isjumpingsideways = true;
+          p.isjumpingsideways = true;
         } 
       }
 
