@@ -5337,7 +5337,22 @@
       });
       this.p.y -= this.p.h / 2 - Game.assets.map.tileSize / 2;
       // events
-      return this.on("sensor", this, "sensor");
+      this.on("sensor", this, "sensor");
+      return Q.input.on("enter", this, "enterDoor");
+    },
+    enterDoor: function() {
+      // enter the door
+      //obj.destroy()
+      Q.inputs['enter'] = 0;
+      // get game statistics
+      Game.currentLevelData.zombies.healed = this.stage.lists.Human != null ? this.stage.lists.Human.length : 0;
+      if (Q.state.get("currentLevel") > 0) {
+        return Game.stageEndLevelScreen();
+      } else {
+        Q.clearStages();
+        Q.stageScene("tutorialSummary", Game.currentLevelData);
+        return Game.currentScreen = "tutorialSummary";
+      }
     },
     sensor: function(obj) {
       if (obj.isA("Player") || obj.isA("ZombiePlayer")) {
@@ -5350,19 +5365,6 @@
           return Game.infoLabel.doorOpen();
         } else if (!this.p.opened) {
           return Game.infoLabel.keyNeeded();
-        } else if (this.p.opened && (Q.inputs['up'] || Q.inputs['action'] || Q.inputs['enter'])) {
-          // enter the door
-          obj.destroy();
-          Q.inputs['enter'] = 0;
-          // get game statistics
-          Game.currentLevelData.zombies.healed = this.stage.lists.Human != null ? this.stage.lists.Human.length : 0;
-          if (Q.state.get("currentLevel") > 0) {
-            return Game.stageEndLevelScreen();
-          } else {
-            Q.clearStages();
-            Q.stageScene("tutorialSummary", Game.currentLevelData);
-            return Game.currentScreen = "tutorialSummary";
-          }
         }
       }
     }
