@@ -3096,7 +3096,7 @@ Quintus.Input = function(Q) {
       Q._defaults(p,this.defaults);
 
       this.entity.on("step",this,"step");
-      this.entity.on("bump.bottom",this,"landed");
+      this.entity.on("bump.bottom",this,"land");
 
       p.landed = 0;
       p.direction ='right';
@@ -3119,7 +3119,7 @@ Quintus.Input = function(Q) {
       this.pendingJumpRight = true;
     },
 
-    landed: function(col) {
+    land: function(col) {
       var p = this.entity.p;
       p.landed = 1/5;
     },
