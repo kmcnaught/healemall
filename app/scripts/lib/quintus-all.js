@@ -3098,7 +3098,7 @@ Quintus.Input = function(Q) {
       this.entity.on("step",this,"step");
       this.entity.on("bump.bottom",this,"land");
 
-      p.landed = 0;
+      p.isjumping = false;
       p.direction ='right';
 
       this.isjumpingsideways = false;
@@ -3121,13 +3121,14 @@ Quintus.Input = function(Q) {
 
     land: function(col) {
       var p = this.entity.p;
-      p.landed = 1/5;
+      p.isjumping = false;
     },
 
     landedjump: function(col) {
       // when a jump completes
       var p = this.entity.p;
-      p.landed = 1/5;      
+      p.isjumping = false;      
+
       Q.inputs['left'] = 0
       Q.inputs['right'] = 0
       this.isjumpingsideways = false;
@@ -3190,11 +3191,11 @@ Quintus.Input = function(Q) {
         p.vx = 0;      
       }
 
-      if(p.landed > 0 && (Q.inputs['up'] || Q.inputs['action'] || 
+      if(!p.isjumping && (Q.inputs['up'] || Q.inputs['action'] || 
                           Q.inputs['jumpleft'] || Q.inputs['jumpright'] ||
                           this.pendingJumpLeft || this.pendingJumpRight)) {
         p.vy = p.jumpSpeed;
-        p.landed = -dt;
+        p.isjumping = true;
         
         // if jumping sideways , we've now executed the jump but need to keep
         // the sideways motion on while it completes. 
@@ -3206,8 +3207,6 @@ Quintus.Input = function(Q) {
           this.isjumpingsideways = true;
         } 
       }
-
-      p.landed -= dt;
 
       // turn off jumping controls (these should only be instantaneous actions)
       this.pendingJumpRight = false;
