@@ -4,6 +4,8 @@
 
 Back in 2013, Kris Urbas and Paweł Madeja made a lovely little platform game which was one of the winners of that year's Github Game Off game jam. Here at SpecialEffect in 2019 we discovered the game and wanted to give it a new lease of life and share it with an under-served audience - disabled gamers who use eye gaze to access a computer. We reached out to Kris and Paweł, who kindly agreed we could take their code and modify it for our users.
 
+Play the game at [https://kmcnaught.co.uk/healemall/app/](https://kmcnaught.co.uk/healemall/app/).
+
 ## The game
 
 In the game you are a pioneering doctor who has discovered a cure for the zombie plague. You must explore an old, abandoned graveyard, heal as many zombies as you can, and find your way out safely. You can play the game using eye gaze, mouse or touch control. 
@@ -45,6 +47,8 @@ Modifications (c) 2019 Kirsty McNaught
 ## Assets
 
 All art assets (files in ``app/images/``) are distributed under the [Creative Commons Attribution 4.0 International](http://creativecommons.org/licenses/by/4.0/) license.  
+
 Original artist: Paweł Madeja
+
 Some modifications / additions: Kirsty McNaught
 
